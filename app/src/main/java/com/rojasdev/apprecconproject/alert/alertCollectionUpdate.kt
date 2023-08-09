@@ -90,7 +90,7 @@ class alertCollectionUpdate(
         dismiss()
         val kg = binding.etKg.text.toString()
         val date = Calendar.getInstance().time
-        val formatDate = "EEEE, MMMM dd 'del' yyyy ' Hora: ' HH:mm:ss"
+        val formatDate = "EEEE, MMMM dd 'del' yyyy 'Hora: ' HH:mm"
         val formato = SimpleDateFormat(formatDate, Locale("es", "CO"))
         val dateFormat = formato.format(date)
 

@@ -24,7 +24,7 @@
     <string name="price">$</string>
     <string name="update">Actualizar</string>
     <string name="settingsAliment">Configuracion de precios</string>
-    <string name="support">Soporte tecnico</string>
+    <string name="support">Ayuda</string>
 
     //txt del alert para add un Recolector
     <string name="addUser">¡Comienza a gestionar tu equipo de recolectores de manera eficiente y sin complicaciones!</string>
@@ -52,7 +52,7 @@
     <string name="cvKg">Ultima Recoleccion</string>
     <string name="tvKg">216 Kg</string>
     <string name="tvFeend">Alimentacion:</string>
-    <string name="tvRecolcection">Recoleciones Anteriores</string>
+    <string name="tvRecolcection">Total recolectado: 150 Kg</string>
     <string name="total">Total</string>
 
     <string name="aliment">Alimentacion</string>
@@ -69,6 +69,8 @@
     <string name="finish_collection">¡Recolección finalizada!</string>
     <string name="finish">finalizar</string>
     <string name="collectado">pesa</string>
+
+    <string name="userInfo">No hay Recoleccion de ese Dia</string>
 
 
 </resources>

@@ -14,6 +14,7 @@ import com.rojasdev.apprecconproject.ActivityRecolectionDetail
 import com.rojasdev.apprecconproject.adapters.adapterRvCollectors
 import com.rojasdev.apprecconproject.alert.alertCollection
 import com.rojasdev.apprecconproject.alert.alertDeleteCollector
+import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.customSnackbar
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
@@ -88,11 +89,9 @@ class FragmentCollectors(
                 launch(Dispatchers.Main) {
                     if(getId.isNotEmpty()) {
                         startActivity(Intent(
-                            requireContext(), ActivityRecolectionDetail::class.java
-                        ).putExtra("userId", item.id).putExtra("userName", item.name)
+                                requireContext(), ActivityRecolectionDetail::class.java
+                            ).putExtra("userId", item.id).putExtra("userName", item.name)
                         )
-                    } else {
-
                     }
                 }
             }
