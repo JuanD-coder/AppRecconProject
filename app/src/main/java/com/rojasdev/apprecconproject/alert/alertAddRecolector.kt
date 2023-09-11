@@ -2,37 +2,23 @@ package com.rojasdev.apprecconproject.alert
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Intent
-import android.content.IntentSender.OnFinished
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextUtils
-import android.text.TextWatcher
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
-import com.google.android.material.snackbar.BaseTransientBottomBar.ContentViewCallback
-import com.rojasdev.apprecconproject.ActivityRecolection
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.customSnackbar
 import com.rojasdev.apprecconproject.controller.requireInput
-import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
+import com.rojasdev.apprecconproject.controller.textListener
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconproject.databinding.AlertRecolectonBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class alertAddRecolector(
     val onClickListener: (RecolectoresEntity) -> Unit,
-    val finished: () -> Unit
+    val finished: (Boolean) -> Unit
 ): DialogFragment() {
 
     private lateinit var binding: AlertRecolectonBinding
@@ -45,38 +31,24 @@ class alertAddRecolector(
         animatedAlert.animatedInit(binding.cvRecolector)
 
         binding.btnClose.setOnClickListener{
-            finished()
+            finished(false)
             dismiss()
         }
 
-        binding.yesAddRecolector.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                finish()
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                addCollector()
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-               if (binding.yesAddRecolector.text!!.isEmpty()){
-                   finish()
-               }else{
-                   addCollector()
-               }
-            }
-
-        })
+        textListener.lister(
+            binding.yesAddRecolector,
+            {addCollector()},
+            {finish()}
+        )
 
         finish()
 
         val dialog = builder.create()
-            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                return dialog
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        return dialog
     }
 
     private fun dates(view: View) {
-
         insertCollector = true
         val recolector = binding.yesAddRecolector.text.toString()
         val addUser = RecolectoresEntity(
@@ -84,13 +56,13 @@ class alertAddRecolector(
             recolector,
             "active"
         )
-        customSnackbar.showCustomSnackbar(view,"Recolector ${recolector} guardado")
+        customSnackbar.showCustomSnackbar(view,"Recolector $recolector guardado")
         onClickListener(addUser)
     }
 
     private fun allUser() {
         if (insertCollector) {
-            finished()
+            finished(true)
             dismiss()
         } else {
             dismiss()

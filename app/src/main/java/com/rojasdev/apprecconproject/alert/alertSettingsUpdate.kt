@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconproject.R
@@ -53,6 +54,7 @@ class alertSettingsUpdate(
     }
 
     private fun initView() {
+        binding.yesAliment.inputType = InputType.TYPE_CLASS_NUMBER
         binding.yesAliment.setText(price.toString())
         binding.tvDescription.text = description
         if (feending == "yes"){
