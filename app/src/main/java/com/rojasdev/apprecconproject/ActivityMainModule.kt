@@ -1,19 +1,25 @@
 package com.rojasdev.apprecconproject
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
 import com.rojasdev.apprecconproject.alert.alertAddRecolector
+import com.rojasdev.apprecconproject.alert.alertAssistant
+import com.rojasdev.apprecconproject.alert.alertHelp
 import com.rojasdev.apprecconproject.alert.alertMessage
 import com.rojasdev.apprecconproject.alert.alertSettings
 import com.rojasdev.apprecconproject.alert.alertWelcome
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.price
+import com.rojasdev.apprecconproject.controller.sifrado
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconproject.data.entities.SettingEntity
@@ -24,12 +30,13 @@ import kotlinx.coroutines.launch
 
 class ActivityMainModule : AppCompatActivity() {
     lateinit var binding: ActivityMainModuleBinding
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainModuleBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        title = "Precios"
+        title = getString(R.string.priceTitle)
 
         this.onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
@@ -65,12 +72,53 @@ class ActivityMainModule : AppCompatActivity() {
     
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.support -> Toast.makeText(this, "Trabajando...", Toast.LENGTH_SHORT).show()
+            R.id.support -> help()
+            R.id.assistant -> assistant()
         }
         return super.onOptionsItemSelected(item)
     }
 
+    private fun assistant() {
+        alertAssistant{
+            val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
+            val editor = preferences.edit()
+            editor.putString("assistant",it)
+            editor.apply()
+        }.show(supportFragmentManager,"dialog")
+    }
+
+    private fun help() {
+        alertHelp{
+            try {
+                val phone = "573170157414"
+                val message = "¡Hola amigos de RECCON! "
+                val sendIntent = Intent()
+                sendIntent.action = Intent.ACTION_VIEW
+                val uri = "whatsapp://send?phone=${phone}&text=${message}"
+                sendIntent.data = Uri.parse(uri)
+                startActivity(sendIntent)
+            } catch (e: ActivityNotFoundException){
+                alertMessage(
+                    getString(R.string.install),
+                    getString(R.string.message),
+                    getString(R.string.playSore),
+                    getString(R.string.ready),
+                    getString(R.string.noWhatsApp)
+                ){
+                    if (it == "yes"){
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=whatsapp&c=apps&hl=es_419&gl=US"))
+                        startActivity(intent)
+                    }else{
+                        startActivity(Intent(this,ActivityMainModule::class.java))
+                    }
+                }.show(supportFragmentManager,"dialog")
+            }
+        }.show(supportFragmentManager,"dialog")
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun alerts(){
+        preferencesAssistant()
         alertWelcome{
             alertSettings{
                 insertSettings(it)
@@ -78,6 +126,7 @@ class ActivityMainModule : AppCompatActivity() {
         }.show(supportFragmentManager,"dialog")
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun insertSettings(settings: SettingEntity){
         preferences()
         CoroutineScope(Dispatchers.IO).launch{
@@ -93,9 +142,18 @@ class ActivityMainModule : AppCompatActivity() {
         val editor = preferences.edit()
         editor.putString("register","true")
         editor.putString("collection","false")
+        editor.putString("assistant","true")
         editor.apply()
     }
 
+    private fun preferencesAssistant (){
+        val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
+        val editor = preferences.edit()
+        editor.putString("assistant","true")
+        editor.apply()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun checkRegister(){
         val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
         val register = preferences.getString("register","")
@@ -133,11 +191,11 @@ class ActivityMainModule : AppCompatActivity() {
         val collection = preferences.getString("collection","")
         if(collection != "true"){
             alertMessage(
-                "¡Verifica la precisión de los precios a pagar!",
-                "${binding.tvNoAliment.text}\nSin alimentación",
-                "${binding.tvYesAliment.text}\nCon alimentación",
-                "Son\ncorrectos",
-                "Cambiar\nprecios"
+                "${binding.tvNoAliment.text}\n ${getString(R.string.notAliment)}",
+                "${binding.tvYesAliment.text}\n ${getString(R.string.yesAliment)}",
+                getString(R.string.btCorrec),
+                getString(R.string.noCorrec),
+                getString(R.string.checkAliment)
             ){
                 if(it == "yes"){
                     alertAddRecolcetor()

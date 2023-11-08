@@ -20,10 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -34,6 +30,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/deleteCollection"
+                    android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -44,8 +41,6 @@
                     style="@style/buttons"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_radius_btn"
-                    android:backgroundTint="@color/Thunderbird"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
                     android:text="@string/yes"
@@ -57,8 +52,6 @@
                     style="@style/buttons"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/border_radius_btn"
-                    android:backgroundTint="@color/Thunderbird"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="8dp"
                     android:text="@string/no"
@@ -83,13 +76,11 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </ScrollView>
-
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnClose"
-        style="@style/foadingButtons"
+        style="@style/floadingButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -98,7 +89,7 @@
         app:layout_constraintBottom_toTopOf="@+id/cvRecolector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_close" />
-
+        app:srcCompat="@drawable/ic_close"
+        android:contentDescription="@string/btnFinish" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

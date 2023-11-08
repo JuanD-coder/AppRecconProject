@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/nestedScrollView"
-    tools:context=".fragments.FragmentInforme">
+    style="@style/scroll"
+    tools:context=".fragments.FragmentReport">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,10 +17,24 @@
             android:id="@+id/viewHeaderBackground"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_view_informe"
+            style="@style/infoTitleInformed"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fbSpeech"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ic_speaker"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvShowPay"
+                android:contentDescription="@string/read" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
@@ -44,7 +59,6 @@
                         style="@style/tvItem"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="#DCDCDC"
                         android:gravity="center"
                         app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -56,11 +70,29 @@
                         android:id="@+id/constraintLayout3"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
-                        android:background="#D3D3D3"
+                        style="@style/bar"
                         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent">
+
+                        <View
+                            android:id="@+id/view11"
+                            android:layout_width="0dp"
+                            android:layout_height="2dp"
+                            android:background="@color/black"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/view12"
+                            android:layout_width="0dp"
+                            android:layout_height="2dp"
+                            android:background="@color/black"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvMonth"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvMonth"
@@ -107,6 +139,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:tint="@color/black"
+                            tools:ignore="TextSizeCheck,TextSizeCheck"
                             tools:text="septiembre" />
 
                         <View
@@ -133,10 +166,7 @@
                         android:id="@+id/constraintLayout2"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:background="#C0C0C0"
-                        app:layout_constraintBottom_toTopOf="@+id/rvDate"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent">
+                        app:layout_constraintBottom_toTopOf="@+id/rvDate">
 
                         <androidx.constraintlayout.widget.Guideline
                             android:id="@+id/guideline1"
@@ -180,6 +210,14 @@
                             android:orientation="vertical"
                             app:layout_constraintGuide_percent="0.852" />
 
+                        <View
+                            android:id="@+id/view13"
+                            android:layout_width="2dp"
+                            android:layout_height="0dp"
+                            android:background="@color/black"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline1"
+                            app:layout_constraintTop_toTopOf="parent" />
+
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/monday"
                             style="@style/tvItem"
@@ -187,11 +225,20 @@
                             android:layout_height="0dp"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:text="L"
+                            android:text="@string/monday"
                             app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/guideline1"
                             app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="HardcodedText" />
+
+                        <View
+                            android:id="@+id/view14"
+                            android:layout_width="2dp"
+                            android:layout_height="0dp"
+                            android:background="@color/black"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline2"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -201,11 +248,20 @@
                             android:layout_height="0dp"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:text="M"
+                            android:text="@string/tuesday"
                             app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/guideline2"
                             app:layout_constraintStart_toStartOf="@+id/guideline1"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="HardcodedText" />
+
+                        <View
+                            android:id="@+id/view15"
+                            android:layout_width="2dp"
+                            android:layout_height="0dp"
+                            android:background="@color/black"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline3"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -215,11 +271,20 @@
                             android:layout_height="0dp"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:text="M"
+                            android:text="@string/wednesday"
                             app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/guideline3"
                             app:layout_constraintStart_toStartOf="@+id/guideline2"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="HardcodedText" />
+
+                        <View
+                            android:id="@+id/view16"
+                            android:layout_width="2dp"
+                            android:layout_height="0dp"
+                            android:background="@color/black"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline4"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -229,11 +294,19 @@
                             android:layout_height="0dp"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:text="J"
+                            android:text="@string/thursday"
                             app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/guideline4"
                             app:layout_constraintStart_toStartOf="@+id/guideline3"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/view17"
+                            android:layout_width="2dp"
+                            android:layout_height="0dp"
+                            android:background="@color/black"
+                            app:layout_constraintEnd_toEndOf="@+id/friday"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -243,13 +316,20 @@
                             android:layout_height="0dp"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:text="V"
+                            android:text="@string/friday"
                             app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/guideline5"
                             app:layout_constraintStart_toStartOf="@+id/guideline4"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:ignore="HardcodedText" />
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/view18"
+                            android:layout_width="2dp"
+                            android:layout_height="0dp"
+                            android:background="@color/black"
+                            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/saturday"
@@ -258,7 +338,7 @@
                             android:layout_height="0dp"
                             android:gravity="center"
                             android:maxLines="1"
-                            android:text="S"
+                            android:text="@string/saturday"
                             app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/guideline6"
@@ -271,13 +351,22 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:gravity="center"
-                            android:text="D"
+                            android:text="@string/sunday"
                             android:textColor="@color/Cinnabar"
                             app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/guideline6"
                             app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/view19"
+                            android:layout_width="0dp"
+                            android:layout_height="2dp"
+                            android:background="@color/black"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -286,7 +375,6 @@
                         android:id="@+id/rvDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -303,13 +391,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="35sp"
                 android:textStyle="bold"
                 android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -331,6 +417,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView"
                 tools:text="Recoleccion: \n 298.2kg" />
+
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

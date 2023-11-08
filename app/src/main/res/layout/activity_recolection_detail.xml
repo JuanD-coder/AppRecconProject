@@ -14,7 +14,7 @@
             android:id="@+id/viewHeaderBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/border_radius"
+            style="@style/infoTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -22,17 +22,18 @@
 
             <TextView
                 android:id="@+id/tvTitle"
-                style="@style/texViewDescriptionInformed"
-                android:layout_width="0dp"
+                style="@style/tvItem"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
                 android:textSize="30sp"
                 android:textStyle="bold"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/tvRecolcection" />
+                tools:text="@string/tvRecolection" />
 
             <TextView
                 android:id="@+id/tvTotal"

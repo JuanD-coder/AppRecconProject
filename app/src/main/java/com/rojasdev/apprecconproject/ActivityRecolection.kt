@@ -1,19 +1,15 @@
 package com.rojasdev.apprecconproject
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import com.rojasdev.apprecconproject.alert.alertAddRecolector
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconproject.databinding.ActivityRecolectionBinding
-import com.rojasdev.apprecconproject.fragments.FragmentCollecion
+import com.rojasdev.apprecconproject.fragments.FragmentCollection
 import com.rojasdev.apprecconproject.fragments.FragmentCollectors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -87,7 +83,7 @@ class ActivityRecolection : AppCompatActivity() {
     }
 
     private fun initFragmentCollectors() {
-        title = "Recolectores"
+        title = getString(R.string.collectors)
         openFragment(FragmentCollectors(
             {
                 if (it == "down"){
@@ -102,9 +98,9 @@ class ActivityRecolection : AppCompatActivity() {
     }
 
     private fun initFragmentCollection() {
-         title = "Recoleccion"
+         title = getString(R.string.collection)
         openFragment(
-            FragmentCollecion(
+            FragmentCollection(
                 {
                     if (it == "down"){
                         hideNavBar()
@@ -121,7 +117,6 @@ class ActivityRecolection : AppCompatActivity() {
     }
 
     private fun initAlertAddRecolcetor() {
-
         alertAddRecolector(
             {
                 insertRecolector(it)

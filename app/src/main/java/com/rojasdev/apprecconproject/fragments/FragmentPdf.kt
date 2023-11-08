@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.rojasdev.apprecconproject.R
+import com.rojasdev.apprecconproject.alert.alertMessage
 import com.rojasdev.apprecconproject.alert.alert_create_pdf
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.databinding.FragmentPdfBinding
@@ -18,14 +20,13 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
+@Suppress("DEPRECATION", "PrivatePropertyName", "NAME_SHADOWING")
 class FragmentPdf : Fragment() {
     private var _binding: FragmentPdfBinding? = null
     private val binding get() = _binding!!
 
     private val CREATE_PDF_REQUEST_CODE = 2
-    private var clickWeek: Boolean = false
-    private var clickMonth: Boolean = false
-    private var clickYear: Boolean = false
+    private var reportType: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,29 +44,22 @@ class FragmentPdf : Fragment() {
         animatedAlert.animatedCv(binding.cv2)
 
         binding.btIWeek.setOnClickListener {
-            clickWeek = true
-            clickMonth = false
-            clickYear = false
-            createPdf(getString(R.string.week), date)
+            reportType = getString(R.string.week)
+            createPdf(reportType!!, date)
         }
 
         binding.btnInforme.setOnClickListener {
-            clickMonth = true
-            clickWeek = false
-            clickYear = false
-            createPdf(getString(R.string.month), date)
+            reportType = getString(R.string.month)
+            createPdf(reportType!!, date)
         }
 
         binding.btCreateYear.setOnClickListener{
-            clickYear = true
-            clickMonth = false
-            clickWeek = false
-            createPdf(getString(R.string.year), date)
+            reportType = getString(R.string.year)
+            createPdf(reportType!!, date)
         }
 
         return binding.root
     }
-
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -74,37 +68,11 @@ class FragmentPdf : Fragment() {
         if (requestCode == CREATE_PDF_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             data?.data?.also { uri ->
                 try {
-
-                    // Pdf Semanal
-                    if(clickWeek){
-                        alert_create_pdf(
-                            "week",
-                            uri
-                        ) {
+                    if(reportType != null){
+                        alert_create_pdf(reportType!!, uri) {
                             openPdfFromUri(uri)
                         }.show(parentFragmentManager,"dialog")
                     }
-
-                    // Pdf Mensual
-                    if (clickMonth){
-                        alert_create_pdf(
-                            "month",
-                            uri
-                        ) {
-                            openPdfFromUri(uri)
-                        }.show(parentFragmentManager,"dialog")
-                    }
-
-                    // Pdf Anual
-                    if (clickYear){
-                        alert_create_pdf(
-                            "year",
-                            uri
-                        ) {
-                            openPdfFromUri(uri)
-                        }.show(parentFragmentManager, "dialog")
-                    }
-
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -114,13 +82,12 @@ class FragmentPdf : Fragment() {
 
     @SuppressLint("SuspiciousIndentation")
     private fun createPdf(classPdf: String, date: String) {
-        val fileName = "informe_$classPdf($date).pdf"
+        val fileName = "${getString(R.string.report)}_$classPdf($date).pdf"
 
-        // Crear una instancia de la class PdfGenerator selecionar donde save
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.type = "application/pdf"
-        intent.putExtra(Intent.EXTRA_TITLE, fileName)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.type = "application/pdf"
+            intent.putExtra(Intent.EXTRA_TITLE, fileName)
 
         try {
             startActivityForResult(intent, CREATE_PDF_REQUEST_CODE)
@@ -130,19 +97,35 @@ class FragmentPdf : Fragment() {
     }
 
     // Open PDF
+    @SuppressLint("QueryPermissionsNeeded")
     private fun openPdfFromUri(uri: Uri) {
         val intent = Intent(Intent.ACTION_VIEW).apply {
             setDataAndType(uri, "application/pdf")
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
-        startActivity(intent)
+        try{
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException){
+            alertMessage(
+                getString(R.string.txtMessageOneInstall),
+                getString(R.string.txtMessageTwoInstall),
+                getString(R.string.btnOpenShop),
+                getString(R.string.btnFinish),
+                getString(R.string.txtErrorOpen)
+            ){
+                if(it == "yes"){
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=lector+pdf&c=apps"))
+                    startActivity(intent)
+                }
+            }.show(parentFragmentManager,"dialog")
+        } catch (e: SecurityException){
+            Toast.makeText(context, getString(R.string.txtNotPermissions), Toast.LENGTH_SHORT).show()
+        }
     }
 
-    // Liberar memoria
+    // clean memory
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

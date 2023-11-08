@@ -11,24 +11,20 @@ import com.rojasdev.apprecconproject.databinding.ItemRvAllRecolectionDateBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class viewHolderItemDate( var view: View ): RecyclerView.ViewHolder(view) {
+class viewHolderItemDate(var view: View): RecyclerView.ViewHolder(view) {
 
     private val binding = ItemRvAllRecolectionDateBinding.bind(view)
 
     @SuppressLint("SetTextI18n")
-    fun render (
-        itemDetail: allCollecionAndCollector
-    ) {
+    fun render ( itemDetail: allCollecionAndCollector ) {
 
         binding.cvCollectionDetail.animation = AnimationUtils.loadAnimation(view.context, R.anim.recycler_transition)
 
-         // Cambiar Formato de la fecha de la BD
         val getDate = itemDetail.Fecha
         val formatDateOriginal = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale("es", "CO"))
         val format = SimpleDateFormat("'Hora: ' HH:mm", Locale("es", "CO"))
         val date = formatDateOriginal.parse(getDate.toString()) // Fecha
         val timeFormat = format.format(date!!) // Hora
-
 
             binding.tvDate.text = timeFormat
             binding.tvNameCollector.text = itemDetail.name_recolector

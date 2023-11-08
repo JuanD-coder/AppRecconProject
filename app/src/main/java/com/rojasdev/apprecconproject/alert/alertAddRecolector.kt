@@ -7,14 +7,22 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.controller.animatedAlert
-import com.rojasdev.apprecconproject.controller.customSnackbar
+import com.rojasdev.apprecconproject.controller.customSnackBar
+import com.rojasdev.apprecconproject.controller.keyLIstener
 import com.rojasdev.apprecconproject.controller.requireInput
 import com.rojasdev.apprecconproject.controller.textListener
+import com.rojasdev.apprecconproject.controller.textToSpeech
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconproject.databinding.AlertRecolectonBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import nl.marc_apps.tts.TextToSpeechInstance
+import nl.marc_apps.tts.errors.TextToSpeechSynthesisInterruptedError
 
 class alertAddRecolector(
     val onClickListener: (RecolectoresEntity) -> Unit,
@@ -23,29 +31,33 @@ class alertAddRecolector(
 
     private lateinit var binding: AlertRecolectonBinding
     private var insertCollector = false
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertRecolectonBinding.inflate(LayoutInflater.from(context))
+        animatedAlert.animatedInit(binding.cvRecolector)
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
-        animatedAlert.animatedInit(binding.cvRecolector)
-
-        binding.btnClose.setOnClickListener{
-            finished(false)
-            dismiss()
-        }
+        buttons(null)
 
         textListener.lister(
             binding.yesAddRecolector,
-            {addCollector()},
-            {finish()}
+            { addCollector() },
+            { finish() }
         )
 
-        finish()
+        CoroutineScope(Dispatchers.IO).launch {
+            textToSpeech().start(
+                requireContext(),
+                getString(R.string.assistantAddCollector)
+            ){
+               buttons(it)
+            }
+        }
 
-        val dialog = builder.create()
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        return dialog
+    val dialog = builder.create()
+    dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    return dialog
     }
 
     private fun dates(view: View) {
@@ -56,7 +68,7 @@ class alertAddRecolector(
             recolector,
             "active"
         )
-        customSnackbar.showCustomSnackbar(view,"Recolector $recolector guardado")
+        customSnackBar.showCustomSnackBar(view,"Recolector $recolector guardado")
         onClickListener(addUser)
     }
 
@@ -75,6 +87,14 @@ class alertAddRecolector(
             binding.yesAddRecolector
         )
 
+        keyLIstener.start(binding.yesAddRecolector){
+            val required = requireInput.validate(myListInput,requireContext())
+            if (required){
+                dates(binding.yesAddRecolector)
+                binding.yesAddRecolector.setText("")
+            }
+        }
+
         binding.btAddRecolector.setOnClickListener {
             val required = requireInput.validate(myListInput,requireContext())
             if (required){
@@ -90,4 +110,22 @@ class alertAddRecolector(
         }
     }
 
+    private fun buttons (tts: TextToSpeechInstance?){
+        if (tts == null){
+            binding.btnClose.setOnClickListener{
+                finished(false)
+                dismiss()
+            }
+        } else {
+            binding.btnClose.setOnClickListener{
+                finished(false)
+                dismiss()
+                try {
+                    tts.close()
+                } catch (e: TextToSpeechSynthesisInterruptedError) {
+                    Toast.makeText(requireContext(), e.toString(), Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 }

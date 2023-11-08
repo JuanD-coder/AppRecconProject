@@ -13,6 +13,7 @@ import com.rojasdev.apprecconproject.ActivityMainModule
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.adapters.adapterItemDate
 import com.rojasdev.apprecconproject.controller.price
+import com.rojasdev.apprecconproject.controller.textToSpeech
 import com.rojasdev.apprecconproject.customCalendar.adapter
 import com.rojasdev.apprecconproject.customCalendar.dataModelDay
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
@@ -26,7 +27,7 @@ import java.util.Calendar
 import java.util.GregorianCalendar
 import java.util.Locale
 
-class FragmentInforme : Fragment() {
+class FragmentReport : Fragment() {
 
     private lateinit var adapter: adapterItemDate
     private lateinit var adapterDates: adapter
@@ -47,7 +48,7 @@ class FragmentInforme : Fragment() {
             })
 
         binding.tvShowPay.visibility = View.GONE
-
+        binding.fbSpeech.visibility = View.GONE
 
         monthSelected()
 
@@ -58,11 +59,11 @@ class FragmentInforme : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val list = AppDataBase.getInstance(requireContext()).RecollectionDao().getDateCollection()
             launch(Dispatchers.Main) {
-                val listaModificada = list.map { it.dropLast(9) }
-                val month = obtenerDiasDelMes(it.first,it.second)
+                val listModification = list.map { it.dropLast(9) }
+                val month = getDaysMonth(it.first,it.second)
 
-                adapterDates = adapter(month,listaModificada){
-                    showAllRecolecion(it)
+                adapterDates = adapter(month,listModification){
+                    showAllRecollection(it)
                 }
 
                 binding.rvDate.adapter = adapterDates
@@ -72,7 +73,7 @@ class FragmentInforme : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun showAllRecolecion(selectedDate: String) {
+    private fun showAllRecollection(selectedDate: String) {
         CoroutineScope(Dispatchers.IO).launch{
             val getAllID = AppDataBase.getInstance(requireContext()).RecolectoresDao().getAll()
             val getTotalKg = AppDataBase.getInstance(requireContext()).RecolectoresDao().getTotalKgDate("${selectedDate}%")
@@ -85,26 +86,30 @@ class FragmentInforme : Fragment() {
                     }
                 }
 
-                binding.tvShowDates.text = "Total Recolectado:\n${getTotalKg[0].Cantidad.toFloat()} Kg"
+                binding.tvShowDates.text = "${getString(R.string.tvRecolection)} \n ${getTotalKg[0].Cantidad.toFloat()} Kg"
                 binding.tvShowDates.visibility = View.VISIBLE
 
                 if (getTotalKg[0].Estado == "active"){
                     price.priceSplit(getTotalKg[0].result.toInt()){
-                        binding.tvShowPay.text = "Total a Pagar:\n${it}"
+                        binding.tvShowPay.text = "${getString(R.string.tvPriceTotal)} \n $it"
                         binding.tvShowPay.visibility = View.VISIBLE
                     }
                 } else {
                     price.priceSplit(getTotalKg[0].result.toInt()){
-                        binding.tvShowPay.text = "Total Pagado:\n${it}"
+                        binding.tvShowPay.text = "${getString(R.string.totalPrince)}: \n $it"
                         binding.tvShowPay.visibility = View.VISIBLE
                     }
                 }
 
                 if(showAll.isEmpty()) {
                     binding.recyclerView.visibility = View.GONE
-                    binding.userInfo.visibility = View.VISIBLE // Mostrar que no hay datos
+                    binding.userInfo.visibility = View.VISIBLE // Show not Data
                 }else{
-
+                    binding.fbSpeech.visibility = View.VISIBLE
+                    binding.fbSpeech.isClickable = true
+                    binding.fbSpeech.setOnClickListener {
+                        speechInformed(selectedDate,getTotalKg[0].Cantidad,getTotalKg[0].result.toInt())
+                    }
                     binding.nestedScrollView.smoothScrollTo(0, 900) // Auto Scroll si hay datos
 
                     adapter = adapterItemDate(showAll)
@@ -117,28 +122,45 @@ class FragmentInforme : Fragment() {
         }
     }
 
+    private fun speechInformed(selectedDate: String,kg: Double, price : Int) {
+
+        val formatDateOriginal = SimpleDateFormat("yyyy-MM-dd", Locale("es", "CO"))
+        val formatDate = SimpleDateFormat("EEEE, dd MMMM 'del' yyyy", Locale("es", "CO"))
+        val date = formatDateOriginal.parse(selectedDate)
+        val dateFormat = date?.let { formatDate.format(it) }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            textToSpeech().start(
+                requireContext(),
+                "${getString(R.string.collection)} del $dateFormat \n" +
+                        "${getString(R.string.recolection)} $kg Kilogramos\n" +
+                        "${getString(R.string.valorTotal)} $price COP"
+            ){}
+        }
+    }
+
     @SuppressLint("SuspiciousIndentation")
-    fun obtenerDiasDelMes(year: Int, month: Int): List<List<dataModelDay>> {
+    fun getDaysMonth(year: Int, month: Int): List<List<dataModelDay>> {
         val diasDelMes = mutableListOf<List<dataModelDay>>()
         val calendar = Calendar.getInstance()
             calendar.set(year, month - 1, 1)
         val ultimoDiaDelMes = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-        var semana = mutableListOf<dataModelDay>()
-        val formatoFecha = SimpleDateFormat("yyyy-MM-dd", Locale("es", "ES"))
-        val formatoDiaSemana = SimpleDateFormat("EEEE", Locale("es", "ES"))
+        var week = mutableListOf<dataModelDay>()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale("es", "ES"))
+        val formatDayWeek = SimpleDateFormat("EEEE", Locale("es", "ES"))
 
         for (dia in 1..ultimoDiaDelMes) {
             calendar.set(Calendar.DAY_OF_MONTH, dia)
             val fechaActual = calendar.time
-            val diaDeLaSemana = formatoDiaSemana.format(fechaActual)
+            val diaDeLaSemana = formatDayWeek.format(fechaActual)
 
-            val day = dataModelDay(formatoFecha.format(fechaActual),dia.toString(),diaDeLaSemana)
+            val day = dataModelDay(dateFormat.format(fechaActual),dia.toString(),diaDeLaSemana)
 
-            semana.add(day)
+            week.add(day)
 
             if (diaDeLaSemana == "domingo" || dia == ultimoDiaDelMes) {
-                diasDelMes.add(semana)
-                semana = mutableListOf()
+                diasDelMes.add(week)
+                week = mutableListOf()
             }
         }
 
@@ -156,21 +178,21 @@ class FragmentInforme : Fragment() {
 
         val year = calendar.get(Calendar.YEAR)
 
-        var previus = obtenerMesAnterior("$year-$monthNum")
-        var next = obtenerMesSiguiente("$year-$monthNum")
+        var previous = getPreviousMonth("$year-$monthNum")
+        var next = getNextMonth("$year-$monthNum")
 
         var monthCalendar = Triple(year,monthNum.toInt(),monthString)
 
-        binding.tvMonthPrevious.text = previus.first
+        binding.tvMonthPrevious.text = previous.first
         binding.tvMonthNext.text = next.first
         binding.tvMonth.text = monthCalendar.third
         binding.tvTitleCalendar.text = "${getString(R.string.calendarCollection)}\n${monthCalendar.first}"
 
         binding.tvMonthPrevious.setOnClickListener {
-            monthCalendar = Triple(previus.second,previus.third,previus.first)
-            previus = obtenerMesAnterior("${monthCalendar.first}-${monthCalendar.second}")
-            next = obtenerMesSiguiente("${monthCalendar.first}-${monthCalendar.second}")
-            binding.tvMonthPrevious.text = previus.first
+            monthCalendar = Triple(previous.second,previous.third,previous.first)
+            previous = getPreviousMonth("${monthCalendar.first}-${monthCalendar.second}")
+            next = getNextMonth("${monthCalendar.first}-${monthCalendar.second}")
+            binding.tvMonthPrevious.text = previous.first
             binding.tvMonthNext.text = next.first
             binding.tvMonth.text = monthCalendar.third
             binding.tvTitleCalendar.text = "${getString(R.string.calendarCollection)}\n${monthCalendar.first}"
@@ -179,9 +201,9 @@ class FragmentInforme : Fragment() {
 
         binding.tvMonthNext.setOnClickListener {
             monthCalendar = Triple(next.second,next.third,next.first)
-            next = obtenerMesSiguiente("${monthCalendar.first}-${monthCalendar.second}")
-            previus = obtenerMesAnterior("${monthCalendar.first}-${monthCalendar.second}")
-            binding.tvMonthPrevious.text = previus.first
+            next = getNextMonth("${monthCalendar.first}-${monthCalendar.second}")
+            previous = getPreviousMonth("${monthCalendar.first}-${monthCalendar.second}")
+            binding.tvMonthPrevious.text = previous.first
             binding.tvMonthNext.text = next.first
             binding.tvMonth.text = monthCalendar.third
             binding.tvTitleCalendar.text = "${getString(R.string.calendarCollection)}\n${monthCalendar.first}"
@@ -192,46 +214,33 @@ class FragmentInforme : Fragment() {
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun obtenerMesAnterior(fecha: String): Triple<String,Int,Int> {
-        val formatoFecha = SimpleDateFormat("yyyy-MM")
-        val fechaEspecifica = formatoFecha.parse(fecha)
-        val calendario: Calendar = GregorianCalendar()
-            calendario.time = fechaEspecifica!!
-            calendario.add(Calendar.MONTH, -1)
-        val formatoMes = SimpleDateFormat("MMMM", Locale("es", "ES"))
-        val mesCompleto = formatoMes.format(calendario.time)
-        val anio = calendario.get(Calendar.YEAR)
-        val monthInt = calendario.get(Calendar.MONTH)
-        return Triple(mesCompleto, anio, monthInt+1)
+    fun getPreviousMonth(fecha: String): Triple<String,Int,Int> {
+        val dateFormat = SimpleDateFormat("yyyy-MM")
+        val specificDate = dateFormat.parse(fecha)
+        val calendar: Calendar = GregorianCalendar()
+            calendar.time = specificDate!!
+            calendar.add(Calendar.MONTH, -1)
+        val monthFormat = SimpleDateFormat("MMMM", Locale("es", "ES"))
+        val fullMonth = monthFormat.format(calendar.time)
+        val year = calendar.get(Calendar.YEAR)
+        val monthInt = calendar.get(Calendar.MONTH)
+        return Triple(fullMonth, year, monthInt + 1)
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun obtenerMesSiguiente(fecha: String): Triple<String,Int,Int> {
-        val formatoFecha = SimpleDateFormat("yyyy-MM")
-        val fechaEspecifica = formatoFecha.parse(fecha)
-        val calendario: Calendar = GregorianCalendar()
-            calendario.time = fechaEspecifica!!
-            calendario.add(Calendar.MONTH, + 1)
-        val formatoMes = SimpleDateFormat("MMMM", Locale("es", "ES"))
-        val mesCompleto = formatoMes.format(calendario.time)
-        val anio = calendario.get(Calendar.YEAR)
-        val monthInt = calendario.get(Calendar.MONTH)
-        return Triple(mesCompleto, anio, monthInt+ 1)
+    fun getNextMonth(fecha: String): Triple<String,Int,Int> {
+        val dayFormat = SimpleDateFormat("yyyy-MM")
+        val specificDate = dayFormat.parse(fecha)
+        val calendar: Calendar = GregorianCalendar()
+            calendar.time = specificDate!!
+            calendar.add(Calendar.MONTH, + 1)
+        val monthFormat = SimpleDateFormat("MMMM", Locale("es", "ES"))
+        val fullMonth = monthFormat.format(calendar.time)
+        val year = calendar.get(Calendar.YEAR)
+        val monthInt = calendar.get(Calendar.MONTH)
+        return Triple(fullMonth, year, monthInt+ 1)
     }
 
-
-
-    // Obtengo el formato de fecha como la BD
-    /*private fun getDate(year: Int, month: Int, dayOfMonth: Int): String {
-        val calendar = Calendar.getInstance()
-
-        calendar.set(year, month, dayOfMonth)
-        val dateFormat = "yyyy-MM-dd"
-        val format = SimpleDateFormat(dateFormat, Locale("es", "ES"))
-        return format.format(calendar.time)
-    }*/
-
-     // Liberar la referencia de la vista y evitar posibles fugas de memoria.
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
