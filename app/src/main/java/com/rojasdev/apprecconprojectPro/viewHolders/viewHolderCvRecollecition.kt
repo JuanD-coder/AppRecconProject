@@ -19,7 +19,7 @@ class viewHolderCvRecollecition( var view: View ): RecyclerView.ViewHolder(view)
 
         binding.cvCollectionDetail.animation = AnimationUtils.loadAnimation(view.context, R.anim.recycler_transition)
 
-            binding.tvNameCollector.text = "Fecha: ${itemDetail.Fecha}"
+            binding.tvDate.text = "Fecha: ${itemDetail.Fecha}"
             binding.tvKgDetail.text = "${itemDetail.Cantidad} Kg"
 
         binding.btnUpdate.setOnClickListener {
@@ -27,7 +27,7 @@ class viewHolderCvRecollecition( var view: View ): RecyclerView.ViewHolder(view)
         }
 
         price.priceSplit(itemDetail.Precio.toInt()){
-            binding.tvDate.text = "Precio: ${it}"
+            binding.tvPrice.text = "Precio: ${it}"
         }
 
         if (itemDetail.Alimentacion == "yes") {

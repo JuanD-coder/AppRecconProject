@@ -10,8 +10,6 @@
         android:id="@+id/cvRecolector"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         app:cardCornerRadius="15dp"
         app:cardElevation="8dp"
         app:cardUseCompatPadding="true"
@@ -35,13 +33,52 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="cristian fabian rojas rojas" />
 
+            <Switch
+                android:id="@+id/switchDates"
+                style="@style/text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:text="@string/datesInternet"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+
+            <TextView
+                android:id="@+id/tvCollection"
+                style="@style/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/collect"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switchDates" />
+
+            <View
+                android:id="@+id/viewCollection"
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/Thunderbird"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCollection" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilKg"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
                 android:hint="@string/kgRecolectados"
                 app:boxCornerRadiusBottomEnd="10dp"
@@ -50,7 +87,7 @@
                 app:boxCornerRadiusTopStart="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDescription"
+                app:layout_constraintTop_toBottomOf="@+id/tvCollection"
                 app:startIconDrawable="@drawable/ic_kilogramo">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -67,22 +104,22 @@
                 style="@style/buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
                 android:text="@string/ready"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toTopOf="@+id/btReady"
+                android:layout_marginTop="4dp"
                 app:layout_constraintEnd_toEndOf="@+id/tvAliment"
                 app:layout_constraintStart_toStartOf="@+id/tvAliment"
-                app:layout_constraintTop_toBottomOf="@+id/tvAliment">
+                app:layout_constraintTop_toBottomOf="@+id/view5">
 
                 <CheckBox
                     android:id="@+id/cbNo"
@@ -90,6 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_margin="3dp"
+                    android:background="@color/white"
                     android:paddingEnd="8dp"
                     android:text="@string/no"
                     tools:ignore="RtlSymmetry" />
@@ -100,6 +138,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_margin="3dp"
+                    android:background="@color/white"
                     android:paddingEnd="8dp"
                     android:text="@string/yes"
                     tools:ignore="RtlSymmetry" />
@@ -111,7 +150,7 @@
                 style="@style/text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:text="@string/aliment"
@@ -120,26 +159,60 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView3" />
 
+            <View
+                android:id="@+id/view5"
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/Thunderbird"
+                app:layout_constraintBottom_toTopOf="@+id/cardView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAliment" />
+
+            <TextView
+                android:id="@+id/tvLote"
+                style="@style/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/lotes"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilKg" />
+
+            <View
+                android:id="@+id/viewLotes"
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/Thunderbird"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvLote" />
+
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="16dp"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="8dp"
-                app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilKg">
-
+                app:layout_constraintTop_toBottomOf="@+id/viewLotes">
 
                 <Spinner
                     android:id="@+id/sLotes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"/>
+                    tools:listitem="@layout/item_spiner" />
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

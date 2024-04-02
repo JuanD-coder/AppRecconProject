@@ -6,22 +6,27 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconprojectPro.R
 import com.rojasdev.apprecconprojectPro.databinding.AlertSettinsBinding
 import com.rojasdev.apprecconprojectPro.controller.animatedAlert
+import com.rojasdev.apprecconprojectPro.controller.dateFormat
 import com.rojasdev.apprecconprojectPro.controller.requireInput
 import com.rojasdev.apprecconprojectPro.data.entities.SettingEntity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 
 class alertSettings(
-    var onClickListener: (SettingEntity) -> Unit
+    var onClickListener: (List<SettingEntity>) -> Unit
 ): DialogFragment() {
     private lateinit var binding: AlertSettinsBinding
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertSettinsBinding.inflate(LayoutInflater.from(context))
-
         animatedAlert.animatedInit(binding.cvSettings)
-
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
@@ -53,16 +58,23 @@ class alertSettings(
             null,
             "yes",
             yesAliment.toInt(),
-            "active"
+            "active",
+            dateFormat.main()
         )
         val configAlimentNow = SettingEntity(
             null,
             "no",
             nowAliment.toInt(),
-            "active"
+            "active",
+            dateFormat.main()
         )
-        onClickListener(configAlimentNow)
-        onClickListener(configAlimentYes)
+
+        val newSettings = mutableListOf(
+            configAlimentYes,
+            configAlimentNow
+        )
+
+        onClickListener(newSettings)
     }
 }
 

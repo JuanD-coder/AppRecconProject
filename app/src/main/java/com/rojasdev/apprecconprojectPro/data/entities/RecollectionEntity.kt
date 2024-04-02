@@ -9,8 +9,7 @@ import androidx.room.PrimaryKey
             foreignKeys = [
                 ForeignKey(entity = RecolectoresEntity::class, parentColumns = ["PK_ID_Recolector"], childColumns = ["Fk_recolector"]),
                 ForeignKey(entity = SettingEntity::class, parentColumns = ["PK_ID_Configuracion"], childColumns = ["Fk_Configuracion"]),
-                ForeignKey(entity = LoteEntity::class, parentColumns = ["PK_ID_Lote"], childColumns = ["Fk_Lote"]),
-                ForeignKey(entity = FincaEntity::class, parentColumns = ["PK_ID_Finca"], childColumns = ["Fk_Finca"])
+                ForeignKey(entity = LoteEntity::class, parentColumns = ["PK_ID_Lote"], childColumns = ["Fk_Lote"])
             ]
     )
 data class RecollectionEntity(
@@ -21,5 +20,5 @@ data class RecollectionEntity(
     @ColumnInfo(name = "Fk_recolector") val collector:Int,
     @ColumnInfo(name = "Fk_Configuracion") val setting:Int,
     @ColumnInfo(name = "Fk_Lote") val lote:Int,
-    @ColumnInfo(name = "Fk_Finca") val finca:Int
+    @ColumnInfo(name = "estado_firebase") var firebase: Boolean
 )

@@ -3,13 +3,14 @@ package com.rojasdev.apprecconprojectPro
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.rojasdev.apprecconprojectPro.alert.alertAddRecolector
 import com.rojasdev.apprecconprojectPro.data.dataBase.AppDataBase
 import com.rojasdev.apprecconprojectPro.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconprojectPro.databinding.ActivityRecolectionBinding
-import com.rojasdev.apprecconprojectPro.fragments.FragmentCollecion
+import com.rojasdev.apprecconprojectPro.fragments.FragmentCollection
 import com.rojasdev.apprecconprojectPro.fragments.FragmentCollectors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,18 +21,10 @@ class ActivityRecolection : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityRecolectionBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
-          setContentView(binding.root)
+        setContentView(binding.root)
 
-        title = "Recolectores"
+        initFragmentCollectors()
         appearNavBar()
-
-        openFragment(FragmentCollectors{
-            if (it == "down"){
-                hideNavBar()
-            }else if (it == "up"){
-                appearNavBar()
-            }
-        })
 
         binding.floatingActionButton.setOnClickListener {
             initAlertAddRecolcetor()
@@ -47,18 +40,16 @@ class ActivityRecolection : AppCompatActivity() {
 
     private fun hideNavBar(){
         onClickFalse()
-        binding.bottomAppBarCollectors.alpha = 0f
-        binding.bottonNavigationViewCollectors.alpha = 0f
-        binding.floatingActionButton.alpha = 0f
-        binding.floatingActionButton.isClickable = false
+        binding.bottomAppBarCollectors.visibility = View.GONE
+        binding.bottonNavigationViewCollectors.visibility = View.GONE
+        binding.floatingActionButton.visibility = View.GONE
     }
 
     private fun appearNavBar(){
         onClickTrue()
-        binding.bottomAppBarCollectors.alpha = 1f
-        binding.bottonNavigationViewCollectors.alpha = 1f
-        binding.floatingActionButton.alpha = 1f
-        binding.floatingActionButton.isClickable = true
+        binding.bottomAppBarCollectors.visibility = View.VISIBLE
+        binding.bottonNavigationViewCollectors.visibility = View.VISIBLE
+        binding.floatingActionButton.visibility = View.VISIBLE
     }
 
     private fun onClickFalse(){
@@ -84,7 +75,7 @@ class ActivityRecolection : AppCompatActivity() {
                     true
                 }
                 R.id.collection ->{
-                 initFragmentCollection()
+                    initFragmentCollection()
                     true
                 }
                 else -> false
@@ -93,20 +84,24 @@ class ActivityRecolection : AppCompatActivity() {
     }
 
     private fun initFragmentCollectors() {
-        title = "Recolectores"
-        openFragment(FragmentCollectors{
-            if (it == "down"){
-                hideNavBar()
-            }else if (it == "up"){
-                appearNavBar()
+        title = getString(R.string.collectors)
+        openFragment(FragmentCollectors(
+            {
+                if (it == "down"){
+                    hideNavBar()
+                }else if (it == "up"){
+                    appearNavBar()
+                }
+            },{
+                preferencesCollecion()
             }
-        })
+        ))
     }
 
     private fun initFragmentCollection() {
-         title = "Recoleccion"
+        title = getString(R.string.collection)
         openFragment(
-            FragmentCollecion(
+            FragmentCollection(
                 {
                     if (it == "down"){
                         hideNavBar()
@@ -123,19 +118,12 @@ class ActivityRecolection : AppCompatActivity() {
     }
 
     private fun initAlertAddRecolcetor() {
-
         alertAddRecolector(
             {
                 insertRecolector(it)
             },
             {
-                openFragment(FragmentCollectors{
-                    if (it == "down"){
-                        hideNavBar()
-                    }else if (it == "up"){
-                        appearNavBar()
-                    }
-                })
+                initFragmentCollectors()
             }
         ).show(supportFragmentManager, "dialog")
     }
@@ -143,9 +131,6 @@ class ActivityRecolection : AppCompatActivity() {
     private fun insertRecolector(recolector: RecolectoresEntity) {
         CoroutineScope(Dispatchers.IO).launch {
             AppDataBase.getInstance(this@ActivityRecolection).RecolectoresDao().add(recolector)
-            launch(Dispatchers.Main) {
-                Toast.makeText(this@ActivityRecolection, "Se agrego un nuevo miembro ${recolector.name}", Toast.LENGTH_SHORT).show()
-            }
         }
     }
 

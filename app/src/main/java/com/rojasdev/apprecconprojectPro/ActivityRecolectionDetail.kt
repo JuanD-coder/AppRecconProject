@@ -1,15 +1,20 @@
 package com.rojasdev.apprecconprojectPro
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import android.view.Menu
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.rojasdev.apprecconprojectPro.data.dataModel.collecionTotalCollector
+import com.rojasdev.apprecconprojectPro.data.dataModel.collectorCollection
+import com.rojasdev.apprecconprojectPro.adapters.adapterRvRecolection
 import com.rojasdev.apprecconprojectPro.databinding.ActivityRecolectionDetailBinding
-import com.rojasdev.apprecconprojectPro.adapters.adpaterRvRecolection
 import com.rojasdev.apprecconprojectPro.alert.alertCollectionUpdate
+import com.rojasdev.apprecconprojectPro.alert.alertUpdateNameCollector
+import com.rojasdev.apprecconprojectPro.controller.customSnackBar
 import com.rojasdev.apprecconprojectPro.controller.price
 import com.rojasdev.apprecconprojectPro.data.dataBase.AppDataBase
-import com.rojasdev.apprecconprojectPro.data.dataModel.collectorCollection
 import com.rojasdev.apprecconprojectPro.data.entities.RecollectionEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,72 +23,48 @@ import kotlinx.coroutines.launch
 class ActivityRecolectionDetail : AppCompatActivity() {
 
     lateinit var binding: ActivityRecolectionDetailBinding
-        private lateinit var adapter: adpaterRvRecolection
-        private lateinit var collectionUpdate: List<collectorCollection>
+    private lateinit var adapter: adapterRvRecolection
+    private lateinit var collectionUpdate: List<collectorCollection>
+    private lateinit var collectionTotal: List<collecionTotalCollector>
+    private var idCollector: Int? = null
+    private var userName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityRecolectionDetailBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val idCollector = intent.getIntExtra("userId", 0)
-        val userName = intent.getStringExtra("userName")
+        // Recibir parametros
+        idCollector = intent.getIntExtra("userId", 0)
+        userName = intent.getStringExtra("userName")
 
         title = userName
 
-        getRecollection(idCollector)
-
-        binding.btnUpdate.setOnClickListener {
-           alertCollectionUpdate(
-               collectionUpdate[0].PK_ID_Recoleccion,
-               collectionUpdate[0].PK_ID_Recolector,
-               collectionUpdate[0].Alimentacion,
-               collectionUpdate[0].Cantidad,
-               userName!!
-           ){
-               updateRecoleccion(it,idCollector)
-           }.show(supportFragmentManager,"dialog")
-        }
+        getRecollection(idCollector!!)
 
     }
 
-    private fun updateRecoleccion(it: RecollectionEntity, idCollector: Int){
-        CoroutineScope(Dispatchers.IO).launch {
-            AppDataBase.getInstance(this@ActivityRecolectionDetail).RecollectionDao().updateCollection(it.ID!!,it.collector,it.total,it.setting)
-            launch(Dispatchers.Main){
-                getRecollection(idCollector)
-                Toast.makeText(this@ActivityRecolectionDetail, "Se actualizo la ultima Recoleccion", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun getRecollection(idCollector: Int, userState: String = "active") {
+    @SuppressLint("SetTextI18n")
+    private fun getRecollection(idCollector: Int) {
         CoroutineScope(Dispatchers.IO).launch{
-            val allRecolection= AppDataBase.getInstance(this@ActivityRecolectionDetail).RecolectoresDao().getCollectorAndCollection(userState,idCollector)
-                launch(Dispatchers.Main) {
-                    collectionUpdate = listOf(allRecolection[0])
-                    adapter = adpaterRvRecolection(allRecolection) {
-                        // Update Collection
-                        alertUpdateRecollection(it, idCollector)
-                    }
-                        binding.tvKg.text = allRecolection[0].Cantidad.toString() + "Kg"
-                        binding.rvRecolections.adapter = adapter
-                        binding.rvRecolections.layoutManager = LinearLayoutManager(this@ActivityRecolectionDetail)
+            val collection= AppDataBase.getInstance(this@ActivityRecolectionDetail).RecolectoresDao().getCollectorAndCollection("active",idCollector)
 
-                    if (allRecolection[0].Alimentacion == "yes") {
-                        binding.tvFeending.text = "Alimentación: Si"
-                    } else {
-                        binding.tvFeending.text = "Alimentación: No"
-                    }
-
-                    price.priceSplit(allRecolection[0].result.toInt()){
-                        binding.tvTotal.text = "Total ${it}"
-                    }
-
-                    price.priceSplit(allRecolection[0].Precio.toInt()){
-                        binding.tvPrice.text = "Precio: ${it}"
-                    }
+            val totalRecolection = AppDataBase.getInstance(this@ActivityRecolectionDetail).RecolectoresDao().getCollectorAndCollectionTotal(idCollector)
+            launch(Dispatchers.Main) {
+                collectionUpdate = listOf(collection[0])
+                collectionTotal = listOf(totalRecolection[0])
+                adapter = adapterRvRecolection(collection) {
+                    // Update Collection
+                    alertUpdateRecollection(it, idCollector)
                 }
+                price.priceSplit(totalRecolection[0].price_total.toInt()){
+                    binding.tvTotal.text = "${getString(R.string.totalPrinceCancel)}\n $it"
+                }
+
+                binding.tvTitle.text = "${getString(R.string.recolection)}\n ${totalRecolection[0].kg_collection.toFloat()} Kg"
+                binding.rvRecolections.adapter = adapter
+                binding.rvRecolections.layoutManager = LinearLayoutManager(this@ActivityRecolectionDetail)
+            }
         }
     }
 
@@ -101,12 +82,37 @@ class ActivityRecolectionDetail : AppCompatActivity() {
 
     private fun updateCollection(it:RecollectionEntity, idCollector: Int) {
         CoroutineScope(Dispatchers.IO).launch {
-            AppDataBase.getInstance(this@ActivityRecolectionDetail).RecollectionDao().updateCollection(it.ID!!,it.collector,it.total,it.setting)
+            AppDataBase.getInstance(this@ActivityRecolectionDetail).RecollectionDao().updateCollection(it.ID!!,it.date,it.collector,it.total,it.setting)
             launch(Dispatchers.Main){
                 getRecollection(idCollector)
-                Toast.makeText(this@ActivityRecolectionDetail, "Se actializo la Recoleccion", Toast.LENGTH_SHORT).show()
+                customSnackBar.showCustomSnackBar(binding.rvRecolections,getString(R.string.updateFinish))
             }
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.edit,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.editName -> showAlertEditName()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun showAlertEditName() {
+        alertUpdateNameCollector(
+            idCollector!!,
+            userName.toString()
+        ){
+            CoroutineScope(Dispatchers.IO).launch {
+                AppDataBase.getInstance(this@ActivityRecolectionDetail).RecolectoresDao().updateCollectorName(it.id!!,it.name)
+                launch(Dispatchers.Main) {
+                    customSnackBar.showCustomSnackBar(binding.rvRecolections,getString(R.string.editNameReady))
+                }
+            }
+        }.show(supportFragmentManager,"dialog")
+    }
 }

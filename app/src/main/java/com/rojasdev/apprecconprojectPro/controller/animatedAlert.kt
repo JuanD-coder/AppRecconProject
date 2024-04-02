@@ -62,4 +62,19 @@ object animatedAlert {
         }
         animator.start()
     }
+
+
+    fun animatedNoDates(cv: CardView){
+            cv.alpha = 1f
+            val animator = ValueAnimator.ofFloat(1f,0.9f,1f,1f,0.9f,1f,1f,0.9f,1f,1f,0.9f,1f,1f,0.9f,1f,1f,0.9f,1f,1f,0.9f,1f)
+            animator.duration = 6000
+            animator.interpolator = AccelerateDecelerateInterpolator()
+            animator.addUpdateListener { valueAnimator ->
+                val animatedValues = valueAnimator.animatedValue as Float
+                cv.alpha = animatedValues
+                cv.scaleX = animatedValues
+                cv.scaleY = animatedValues
+            }
+            animator.start()
+    }
 }

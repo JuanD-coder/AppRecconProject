@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -52,7 +53,7 @@ class   alertPhoneVerification(
         animatedAlert.animatedInit(binding.cvVerificationSMS)
         registerUser(phoneNumber)
 
-        binding.tvTitleVerification.text = "+57 $phoneNumber"
+        binding.tvTitleVerification.text = "$phoneNumber"
         binding.tvInfoSMS.text = "${getString(R.string.tvContentInfo)} $phoneNumber"
 
         val verificationCode = binding.editTextNumber.text
@@ -73,12 +74,19 @@ class   alertPhoneVerification(
         return dialog
     }
 
+    private fun preferences (credential: String){
+        val preferences = requireContext().getSharedPreferences( "credential", Context.MODE_PRIVATE)
+        val editor = preferences.edit()
+        editor.putString("credential",credential)
+        editor.apply()
+    }
     private fun registerUser(phoneNumber: String) {
 
         val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
                 Log.d(TAG, "onVerificationCompleted:$credential")
+                preferences(credential.toString())
                 signInWithPhoneAuthCredential(credential) // Inicio de sesion
             }
 
@@ -130,8 +138,6 @@ class   alertPhoneVerification(
 
                     val userData = hashMapOf(
                         "userName" to userName,
-                        "phoneNumber" to phoneNumber,
-                        "password" to password
                     )
 
                     fireStoreDB.collection("/User").document(userId)

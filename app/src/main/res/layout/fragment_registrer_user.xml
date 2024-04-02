@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.FragmentRegisterUser"
-    android:background="@color/Thunderbird">
+    android:background="@color/gray_light">
 
    <androidx.constraintlayout.widget.ConstraintLayout
        android:layout_width="match_parent"
@@ -13,7 +13,7 @@
 
        <androidx.cardview.widget.CardView
            android:id="@+id/cvWelcome"
-           android:layout_width="match_parent"
+           android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_marginStart="8dp"
            android:layout_marginEnd="8dp"
@@ -32,8 +32,8 @@
 
                <ImageView
                    android:id="@+id/imageView"
-                   android:layout_width="150dp"
-                   android:layout_height="150dp"
+                   android:layout_width="100dp"
+                   android:layout_height="100dp"
                    android:layout_marginTop="8dp"
                    android:contentDescription="@string/ImageLogo"
                    app:layout_constraintEnd_toEndOf="parent"
@@ -45,11 +45,13 @@
                    android:id="@+id/tvTitle"
                    style="@style/tvTitle"
                    android:layout_width="wrap_content"
-                   android:layout_height="match_parent"
-                   android:layout_marginTop="20dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="16dp"
                    android:text="@string/tvTitleRegisterUser"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
+                   android:paddingStart="16dp"
+                   android:paddingEnd="16dp"
+                   app:layout_constraintEnd_toEndOf="@+id/imageView"
+                   app:layout_constraintStart_toStartOf="@+id/imageView"
                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
                <com.google.android.material.textfield.TextInputLayout
@@ -58,14 +60,12 @@
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
                    android:layout_marginTop="10dp"
-                   android:layout_marginStart="16dp"
-                   android:layout_marginEnd="16dp"
                    app:boxCornerRadiusBottomEnd="10dp"
                    app:boxCornerRadiusBottomStart="10dp"
                    app:boxCornerRadiusTopEnd="10dp"
                    app:boxCornerRadiusTopStart="10dp"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+                   app:layout_constraintStart_toStartOf="@+id/tvTitle"
                    app:layout_constraintTop_toBottomOf="@+id/tvTitle"
                    app:startIconDrawable="@drawable/baseline_agriculture_24">
 
@@ -84,24 +84,22 @@
                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
-                   android:layout_marginStart="16dp"
-                   android:layout_marginTop="16dp"
-                   android:layout_marginEnd="16dp"
+                   android:layout_marginTop="8dp"
                    app:boxCornerRadiusBottomEnd="10dp"
                    app:boxCornerRadiusBottomStart="10dp"
                    app:boxCornerRadiusTopEnd="10dp"
                    app:boxCornerRadiusTopStart="10dp"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintEnd_toEndOf="@+id/tvUserName"
+                   app:layout_constraintStart_toStartOf="@+id/tvUserName"
                    app:layout_constraintTop_toBottomOf="@+id/tvUserName"
-                   app:startIconDrawable="@drawable/ic_phone_24">
+                   app:startIconDrawable="@drawable/ic_email">
 
                    <com.google.android.material.textfield.TextInputEditText
-                       android:id="@+id/hitPhone"
+                       android:id="@+id/hitCorreo"
                        android:layout_width="match_parent"
                        android:layout_height="61dp"
-                       android:hint="@string/cell"
-                       android:inputType="phone" />
+                       android:hint="@string/email"
+                       android:inputType="textEmailAddress" />
 
                </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,16 +108,15 @@
                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                    android:layout_width="0dp"
                    android:layout_height="wrap_content"
-                   android:layout_marginStart="16dp"
-                   android:layout_marginTop="16dp"
-                   android:layout_marginEnd="16dp"
+                   android:layout_marginTop="8dp"
                    app:boxCornerRadiusBottomEnd="10dp"
                    app:boxCornerRadiusBottomStart="10dp"
                    app:boxCornerRadiusTopEnd="10dp"
                    app:boxCornerRadiusTopStart="10dp"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintEnd_toEndOf="@+id/tvNumberPhone"
+                   app:layout_constraintStart_toStartOf="@+id/tvNumberPhone"
                    app:layout_constraintTop_toBottomOf="@+id/tvNumberPhone"
+                   app:passwordToggleEnabled="true"
                    app:startIconDrawable="@drawable/ic_password">
 
                    <com.google.android.material.textfield.TextInputEditText
@@ -136,17 +133,42 @@
                    style="@style/buttons"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:layout_marginTop="16dp"
+                   android:layout_marginTop="8dp"
                    android:layout_marginBottom="16dp"
                    android:text="@string/createAccount"
                    app:layout_constraintBottom_toBottomOf="parent"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintEnd_toEndOf="@+id/tvPassword"
+                   app:layout_constraintStart_toStartOf="@+id/tvPassword"
                    app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
 
            </androidx.constraintlayout.widget.ConstraintLayout>
 
        </androidx.cardview.widget.CardView>
+
+       <ProgressBar
+           android:id="@+id/progressBar"
+           style="?android:attr/progressBarStyle"
+           android:layout_width="100dp"
+           android:layout_height="100dp"
+           android:indeterminateTint="@color/Thunderbird"
+           android:visibility="gone"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent" />
+
+       <TextView
+           android:id="@+id/tvLoading"
+           style="@style/text"
+           android:layout_width="150dp"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="verificando los datos"
+           android:visibility="gone"
+           app:layout_constraintEnd_toEndOf="@+id/progressBar"
+           app:layout_constraintStart_toStartOf="@+id/progressBar"
+           app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
 
    </androidx.constraintlayout.widget.ConstraintLayout>
 

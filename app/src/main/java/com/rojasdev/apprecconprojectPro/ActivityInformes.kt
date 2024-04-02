@@ -7,28 +7,31 @@ import androidx.fragment.app.Fragment
 import com.rojasdev.apprecconprojectPro.databinding.ActivityInformesBinding
 import com.rojasdev.apprecconprojectPro.fragments.FragmentInforme
 import com.rojasdev.apprecconprojectPro.fragments.FragmentPdf
+import com.rojasdev.apprecconprojectPro.fragments.FragmentReport
 
 class ActivityInformes : AppCompatActivity() {
+
     lateinit var binding: ActivityInformesBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityInformesBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        title = getString(R.string.informedTitle)
+        openFragment(FragmentReport())
 
-        title = "Informe rapido"
-        openFragment(FragmentInforme())
-        Toast.makeText(this, "list", Toast.LENGTH_SHORT).show()
+
+        //configuracion de la barra de navigation
         binding.bottonNavigationView.setOnNavigationItemSelectedListener {
-            meniItem ->
+                meniItem ->
             when(meniItem.itemId){
                 R.id.list ->{
-                    title = "Informe rapido"
-                    openFragment(FragmentInforme())
+                    title = getString(R.string.informedTitle)
+                    openFragment(FragmentReport())
                     true
                 }
                 R.id.pdf ->{
-                    title = "Informes en PDF"
+                    title = getString(R.string.informedTitlePdf)
                     openFragment(FragmentPdf())
                     true
                 }
@@ -43,4 +46,5 @@ class ActivityInformes : AppCompatActivity() {
         transaction.addToBackStack(null)
         transaction.commit()
     }
+
 }

@@ -10,6 +10,17 @@
         <item name="colorSecondaryVariant">@color/Tom_Thumb</item>
     </style>
 
+    <!-- Base application theme. -->
+    <style name="Theme.AppRecconProject.MainModule" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/Thunderbird</item>
+        <item name="colorPrimaryVariant">@color/Dark_Tan</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+
+        <item name="colorSecondary">@color/Hippie_Green</item>
+        <item name="colorSecondaryVariant">@color/Tom_Thumb</item>
+    </style>
+
     <!--splash theme. -->
     <style name="Theme.AppRecconProject.splash" parent="Theme.MaterialComponents.NoActionBar.Bridge">
         <item name="colorPrimary">@color/white</item>

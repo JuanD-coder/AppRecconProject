@@ -33,7 +33,7 @@ abstract class AppDataBase : RoomDatabase() {
     abstract fun FincaDao(): FincaDao
 
     companion object{
-        private const val DATABASE_NAME = "DB_Reccon"
+        private const val DATABASE_NAME = "DB_RecconPro"
 
         private var Instance:AppDataBase? = null
 

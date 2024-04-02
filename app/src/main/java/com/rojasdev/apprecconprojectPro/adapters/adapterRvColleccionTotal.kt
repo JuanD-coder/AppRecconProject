@@ -3,8 +3,8 @@ package com.rojasdev.apprecconprojectPro.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.rojasdev.apprecconprojectPro.R
 import com.rojasdev.apprecconprojectPro.data.dataModel.collecionTotalCollector
+import com.rojasdev.apprecconprojectPro.R
 import com.rojasdev.apprecconprojectPro.viewHolders.viewHolderCvCollectionTotal
 
 class adapterRvColleccionTotal(

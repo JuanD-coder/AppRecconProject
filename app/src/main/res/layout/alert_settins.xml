@@ -47,7 +47,7 @@
                         android:id="@+id/nowAliment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/no_alimentacion"
+                        android:hint="@string/notFeeding"
                         android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,7 +72,7 @@
                         android:id="@+id/yesAliment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/si_alimentacion"
+                        android:hint="@string/yesFeeding"
                         android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 `

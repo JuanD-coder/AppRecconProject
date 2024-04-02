@@ -5,26 +5,29 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconprojectPro.R
 import com.rojasdev.apprecconprojectPro.databinding.AlertUpdateSettingBinding
 import com.rojasdev.apprecconprojectPro.controller.animatedAlert
+import com.rojasdev.apprecconprojectPro.controller.dateFormat
+import com.rojasdev.apprecconprojectPro.controller.keyLIstener
 import com.rojasdev.apprecconprojectPro.controller.requireInput
 import com.rojasdev.apprecconprojectPro.data.entities.SettingEntity
 
 class alertSettingsUpdate(
-    var description: String,
-    var feending: String,
-    var idSetting: Int,
-    var onClickListener: (SettingEntity) -> Unit
-): DialogFragment() {
+    private var description: String,
+    private var fending: String,
+    private var idSetting: Int,
+    var price: Int,
+    var onClickListener: (SettingEntity) -> Unit ): DialogFragment() {
+
     private lateinit var binding: AlertUpdateSettingBinding
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertUpdateSettingBinding.inflate(LayoutInflater.from(context))
-
         animatedAlert.animatedInit(binding.cvSettings)
-
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
@@ -33,6 +36,14 @@ class alertSettingsUpdate(
         )
 
         binding.btReady.setOnClickListener {
+            val require = requireInput.validate(myListInput,requireContext())
+            if (require){
+                dates()
+                dismiss()
+            }
+        }
+
+        keyLIstener.start(binding.yesAliment){
             val require = requireInput.validate(myListInput,requireContext())
             if (require){
                 dates()
@@ -52,13 +63,16 @@ class alertSettingsUpdate(
     }
 
     private fun initView() {
+        binding.yesAliment.inputType = InputType.TYPE_CLASS_NUMBER
+        binding.yesAliment.setText(price.toString())
         binding.tvDescription.text = description
-        if (feending == "yes"){
+
+        if (fending == "yes"){
             binding.tilSiAlimentacion.setStartIconDrawable(R.drawable.ic_alimentacion)
-            binding.yesAliment.setHint(R.string.si_alimentacion)
+            binding.yesAliment.setHint(R.string.yesFeeding)
         }else{
             binding.tilSiAlimentacion.setStartIconDrawable(R.drawable.ic_no_alimentacion)
-            binding.yesAliment.setHint(R.string.no_alimentacion)
+            binding.yesAliment.setHint(R.string.notFeeding)
         }
     }
 
@@ -67,9 +81,10 @@ class alertSettingsUpdate(
 
         val configAlimentYes = SettingEntity(
             idSetting,
-            feending,
+            fending,
             yesAliment.toInt(),
-            "active"
+            "active",
+            dateFormat.main()
         )
 
         onClickListener(configAlimentYes)
