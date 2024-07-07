@@ -7,22 +7,16 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconproject.R
+import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.customSnackBar
 import com.rojasdev.apprecconproject.controller.keyLIstener
 import com.rojasdev.apprecconproject.controller.requireInput
 import com.rojasdev.apprecconproject.controller.textListener
-import com.rojasdev.apprecconproject.controller.textToSpeech
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconproject.databinding.AlertRecolectonBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import nl.marc_apps.tts.TextToSpeechInstance
-import nl.marc_apps.tts.errors.TextToSpeechSynthesisInterruptedError
 
 class alertAddRecolector(
     val onClickListener: (RecolectoresEntity) -> Unit,
@@ -38,22 +32,15 @@ class alertAddRecolector(
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
-        buttons(null)
+        adsBanner.initLoadAds(binding.banner)
+
+        buttons()
 
         textListener.lister(
             binding.yesAddRecolector,
             { addCollector() },
             { finish() }
         )
-
-        CoroutineScope(Dispatchers.IO).launch {
-            textToSpeech().start(
-                requireContext(),
-                getString(R.string.assistantAddCollector)
-            ){
-               buttons(it)
-            }
-        }
 
     val dialog = builder.create()
     dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -110,22 +97,10 @@ class alertAddRecolector(
         }
     }
 
-    private fun buttons (tts: TextToSpeechInstance?){
-        if (tts == null){
+    private fun buttons (){
             binding.btnClose.setOnClickListener{
                 finished(false)
                 dismiss()
             }
-        } else {
-            binding.btnClose.setOnClickListener{
-                finished(false)
-                dismiss()
-                try {
-                    tts.close()
-                } catch (e: TextToSpeechSynthesisInterruptedError) {
-                    Toast.makeText(requireContext(), e.toString(), Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
     }
 }

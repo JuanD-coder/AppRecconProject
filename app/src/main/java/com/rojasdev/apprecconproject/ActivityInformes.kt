@@ -3,6 +3,7 @@ package com.rojasdev.apprecconproject
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.databinding.ActivityInformesBinding
 import com.rojasdev.apprecconproject.fragments.FragmentReport
 import com.rojasdev.apprecconproject.fragments.FragmentPdf
@@ -18,6 +19,8 @@ class ActivityInformes : AppCompatActivity() {
         title = getString(R.string.informedTitle)
         openFragment(FragmentReport())
 
+
+        adsBanner.initLoadAds(binding.banner)
         //configuracion de la barra de navigation
         binding.bottonNavigationView.setOnNavigationItemSelectedListener {
             meniItem ->

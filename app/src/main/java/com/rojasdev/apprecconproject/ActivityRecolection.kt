@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.rojasdev.apprecconproject.alert.alertAddRecolector
+import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconproject.databinding.ActivityRecolectionBinding
@@ -21,6 +22,8 @@ class ActivityRecolection : AppCompatActivity() {
         binding = ActivityRecolectionBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
           setContentView(binding.root)
+
+        adsBanner.initLoadAds(binding.banner)
 
         initFragmentCollectors()
         appearNavBar()

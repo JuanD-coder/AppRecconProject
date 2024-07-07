@@ -6,6 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rojasdev.apprecconproject.adapters.adapterRvSettings
 import com.rojasdev.apprecconproject.alert.alertSettingsUpdate
+import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.customSnackBar
 import com.rojasdev.apprecconproject.controller.dateFormat
@@ -29,6 +30,8 @@ class ActivitySettings : AppCompatActivity() {
         setContentView(binding.root)
 
         title = getString(R.string.previousPrice)
+
+        adsBanner.initLoadAds(binding.banner)
 
         getNoAliment()
         getYesAliment()

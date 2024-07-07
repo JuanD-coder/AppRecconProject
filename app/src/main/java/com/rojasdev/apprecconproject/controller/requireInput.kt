@@ -14,7 +14,6 @@ object requireInput {
         for (item in inputList){
             if (item.text!!.isEmpty()){
                 item.error = "¡Campo obligatorio!"
-                assistant("¡Campo obligatorio!",context)
                 item.requestFocus()
                 vibratePhone(context)
                 return false
@@ -31,10 +30,4 @@ object requireInput {
             vibrator.vibrate(200)
         }
     }
-
-   private fun assistant(message: String, context: Context){
-       CoroutineScope(Dispatchers.IO).launch {
-           textToSpeech().start(context,message){}
-       }
-   }
 }

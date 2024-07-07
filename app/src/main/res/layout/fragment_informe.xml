@@ -15,26 +15,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/viewHeaderBackground"
+            style="@style/infoTitleInformed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/infoTitleInformed"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fbSpeech"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:src="@drawable/ic_speaker"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvShowPay"
-                android:contentDescription="@string/read" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
@@ -68,9 +55,9 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayout3"
+                        style="@style/bar"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
-                        style="@style/bar"
                         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -391,13 +378,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="35sp"
                 android:textStyle="bold"
                 android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvShowDates"
                 tools:text="Recoleccion: \n $109,000" />
@@ -417,8 +405,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView"
                 tools:text="Recoleccion: \n 298.2kg" />
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

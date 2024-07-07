@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.rojasdev.apprecconproject.adapters.adapterRvRecolection
 import com.rojasdev.apprecconproject.alert.alertCollectionUpdate
 import com.rojasdev.apprecconproject.alert.alertUpdateNameCollector
+import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.customSnackBar
 import com.rojasdev.apprecconproject.controller.price
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
@@ -33,6 +34,8 @@ class ActivityRecolectionDetail : AppCompatActivity() {
         binding = ActivityRecolectionDetailBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        adsBanner.initLoadAds(binding.banner)
 
         // Recibir parametros
         idCollector = intent.getIntExtra("userId", 0)

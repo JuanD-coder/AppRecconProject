@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,7 +14,6 @@ import com.rojasdev.apprecconproject.ActivityMainModule
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.adapters.adapterItemDate
 import com.rojasdev.apprecconproject.controller.price
-import com.rojasdev.apprecconproject.controller.textToSpeech
 import com.rojasdev.apprecconproject.customCalendar.adapter
 import com.rojasdev.apprecconproject.customCalendar.dataModelDay
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
@@ -48,7 +48,6 @@ class FragmentReport : Fragment() {
             })
 
         binding.tvShowPay.visibility = View.GONE
-        binding.fbSpeech.visibility = View.GONE
 
         monthSelected()
 
@@ -61,7 +60,6 @@ class FragmentReport : Fragment() {
             launch(Dispatchers.Main) {
                 val listModification = list.map { it.dropLast(9) }
                 val month = getDaysMonth(it.first,it.second)
-
                 adapterDates = adapter(month,listModification){
                     showAllRecollection(it)
                 }
@@ -105,11 +103,6 @@ class FragmentReport : Fragment() {
                     binding.recyclerView.visibility = View.GONE
                     binding.userInfo.visibility = View.VISIBLE // Show not Data
                 }else{
-                    binding.fbSpeech.visibility = View.VISIBLE
-                    binding.fbSpeech.isClickable = true
-                    binding.fbSpeech.setOnClickListener {
-                        speechInformed(selectedDate,getTotalKg[0].Cantidad,getTotalKg[0].result.toInt())
-                    }
                     binding.nestedScrollView.smoothScrollTo(0, 900) // Auto Scroll si hay datos
 
                     adapter = adapterItemDate(showAll)
@@ -122,22 +115,6 @@ class FragmentReport : Fragment() {
         }
     }
 
-    private fun speechInformed(selectedDate: String,kg: Double, price : Int) {
-
-        val formatDateOriginal = SimpleDateFormat("yyyy-MM-dd", Locale("es", "CO"))
-        val formatDate = SimpleDateFormat("EEEE, dd MMMM 'del' yyyy", Locale("es", "CO"))
-        val date = formatDateOriginal.parse(selectedDate)
-        val dateFormat = date?.let { formatDate.format(it) }
-
-        CoroutineScope(Dispatchers.IO).launch {
-            textToSpeech().start(
-                requireContext(),
-                "${getString(R.string.collection)} del $dateFormat \n" +
-                        "${getString(R.string.recolection)} $kg Kilogramos\n" +
-                        "${getString(R.string.valorTotal)} $price COP"
-            ){}
-        }
-    }
 
     @SuppressLint("SuspiciousIndentation")
     fun getDaysMonth(year: Int, month: Int): List<List<dataModelDay>> {

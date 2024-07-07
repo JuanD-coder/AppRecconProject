@@ -35,4 +35,7 @@ interface SettingDao {
             "INNER JOIN Recoleccion re ON con.PK_ID_Configuracion = re.Fk_Configuracion " +
             "WHERE re.Estado == 'active'")
     suspend fun getTotalCollectionActive(): List<totalWeekPdf>
+
+    @Query("Delete FROM Configuracion")
+    suspend fun delete()
 }
