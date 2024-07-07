@@ -10,8 +10,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
+import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconproject.R
+import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.databinding.AlertCreatePdfBinding
 import com.rojasdev.apprecconproject.pdf.generateMonthPDF
@@ -47,6 +49,7 @@ class alert_create_pdf(
                 binding.textView.text = getString(R.string.yearLoadingPdf)
                 starTimer {
                     generateYearPDF(requireContext(), resources){
+                        dialog!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                         dismiss()
                         finished()
                     }.generateYearPdf(uri)
@@ -56,6 +59,7 @@ class alert_create_pdf(
                 binding.textView.text = getString(R.string.weekLoadingPdf)
                 starTimer {
                     generatePdfSemanal(requireContext(), resources){
+                        dialog!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                         dismiss()
                         finished()
                     }.generate(uri)
@@ -65,6 +69,7 @@ class alert_create_pdf(
                 binding.textView.text = getString(R.string.monthLoadingPdf)
                 starTimer {
                     generateMonthPDF(requireContext(), resources){
+                        dialog!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                         dismiss()
                         finished()
                     }.generatePfd(uri)
@@ -76,6 +81,7 @@ class alert_create_pdf(
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
         animatedAlert.onBackAlert(dialog,requireContext(),"")
+        dialog!!.window!!.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         return dialog
     }

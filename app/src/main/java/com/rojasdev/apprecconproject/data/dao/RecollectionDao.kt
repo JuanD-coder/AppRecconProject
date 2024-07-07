@@ -22,4 +22,7 @@ interface RecollectionDao {
 
     @Query("UPDATE recoleccion SET estado = 'archive' WHERE Fk_recolector = :id")
     suspend fun updateCollectionState(id:Int)
+
+    @Query("Delete FROM recoleccion")
+    suspend fun delete()
 }

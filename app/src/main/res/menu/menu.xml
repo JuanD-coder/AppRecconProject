@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/support"
         android:title="@string/support"
@@ -8,8 +7,14 @@
         android:visible="true"/>
 
     <item
-        android:id="@+id/assistant"
-        android:title="@string/assistant"
+        android:id="@+id/apoyo"
+        android:title="@string/apoyoProjec"
         android:icon="@drawable/ic_close"
+        android:visible="true"/>
+
+    <item
+        android:id="@+id/delete"
+        android:title="@string/DeleteTODO"
+        android:icon="@drawable/ic_delete"
         android:visible="true"/>
 </menu>

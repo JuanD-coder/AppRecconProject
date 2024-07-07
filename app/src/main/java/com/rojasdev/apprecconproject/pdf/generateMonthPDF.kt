@@ -219,7 +219,7 @@ class generateMonthPDF(
             val query = AppDataBase.getInstance(context).RecolectoresDao().getPdfInfo("${date}%", aliment)
             launch(Dispatchers.Main) {
                 if (query.isNotEmpty()){
-                    val columns = PdfPTable(4)
+                    val columns = PdfPTable(5)
                         columns.horizontalAlignment = Element.ALIGN_LEFT
                         columns.widthPercentage = 100f
                     val header = PdfPCell()
@@ -238,6 +238,9 @@ class generateMonthPDF(
                             header.phrase = Phrase(it)
                                 columns.addCell(header)
                         }
+
+                        header.phrase = Phrase(item.Fecha)
+                        columns.addCell(header)
 
                         if (item.Estado == "active"){
                             header.phrase = Phrase(context.getString(R.string.stateActive))
@@ -350,6 +353,7 @@ class generateMonthPDF(
             context.getString(R.string.name),
             context.getString(R.string.recolection),
             context.getString(R.string.totalPrince),
+            context.getString(R.string.date),
             context.getString(R.string.state)
         )
         txtFont.color = BaseColor.BLACK

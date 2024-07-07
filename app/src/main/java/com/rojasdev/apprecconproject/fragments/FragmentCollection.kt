@@ -103,6 +103,7 @@ class FragmentCollection(
 
             launch(Dispatchers.Main) {
                 customSnackBar.showCustomSnackBar(requireView(),getString(R.string.collectionCanceled))
+                getTotalCollection()
                 totalCollectionCollector()
                 preferencesUpdate()
             }

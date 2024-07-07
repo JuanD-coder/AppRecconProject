@@ -89,7 +89,7 @@ class generatePdfSemanal(
 
             // Pdf Title
             val titleFont: Font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 21F, BaseColor.WHITE)
-            val titlePdf = Paragraph("\n${context.getString(R.string.titlePdfWeek)}\n", titleFont)
+            val titlePdf = Paragraph("\n${context.getString(R.string.titlePdfYear)}\n", titleFont)
 
             val cellText = PdfPCell(titlePdf)
                 cellText.verticalAlignment = PdfPCell.ALIGN_CENTER
@@ -162,7 +162,7 @@ class generatePdfSemanal(
             launch(Dispatchers.Main) {
                 if (query.isNotEmpty()){
                     //pdf table permite crear una tabla donde numColumns es el numero de columnas que organizara automaticamente
-                    val table = PdfPTable(4)
+                    val table = PdfPTable(5)
                         table.horizontalAlignment = Element.ALIGN_LEFT
                         table.widthPercentage = 100f
                     val header = PdfPCell()
@@ -186,6 +186,9 @@ class generatePdfSemanal(
                             header.phrase = Phrase(it)
                                 table.addCell(header)
                         }
+
+                        header.phrase = Phrase(item.Fecha)
+                        table.addCell(header)
 
                         if (item.Estado == "active") {
                             header.phrase = Phrase(context.getString(R.string.stateActive))
@@ -412,6 +415,7 @@ class generatePdfSemanal(
             context.getString(R.string.name),
             context.getString(R.string.recolection),
             context.getString(R.string.totalPrince),
+            context.getString(R.string.date),
             context.getString(R.string.state)
         )
         txtFont.color = BaseColor.BLACK

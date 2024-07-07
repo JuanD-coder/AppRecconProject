@@ -4,7 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context=".ActivityRecolection">
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/banner"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-6507674390958957/7559762911"
+        app:layout_constraintEnd_toEndOf="@+id/cvRecolector"
+        app:layout_constraintStart_toStartOf="@+id/cvRecolector"
+        app:layout_constraintTop_toBottomOf="@+id/cvRecolector" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvRecolector"

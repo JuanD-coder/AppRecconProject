@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconproject.ActivityRecolectionDetail
 import com.rojasdev.apprecconproject.R
+import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.keyLIstener
 import com.rojasdev.apprecconproject.controller.requireInput
@@ -28,6 +29,8 @@ class alertUpdateNameCollector (
         animatedAlert.animatedInit(binding.cvSettings)
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
+
+        adsBanner.initLoadAds(binding.banner)
 
         val myListInput = listOf(
             binding.yesAliment

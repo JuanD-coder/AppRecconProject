@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
+import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.databinding.AlertDeleteBinding
 
@@ -21,6 +22,8 @@ class alertDeleteCollector(
         binding = AlertDeleteBinding.inflate(LayoutInflater.from(context))
         val builder = AlertDialog.Builder(requireActivity())
             builder.setView(binding.root)
+
+        adsBanner.initLoadAds(binding.banner)
 
         animatedAlert.animatedInit(binding.cvRecolector)
 

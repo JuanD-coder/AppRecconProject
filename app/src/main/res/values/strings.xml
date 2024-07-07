@@ -101,6 +101,7 @@
     <string name="totalPrince">Total Pagado</string>
     <string name="total">Total</string>
     <string name="state">Estado</string>
+    <string name="date">Fecha</string>
     <string name="princeTotal">Precio</string>
     <string name="valorTotal">Valor Pagado: </string>
     <string name="pdfFinish">Con cada semana de recolección, avanzamos hacia la excelencia en nuestra producción cafetera. ¡Sigamos cosechando éxitos juntos!</string>
@@ -180,5 +181,32 @@
     <string name="friday">V</string>
     <string name="saturday">S</string>
     <string name="sunday">D</string>
+
+    <!-- notification Pdf -->
+    <string name="weekT">Semana Tras Semana, Éxito Constante</string>
+    <string name="weekTS">Detalles precisos para cada etapa de la recolección</string>
+    <string name="weekM">Mantén la eficiencia en cada semana. Con Reccon, crea tu PDF Semanal para analizar datos específicos de recolección y tomar decisiones rápidas y efectivas.</string>
+
+    <string name="yearT">Refleja Tu Éxito Anual</string>
+    <string name="yearTS">Resumen completo para evaluar tu año cafetero</string>
+    <string name="yearM">¡Es hora de recopilar los frutos de un año de esfuerzo! Genera tu PDF Anual con Reccon para revisar tendencias, rendimientos y celebrar tus logros en la producción de café.</string>
+
+    <string name="montT">Mes a Mes, Café de Calidad</string>
+    <string name="montTS">Mes a Mes, Café de Calidad</string>
+    <string name="montM">Optimiza tu producción cafetera. Con Reccon, genera tu PDF Mensual para revisar los avances, costos y asegurarte de que cada mes sea un paso hacia adelante en la excelencia cafetera.</string>
+    <string name="apoyo">Únete a nuestra comunidad en Facebook para estar al tanto de las últimas actualizaciones. También puedes apoyar nuestro proyecto viendo un breve anuncio. ¡Gracias por formar parte de la familia Reccon"</string>
+    <string name="ads">Ver anuncio</string>
+    <string name="facebook">Ir a Facebook</string>
+    <string name="apoyoProjec">Apoyar el proyecto</string>
+    <string name="noFacebook">No tienes Facebook</string>
+    <string name="DeleteTODO">Eliminar todo</string>
+    <string name="txtStop">Detener</string>
+    <string name="noDeleteDates">¡Aún estás a tiempo de NO eliminar tus datos!</string>
+    <string name="errorDeleteDates">¡Aún hay recolectores sin pagar!</string>
+    <string name="deleteA">¿Estás seguro de eliminar los registros actuales?</string>
+    <string name="deleteB">Tu información se eliminará por completo.</string>
+    <string name="deleteBtn">Sí, elimina todo.</string>
+    <string name="cuidado">¡¡MUCHO CUIDADO!!</string>
+    <string name="reqirePermission">¿Sabías que al activar la ubicación en RECCON ayudas a que el proyecto se mantenga económicamente?                Para ofrecerte una mejor experiencia, RECCON te solicitará permiso para acceder a tu ubicación.             "Es muy sencillo:                               "Sigue las instrucciones que aparecerán en la pantalla.              Serás dirigido a la configuración de tu dispositivo.              Busca el icono de la app RECCON.               Selecciona la opción "Permitir siempre"                Recuerda: RECCON es una app totalmente gratuita y legal. Tu privacidad es importante para nosotros. Puedes controlar cómo se usa tu ubicación en cualquier momento. Al activar la ubicación, nos ayudas a mejorar la app y a mantener el proyecto RECCON ¡Gracias por tu apoyo! "Disfruta de todos los beneficios de RECCON.</string>
 
 </resources>

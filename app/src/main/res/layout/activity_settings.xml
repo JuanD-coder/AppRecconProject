@@ -5,14 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/layout"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context=".ActivitySettings">
 
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-6507674390958957/1427944387"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ScrollView
+        style="@style/scroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        style="@style/scroll"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/banner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btViewAlimentArchived">
@@ -186,6 +198,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvt"
+                style="@style/text"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
@@ -194,7 +207,6 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:text="@string/actualPrice"
-                style="@style/text"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

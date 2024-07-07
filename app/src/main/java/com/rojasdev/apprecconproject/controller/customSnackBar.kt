@@ -31,9 +31,6 @@ object customSnackBar {
         val mp = MediaPlayer.create(view.context, R.raw.notification_all_tasks_completed)
             mp.start()
 
-        CoroutineScope(Dispatchers.IO).launch {
-            textToSpeech().start(view.context, message){}
-        }
         snackBar.show()
     }
 }

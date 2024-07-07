@@ -9,6 +9,7 @@ import android.text.InputType
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconproject.R
+import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.dateFormat
 import com.rojasdev.apprecconproject.controller.keyLIstener
@@ -34,6 +35,8 @@ class alertSettingsUpdate(
         val myListInput = listOf(
             binding.yesAliment
         )
+
+        adsBanner.initLoadAds(binding.banner)
 
         binding.btReady.setOnClickListener {
             val require = requireInput.validate(myListInput,requireContext())

@@ -7,22 +7,15 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.adapters.adapterRvCancelCollection
+import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.price
-import com.rojasdev.apprecconproject.controller.textToSpeech
 import com.rojasdev.apprecconproject.data.dataModel.collecionTotalCollector
 import com.rojasdev.apprecconproject.data.dataModel.collectorCollection
 import com.rojasdev.apprecconproject.databinding.AlertCancelCollectionBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import nl.marc_apps.tts.TextToSpeechInstance
-import nl.marc_apps.tts.errors.TextToSpeechSynthesisInterruptedError
 
 class alertCancelCollection (
     private var collectionTotal: List<collecionTotalCollector>,
@@ -38,20 +31,9 @@ class alertCancelCollection (
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            textToSpeech().start(
-                requireContext(),
-                "${getString(R.string.assistantCancelCollection)} \n" +
-                        "${collectionTotal[0].name_recolector} \n" +
-                        "${collectionTotal[0].kg_collection}Kilogramos \n" +
-                        "${getString(R.string.assistantCancelCollectionTotal)} \n" +
-                        "${collectionTotal[0].price_total.toInt()} COP"
-            ){
-                buttons(it)
-            }
-        }
+        adsBanner.initLoadAds(binding.banner)
 
-        buttons(null)
+        buttons()
 
         binding.tvNameCollector.text = collectionTotal[0].name_recolector
 
@@ -73,8 +55,8 @@ class alertCancelCollection (
         binding.rv.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun buttons (tts: TextToSpeechInstance?){
-        if (tts == null){
+    private fun buttons (){
+
             binding.btnReady.setOnClickListener {
                 onClickListener(collectionTotal[0].PK_ID_Recolector)
                 dismiss()
@@ -87,37 +69,6 @@ class alertCancelCollection (
             binding.btnFinish.setOnClickListener {
                 dismiss()
             }
-        } else {
-            binding.btnReady.setOnClickListener {
-                onClickListener(collectionTotal[0].PK_ID_Recolector)
-                dismiss()
 
-                try {
-                    tts.close()
-                } catch (e: TextToSpeechSynthesisInterruptedError) {
-                    Toast.makeText(requireContext(), e.toString(), Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            binding.btnClose.setOnClickListener {
-                dismiss()
-
-                try {
-                    tts.close()
-                } catch (e: TextToSpeechSynthesisInterruptedError) {
-                    Toast.makeText(requireContext(), e.toString(), Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            binding.btnFinish.setOnClickListener {
-                dismiss()
-
-                try {
-                    tts.close()
-                } catch (e: TextToSpeechSynthesisInterruptedError) {
-                    Toast.makeText(requireContext(), e.toString(), Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
     }
 }
