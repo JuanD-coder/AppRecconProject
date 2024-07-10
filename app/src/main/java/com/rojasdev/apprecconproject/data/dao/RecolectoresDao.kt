@@ -32,6 +32,9 @@ interface RecolectoresDao {
     @Query("SELECT * FROM recolectores WHERE estado_recolector == 'active'")
     suspend fun getAllRecolector(): List<RecolectoresEntity>
 
+    @Query("SELECT * FROM recolectores WHERE estado_recolector == 'work-active'")
+    suspend fun getAllWorkMen(): List<RecolectoresEntity>
+
     @Query("SELECT PK_ID_Recolector FROM recolectores WHERE estado_recolector == 'active'")
     suspend fun getIDCollectors(): List<Long>
 

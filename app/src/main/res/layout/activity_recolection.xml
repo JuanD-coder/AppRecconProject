@@ -51,8 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/trasparent_background"
-                app:menu="@menu/nav_menu_collectors">
+                android:background="@drawable/trasparent_background">
 
             </com.google.android.material.bottomnavigation.BottomNavigationView>
 
@@ -60,13 +59,11 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton"
-            style="@style/floadingButtons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/collectors"
             android:src="@drawable/ic_add"
             android:tint="@color/white"
-            app:backgroundTint="@color/Dark_Tan"
             app:layout_anchor="@id/bottomAppBarCollectors" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

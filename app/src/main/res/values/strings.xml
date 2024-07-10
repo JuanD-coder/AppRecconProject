@@ -25,14 +25,14 @@
     <string name="deleteCollection">¿Estás seguro de que deseas eliminar este recolector?</string>
     <string name="finish_collection">¡Recolección finalizada!</string>
     <string name="tvRecolection">Total recolectado:</string>
-    <string name="hintUser">Nombre del Recolector</string>
+    <string name="hintUser">Nombre del Trabajador</string>
     <string name="tvPriceTotal">Total a Pagar:</string>
     <string name="priceCollection">Ganado</string>
     <string name="collected">pesa</string>
     <string name="tvKg">216 Kg</string>
 
     <!-- txt del alert -->
-    <string name="addUser">¡Comienza a gestionar tu equipo de recolectores de manera eficiente y sin complicaciones!</string>
+    <string name="addUser">¡Comienza a gestionar tu equipo de trabajo de manera eficiente y sin complicaciones!</string>
     <string name="readyAddRecolector">Recolector</string>
     <string name="save">Guardado</string>
 
@@ -111,7 +111,7 @@
     <string name="btnFinish">Cancelar</string>
     <string name="btnAdd">Insertar</string>
     <string name="btnOpenShop">Ir a la Play Store</string>
-    <string name="btnAddRecolector">Añadir Recolector</string>
+    <string name="btnAddRecolector">Añadir Trabajador</string>
     <string name="ready">Listo</string>
     <string name="Init">Empecemos</string>
     <string name="update">Actualizar</string>
@@ -135,6 +135,7 @@
 
     <string name="updateFinish">¡Recolección actualizada con éxito!</string>
     <string name="addCollectionFinish">\¡Nueva recolección agregada! </string>
+    <string name="addWorkFinish">\¡Nuevo apunte agregado! </string>
     <string name="help">Tienes una pregunta? ¡Estamos aquí para ayudarte! Escríbenos en WhatsApp de soporte</string>
     <string name="chat">¡Conversemos en WhatsApp!</string>
     <string name="informed">Calendario de recoleccion</string>
@@ -208,5 +209,17 @@
     <string name="deleteBtn">Sí, elimina todo.</string>
     <string name="cuidado">¡¡MUCHO CUIDADO!!</string>
     <string name="reqirePermission">¿Sabías que al activar la ubicación en RECCON ayudas a que el proyecto se mantenga económicamente?                Para ofrecerte una mejor experiencia, RECCON te solicitará permiso para acceder a tu ubicación.             "Es muy sencillo:                               "Sigue las instrucciones que aparecerán en la pantalla.              Serás dirigido a la configuración de tu dispositivo.              Busca el icono de la app RECCON.               Selecciona la opción "Permitir siempre"                Recuerda: RECCON es una app totalmente gratuita y legal. Tu privacidad es importante para nosotros. Puedes controlar cómo se usa tu ubicación en cualquier momento. Al activar la ubicación, nos ayudas a mejorar la app y a mantener el proyecto RECCON ¡Gracias por tu apoyo! "Disfruta de todos los beneficios de RECCON.</string>
+    <string name="configWork">puedes agregar 4 precios para tus actividades cafeteras. ejemplo: Guadanada $120.000</string>
+    <string name="nameWork">Nombre de la actividad</string>
+    <string name="priceWork">Precio del fornal</string>
+    <string name="descriptionWork">ahora tambien puedes registar tus tareas diarias para gestionar mejor tu empresa</string>
+    <string name="Work">Fornal</string>
+    <string name="btnAddWork">guaedar precio</string>
+    <string name="work">Fornales</string>
+    <string name="workMen">Fornaleros</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="workCancel">Pagar Fornales</string>
+    <string name="workDescription">Tarea realizada</string>
 
 </resources>

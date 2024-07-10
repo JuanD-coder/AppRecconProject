@@ -1,41 +1,49 @@
-package com.rojasdev.apprecconproject.fragments
+package com.rojasdev.apprecconproject.fragments.work
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rojasdev.apprecconproject.ActivityInformes
 import com.rojasdev.apprecconproject.ActivityMainModule
+import com.rojasdev.apprecconproject.ActivityRecolectionDetail
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.adapters.adapterRvCollectionTotal
-import com.rojasdev.apprecconproject.alert.alertCancelCollection
-import com.rojasdev.apprecconproject.alert.alertMessage
+import com.rojasdev.apprecconproject.adapters.adapterRvCollectors
+import com.rojasdev.apprecconproject.alert.collection.alertCancelCollection
+import com.rojasdev.apprecconproject.alert.collection.alertCollection
+import com.rojasdev.apprecconproject.alert.collection.alertDeleteCollector
+import com.rojasdev.apprecconproject.alert.messagin.alertMessage
 import com.rojasdev.apprecconproject.controller.customSnackBar
 import com.rojasdev.apprecconproject.controller.price
 import com.rojasdev.apprecconproject.controller.scrolling
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
 import com.rojasdev.apprecconproject.data.dataModel.collecionTotalCollector
+import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
+import com.rojasdev.apprecconproject.data.entities.RecollectionEntity
 import com.rojasdev.apprecconproject.databinding.FragmentCollectorsAndCollecionBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FragmentCollection(
+
+class FragmentWorkCancelet(
     var scroll:(String)-> Unit,
-    var preferences:()-> Unit) : Fragment()
-{
+    var preferences:()-> Unit
+) : Fragment() {
+
     private var _binding: FragmentCollectorsAndCollecionBinding? = null
     private lateinit var adapter: adapterRvCollectionTotal
     private val binding get() = _binding!!
 
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCollectorsAndCollecionBinding.inflate(inflater, container, false)
@@ -54,7 +62,6 @@ class FragmentCollection(
         }
 
         getTotalCollection()
-
         return binding.root
     }
 
@@ -75,9 +82,9 @@ class FragmentCollection(
     }
 
     private fun dates(total:List<collecionTotalCollector>) {
-    adapter = adapterRvCollectionTotal(total) {
-        initCancelCollection(it)
-    }
+        adapter = adapterRvCollectionTotal(total) {
+            initCancelCollection(it)
+        }
         binding.rvCollectors.adapter = adapter
         binding.rvCollectors.layoutManager = LinearLayoutManager(requireContext())
     }
@@ -124,7 +131,7 @@ class FragmentCollection(
                     ){
                         if(it == "yes"){
                             preferences()
-                            startActivity(Intent(requireContext(),ActivityInformes::class.java))
+                            startActivity(Intent(requireContext(), ActivityInformes::class.java))
                         }else{
                             preferences()
                             startActivity(Intent(requireContext(),ActivityMainModule::class.java))
@@ -156,5 +163,4 @@ class FragmentCollection(
         super.onDestroyView()
         _binding = null
     }
-
 }

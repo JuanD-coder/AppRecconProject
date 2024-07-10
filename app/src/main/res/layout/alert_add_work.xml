@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ActivityRecolection">
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-6507674390958957/6388499084"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/cvRecolector" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvRecolector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="8dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilWork"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="100dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="16dp"
+                ads:boxCornerRadiusBottomEnd="10dp"
+                ads:boxCornerRadiusBottomStart="10dp"
+                ads:boxCornerRadiusTopEnd="10dp"
+                ads:boxCornerRadiusTopStart="10dp"
+                ads:boxStrokeColor="@color/Orange"
+                ads:hintTextColor="@color/Orange"
+                ads:layout_constraintEnd_toEndOf="@+id/tilKg"
+                ads:layout_constraintStart_toStartOf="@+id/tilKg"
+                ads:layout_constraintTop_toBottomOf="@+id/tilKg">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etWorkDay"
+                    android:text="1"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvDescription"
+                style="@style/texViewAlertWork"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="cristian fabian rojas rojas" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilKg"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="16dp"
+                android:hint="@string/workDescription"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="@color/Orange"
+                app:hintTextColor="@color/Orange"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDescription"
+                app:startIconDrawable="@drawable/ic_construction_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etWork"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <Button
+                android:id="@+id/btReady"
+                style="@style/buttonsWork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/ready"
+                ads:layout_constraintTop_toBottomOf="@+id/cardView3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btMinius"
+                style="@style/buttonsWork"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:padding="0dp"
+                android:src="@drawable/ic_minius"
+                ads:layout_constraintBottom_toBottomOf="@+id/tilWork"
+                ads:layout_constraintEnd_toStartOf="@+id/tilWork"
+                ads:layout_constraintTop_toTopOf="@+id/tilWork"
+                ads:tint="@color/white" />
+
+            <ImageButton
+                android:id="@+id/btPlus"
+                style="@style/buttonsWork"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_add"
+                ads:layout_constraintBottom_toBottomOf="@+id/tilWork"
+                ads:layout_constraintStart_toEndOf="@+id/tilWork"
+                ads:layout_constraintTop_toTopOf="@+id/tilWork" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                ads:layout_constraintEnd_toEndOf="parent"
+                ads:layout_constraintHorizontal_bias="0.0"
+                ads:layout_constraintStart_toStartOf="parent"
+                ads:layout_constraintTop_toBottomOf="@+id/tvAliment">
+
+                <Spinner
+                    android:id="@+id/sPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    ads:layout_constraintTop_toBottomOf="@+id/tvAliment"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:listitem="@layout/item_spiner" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tvAliment"
+                style="@style/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/priceWork"
+                android:textSize="18sp"
+                ads:layout_constraintEnd_toEndOf="@+id/btPlus"
+                ads:layout_constraintStart_toStartOf="@+id/btMinius"
+                ads:layout_constraintTop_toBottomOf="@+id/tilWork" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnClose"
+        style="@style/buttonsWork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@+id/cvRecolector"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_close"
+        tools:ignore="ContentDescription" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

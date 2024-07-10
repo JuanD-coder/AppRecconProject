@@ -1,4 +1,4 @@
-package com.rojasdev.apprecconproject.alert
+package com.rojasdev.apprecconproject.alert.report
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
@@ -13,7 +13,6 @@ import android.view.LayoutInflater
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconproject.R
-import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.databinding.AlertCreatePdfBinding
 import com.rojasdev.apprecconproject.pdf.generateMonthPDF

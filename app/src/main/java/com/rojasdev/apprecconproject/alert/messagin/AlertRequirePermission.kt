@@ -1,4 +1,4 @@
-package com.rojasdev.apprecconproject.alert
+package com.rojasdev.apprecconproject.alert.messagin
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -9,18 +9,19 @@ import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.controller.animatedAlert
-import com.rojasdev.apprecconproject.databinding.AlertWelcomeBinding
+import com.rojasdev.apprecconproject.databinding.AlertRequirePermissionBinding
 
-class alertWelcome(
+class alertRequirePermission(
     var onClickListener: () -> Unit
 ): DialogFragment() {
 
-    private lateinit var binding: AlertWelcomeBinding
+    private lateinit var binding: AlertRequirePermissionBinding
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = AlertWelcomeBinding.inflate(LayoutInflater.from(context))
+        binding = AlertRequirePermissionBinding.inflate(LayoutInflater.from(context))
         animatedAlert.animatedInit(binding.cvWelcome)
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
+
 
         binding.btInit.setOnClickListener {
             dismiss()

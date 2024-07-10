@@ -3,9 +3,7 @@ package com.rojasdev.apprecconproject
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,13 +13,14 @@ import androidx.activity.OnBackPressedCallback
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
-import com.rojasdev.apprecconproject.alert.alertAddRecolector
-import com.rojasdev.apprecconproject.alert.alertApoyo
-import com.rojasdev.apprecconproject.alert.alertCountDown
-import com.rojasdev.apprecconproject.alert.alertHelp
-import com.rojasdev.apprecconproject.alert.alertMessage
-import com.rojasdev.apprecconproject.alert.alertSettings
-import com.rojasdev.apprecconproject.alert.alertWelcome
+import com.rojasdev.apprecconproject.alert.settings.alertAddPriceWork
+import com.rojasdev.apprecconproject.alert.collection.alertAddRecolector
+import com.rojasdev.apprecconproject.alert.messagin.alertApoyo
+import com.rojasdev.apprecconproject.alert.messagin.alertCountDown
+import com.rojasdev.apprecconproject.alert.messagin.alertHelp
+import com.rojasdev.apprecconproject.alert.messagin.alertMessage
+import com.rojasdev.apprecconproject.alert.settings.alertSettings
+import com.rojasdev.apprecconproject.alert.messagin.alertWelcome
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.customSnackBar
@@ -58,6 +57,12 @@ class ActivityMainModule : AppCompatActivity() {
         getRGPD()
 
         checkRegister()
+
+        binding.cvWork.setOnClickListener {
+            checkRegister()
+            animatedAlert.animatedClick(binding.cvWork)
+            checkWork()
+        }
 
         binding.cvInformes.setOnClickListener {
             checkRegister()
@@ -183,7 +188,6 @@ class ActivityMainModule : AppCompatActivity() {
     }
 
     private fun alerts(){
-        preferencesAssistant()
         alertWelcome{
             alertSettings{
                 insertSettings(it)
@@ -207,14 +211,13 @@ class ActivityMainModule : AppCompatActivity() {
         val editor = preferences.edit()
         editor.putString("register","true")
         editor.putString("collection","false")
-        editor.putString("assistant","true")
         editor.apply()
     }
 
-    private fun preferencesAssistant (){
+    private fun preferencesWork (){
         val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
         val editor = preferences.edit()
-        editor.putString("assistant","true")
+        editor.putString("work","true")
         editor.apply()
     }
 
@@ -277,6 +280,26 @@ class ActivityMainModule : AppCompatActivity() {
         }
     }
 
+    private fun checkWork(){
+        val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
+        val work = preferences.getString("work","")
+        if(work != "true"){
+            alertAddWork()
+        }else{
+            checkWorkMen()
+        }
+    }
+
+    private fun checkWorkMen(){
+        val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
+        val work = preferences.getString("workMen","")
+        if(work != "true"){
+            alertAddWorkMen()
+        }else{
+            startActivity(Intent(this,ActivityWork::class.java))
+        }
+    }
+
     private fun checkCollection(){
         val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
         val collection = preferences.getString("collection","")
@@ -301,12 +324,51 @@ class ActivityMainModule : AppCompatActivity() {
 
     private fun alertAddRecolcetor() {
         alertAddRecolector(
+            false,
             {
                 insertRecolector(it)
             },
             {
                 if(it){
                     startActivity(Intent(this,ActivityRecolection::class.java))
+                }else{
+                    startActivity(Intent(this,ActivityMainModule::class.java))
+                }
+            }
+        ).show(supportFragmentManager, "dialog")
+    }
+
+    private fun alertAddWorkMen() {
+        alertAddRecolector(
+            true,
+            {
+                val newMen = RecolectoresEntity(
+                    id = null,
+                    name = it.name,
+                    state = "work-active"
+                )
+                insertRecolector(newMen)
+                preferencesWorkMen()
+            },
+            {
+                if(it){
+                    startActivity(Intent(this,ActivityWork::class.java))
+                }else{
+                    startActivity(Intent(this,ActivityMainModule::class.java))
+                }
+            }
+        ).show(supportFragmentManager, "dialog")
+    }
+
+    private fun alertAddWork() {
+        alertAddPriceWork(
+            {
+                insertSettings(it)
+                preferencesWork()
+            },
+            {
+                if(it){
+                    checkWorkMen()
                 }else{
                     startActivity(Intent(this,ActivityMainModule::class.java))
                 }
@@ -325,6 +387,13 @@ class ActivityMainModule : AppCompatActivity() {
         val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
         val editor = preferences.edit()
         editor.putString("collection","true")
+        editor.apply()
+    }
+
+    private fun preferencesWorkMen() {
+        val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
+        val editor = preferences.edit()
+        editor.putString("workMen","true")
         editor.apply()
     }
 

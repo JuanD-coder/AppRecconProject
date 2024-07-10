@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.databinding.ActivityInformesBinding
-import com.rojasdev.apprecconproject.fragments.FragmentReport
-import com.rojasdev.apprecconproject.fragments.FragmentPdf
+import com.rojasdev.apprecconproject.fragments.report.FragmentReport
+import com.rojasdev.apprecconproject.fragments.report.FragmentPdf
 
 class ActivityInformes : AppCompatActivity() {
 

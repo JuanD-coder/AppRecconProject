@@ -1,4 +1,4 @@
-package com.rojasdev.apprecconproject.alert
+package com.rojasdev.apprecconproject.alert.settings
 
 import android.app.AlertDialog
 import android.app.Dialog

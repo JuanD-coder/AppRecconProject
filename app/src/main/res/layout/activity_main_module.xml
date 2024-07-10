@@ -122,7 +122,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -130,19 +130,11 @@
             app:layout_constraintTop_toTopOf="@+id/guideline3">
 
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.5" />
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvInformes"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:clickable="true"
                 android:focusable="true"
@@ -150,10 +142,9 @@
                 app:cardCornerRadius="10dp"
                 app:cardElevation="8dp"
                 app:cardUseCompatPadding="true"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/guideline18">
+                app:layout_constraintTop_toBottomOf="@+id/cvWork">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -193,20 +184,71 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cvCollection"
+                android:id="@+id/cvWork"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardBackgroundColor="@color/gray"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="8dp"
                 app:cardUseCompatPadding="true"
-                app:layout_constraintBottom_toTopOf="@+id/guideline18"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cvCollection">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textViewWork1"
+                        style="@style/texViewAlertWork"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/OrangeDark"
+                        android:text="@string/Work"
+                        android:textSize="30sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textViewWork3"
+                        style="@style/texViewDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/descriptionWork"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewWork1" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvCollection"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/gray"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="8dp"
+                app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">

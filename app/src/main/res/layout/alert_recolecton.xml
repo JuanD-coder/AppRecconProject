@@ -96,12 +96,12 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnClose"
-        style="@style/buttons"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        app:backgroundTint="@color/Dark_Tan"
+        ads:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintBottom_toTopOf="@+id/cvRecolector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/nestedScrollView"
     style="@style/scroll"
-    tools:context=".fragments.FragmentReport">
+    tools:context=".fragments.report.FragmentReport">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

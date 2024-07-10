@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rojasdev.apprecconproject.adapters.adapterRvSettings
-import com.rojasdev.apprecconproject.alert.alertSettingsUpdate
+import com.rojasdev.apprecconproject.alert.settings.alertSettingsUpdate
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.customSnackBar

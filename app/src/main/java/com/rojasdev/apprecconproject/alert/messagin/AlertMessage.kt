@@ -1,4 +1,4 @@
-package com.rojasdev.apprecconproject.alert
+package com.rojasdev.apprecconproject.alert.messagin
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog

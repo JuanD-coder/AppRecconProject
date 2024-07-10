@@ -1,4 +1,4 @@
-package com.rojasdev.apprecconproject.fragments
+package com.rojasdev.apprecconproject.fragments.collection
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,9 +12,9 @@ import com.rojasdev.apprecconproject.ActivityMainModule
 import com.rojasdev.apprecconproject.ActivityRecolectionDetail
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.adapters.adapterRvCollectors
-import com.rojasdev.apprecconproject.alert.alertCollection
-import com.rojasdev.apprecconproject.alert.alertDeleteCollector
-import com.rojasdev.apprecconproject.alert.alertMessage
+import com.rojasdev.apprecconproject.alert.collection.alertCollection
+import com.rojasdev.apprecconproject.alert.collection.alertDeleteCollector
+import com.rojasdev.apprecconproject.alert.messagin.alertMessage
 import com.rojasdev.apprecconproject.controller.customSnackBar
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity

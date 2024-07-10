@@ -1,4 +1,4 @@
-package com.rojasdev.apprecconproject.fragments
+package com.rojasdev.apprecconproject.fragments.report
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -12,8 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.rojasdev.apprecconproject.R
-import com.rojasdev.apprecconproject.alert.alertMessage
-import com.rojasdev.apprecconproject.alert.alert_create_pdf
+import com.rojasdev.apprecconproject.alert.messagin.alertMessage
+import com.rojasdev.apprecconproject.alert.report.alert_create_pdf
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.databinding.FragmentPdfBinding
 import java.text.SimpleDateFormat

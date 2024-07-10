@@ -17,6 +17,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppRecconProject">
 
+        <activity
+            android:name=".ActivityWork"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".ActivityMainModule"
+            android:theme="@style/Theme.AppRecconProject.work"
+            tools:ignore="LockedOrientationActivity"/>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.rojasdev.apprecconproject.fileprovider"

@@ -1,12 +1,15 @@
-package com.rojasdev.apprecconproject.alert
+package com.rojasdev.apprecconproject.alert.collection
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.controller.adsBanner
@@ -19,6 +22,7 @@ import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconproject.databinding.AlertRecolectonBinding
 
 class alertAddRecolector(
+    var style : Boolean,
     val onClickListener: (RecolectoresEntity) -> Unit,
     val finished: (Boolean) -> Unit
 ): DialogFragment() {
@@ -26,6 +30,7 @@ class alertAddRecolector(
     private lateinit var binding: AlertRecolectonBinding
     private var insertCollector = false
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertRecolectonBinding.inflate(LayoutInflater.from(context))
         animatedAlert.animatedInit(binding.cvRecolector)
@@ -42,9 +47,27 @@ class alertAddRecolector(
             { finish() }
         )
 
+    contextTheme()
+
     val dialog = builder.create()
     dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     return dialog
+    }
+
+    private fun contextTheme() {
+        if (style == true){
+            binding.btAddRecolector.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.Orange))
+            binding.tvDescription.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.Orange))
+
+            binding.btnClose.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.Orange))
+            binding.btnClose.invalidate()
+
+            binding.tilInputAdd.boxStrokeColor = ContextCompat.getColor(requireContext(), R.color.Orange)
+            binding.tilInputAdd.hintTextColor = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.Orange))
+        }else{
+            binding.btnClose.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.Thunderbird))
+            binding.btnClose.invalidate()
+        }
     }
 
     private fun dates(view: View) {
@@ -55,7 +78,7 @@ class alertAddRecolector(
             recolector,
             "active"
         )
-        customSnackBar.showCustomSnackBar(view,"Recolector $recolector guardado")
+        customSnackBar.showCustomSnackBar(view,"Trabajador $recolector guardado")
         onClickListener(addUser)
     }
 

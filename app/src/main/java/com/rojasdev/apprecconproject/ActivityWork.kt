@@ -2,9 +2,9 @@ package com.rojasdev.apprecconproject
 
 import android.content.Context
 import android.content.res.ColorStateList
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.rojasdev.apprecconproject.alert.collection.alertAddRecolector
@@ -15,40 +15,42 @@ import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconproject.databinding.ActivityRecolectionBinding
 import com.rojasdev.apprecconproject.fragments.collection.FragmentCollection
 import com.rojasdev.apprecconproject.fragments.collection.FragmentCollectors
+import com.rojasdev.apprecconproject.fragments.work.FragmentWork
+import com.rojasdev.apprecconproject.fragments.work.FragmentWorkCancelet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ActivityRecolection : AppCompatActivity() {
+class ActivityWork : AppCompatActivity() {
     private lateinit var binding: ActivityRecolectionBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityRecolectionBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
-          setContentView(binding.root)
-
-        adsBanner.initLoadAds(binding.banner)
+        setContentView(binding.root)
 
         initFragmentCollectors()
         appearNavBar()
+        adsBanner.initLoadAds(binding.banner)
 
-        binding.floatingActionButton.setOnClickListener {
-            initAlertAddRecolcetor()
-        }
-
-        binding.bottonNavigationViewCollectors.inflateMenu(R.menu.nav_menu_collectors)
+        binding.bottonNavigationViewCollectors.inflateMenu(R.menu.menu_work)
+        binding.floatingActionButton.invalidate()
 
         controllerTheme.main(
             this,
             day = {
-                binding.floatingActionButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.Thunderbird))
+                binding.floatingActionButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.Orange))
             },
             night = {
-                binding.floatingActionButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.Dark_Tan))
+                binding.floatingActionButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.OrangeDark))
             }
         )
 
-        binding.floatingActionButton.invalidate()
+        binding.floatingActionButton.setOnClickListener {
+            initAlertAddRecolcetor()
+        }
     }
+
+
     private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.ViewPagerCollectors, fragment)
@@ -93,7 +95,7 @@ class ActivityRecolection : AppCompatActivity() {
                     true
                 }
                 R.id.collection ->{
-                 initFragmentCollection()
+                    initFragmentCollection()
                     true
                 }
                 else -> false
@@ -101,9 +103,10 @@ class ActivityRecolection : AppCompatActivity() {
         }
     }
 
+
     private fun initFragmentCollectors() {
-        title = getString(R.string.collectors)
-        openFragment(FragmentCollectors(
+        title = getString(R.string.workMen)
+        openFragment(FragmentWork(
             {
                 if (it == "down"){
                     hideNavBar()
@@ -117,9 +120,9 @@ class ActivityRecolection : AppCompatActivity() {
     }
 
     private fun initFragmentCollection() {
-         title = getString(R.string.collection)
+        title = getString(R.string.work)
         openFragment(
-            FragmentCollection(
+            FragmentWorkCancelet(
                 {
                     if (it == "down"){
                         hideNavBar()
@@ -135,11 +138,17 @@ class ActivityRecolection : AppCompatActivity() {
 
     }
 
+
     private fun initAlertAddRecolcetor() {
         alertAddRecolector(
-            false,
+            true,
             {
-                insertRecolector(it)
+                val newMen = RecolectoresEntity(
+                    null,
+                    it.name,
+                    "work-active"
+                )
+                insertRecolector(newMen)
             },
             {
                 initFragmentCollectors()
@@ -149,7 +158,7 @@ class ActivityRecolection : AppCompatActivity() {
 
     private fun insertRecolector(recolector: RecolectoresEntity) {
         CoroutineScope(Dispatchers.IO).launch {
-            AppDataBase.getInstance(this@ActivityRecolection).RecolectoresDao().add(recolector)
+            AppDataBase.getInstance(this@ActivityWork).RecolectoresDao().add(recolector)
         }
     }
 
@@ -159,6 +168,5 @@ class ActivityRecolection : AppCompatActivity() {
         editor.putString("collection","false")
         editor.apply()
     }
-
 
 }

@@ -24,6 +24,9 @@ interface SettingDao {
     @Query("SELECT * FROM configuracion WHERE Estado == :state ")
     suspend fun getAlimentState(state : String): List<SettingEntity>
 
+    @Query("SELECT * FROM configuracion WHERE Estado == :state AND Alimentacion != 'yes' AND Alimentacion != 'no'")
+    suspend fun getPriceWorkState(state : String): List<SettingEntity>
+
     @Query("SELECT con.Precio, sum(re.Cantidad) as cantidad, sum(re.Cantidad * con.Precio) as total " +
             "FROM configuracion con  " +
             "INNER JOIN Recoleccion re ON con.PK_ID_Configuracion = re.Fk_Configuracion " +
