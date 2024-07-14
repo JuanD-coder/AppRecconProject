@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId "com.rojasdev.apprecconproject"
         minSdk 21
-        targetSdk 33
+        targetSdk 34
         versionCode 7
         versionName "1.3"
 
@@ -62,7 +62,7 @@ dependencies {
     implementation 'com.itextpdf:itextg:5.5.10'
 
     // ads
-    implementation 'com.google.android.gms:play-services-ads:22.5.0'
+    implementation 'com.google.android.gms:play-services-ads:23.2.0'
 
     // monedata
     implementation 'io.monedata:android-sdk:1.7.2'

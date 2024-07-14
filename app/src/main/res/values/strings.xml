@@ -211,15 +211,16 @@
     <string name="reqirePermission">¿Sabías que al activar la ubicación en RECCON ayudas a que el proyecto se mantenga económicamente?                Para ofrecerte una mejor experiencia, RECCON te solicitará permiso para acceder a tu ubicación.             "Es muy sencillo:                               "Sigue las instrucciones que aparecerán en la pantalla.              Serás dirigido a la configuración de tu dispositivo.              Busca el icono de la app RECCON.               Selecciona la opción "Permitir siempre"                Recuerda: RECCON es una app totalmente gratuita y legal. Tu privacidad es importante para nosotros. Puedes controlar cómo se usa tu ubicación en cualquier momento. Al activar la ubicación, nos ayudas a mejorar la app y a mantener el proyecto RECCON ¡Gracias por tu apoyo! "Disfruta de todos los beneficios de RECCON.</string>
     <string name="configWork">puedes agregar 4 precios para tus actividades cafeteras. ejemplo: Guadanada $120.000</string>
     <string name="nameWork">Nombre de la actividad</string>
-    <string name="priceWork">Precio del fornal</string>
+    <string name="priceWork">Precio del Jornal</string>
     <string name="descriptionWork">ahora tambien puedes registar tus tareas diarias para gestionar mejor tu empresa</string>
-    <string name="Work">Fornal</string>
+    <string name="Work">Jornal</string>
     <string name="btnAddWork">guaedar precio</string>
-    <string name="work">Fornales</string>
-    <string name="workMen">Fornaleros</string>
+    <string name="work">Jornales</string>
+    <string name="workMen">Jornaleros</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="workCancel">Pagar Fornales</string>
+    <string name="workCancel">Pagar Jornales</string>
     <string name="workDescription">Tarea realizada</string>
+    <string name="WorkNumerb">Jornales trabajados</string>
 
 </resources>

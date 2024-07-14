@@ -41,6 +41,7 @@ class viewHolderCvCollectors( var view: View): RecyclerView.ViewHolder(view) {
             )
             binding.fbAddKg.setImageResource(R.drawable.ic_edit)
 
+
             binding.tv.text = view.context.getString(R.string.Work)
         }
 

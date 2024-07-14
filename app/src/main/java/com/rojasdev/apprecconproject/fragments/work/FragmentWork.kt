@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.rojasdev.apprecconproject.ActivityDetalleWork
 import com.rojasdev.apprecconproject.ActivityMainModule
 import com.rojasdev.apprecconproject.ActivityRecolectionDetail
 import com.rojasdev.apprecconproject.R
@@ -102,7 +103,7 @@ class FragmentWork(
     private fun initDetailCollector(item: RecolectoresEntity) {
         startActivity(
             Intent(
-            requireContext(), ActivityRecolectionDetail::class.java
+            requireContext(), ActivityDetalleWork::class.java
         ).putExtra("userId", item.id).putExtra("userName", item.name))
     }
 

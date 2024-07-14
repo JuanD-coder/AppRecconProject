@@ -16,14 +16,21 @@
         android:roundIcon="@mipmap/ic_reccon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppRecconProject">
+        <activity
+            android:name=".ActivityDetalleWork"
+            android:exported="false"
+            android:parentActivityName=".ActivityWork"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppRecconProject.work"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name=".ActivityWork"
             android:exported="false"
-            android:screenOrientation="portrait"
             android:parentActivityName=".ActivityMainModule"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppRecconProject.work"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

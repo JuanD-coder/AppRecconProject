@@ -6,26 +6,27 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconproject.adapters.adapterSwiper
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.dateFormat
 import com.rojasdev.apprecconproject.controller.requireInput
-import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconproject.data.entities.SettingEntity
 import com.rojasdev.apprecconproject.data.entities.WorkEntity
 import com.rojasdev.apprecconproject.databinding.AlertAddWorkBinding
 
-class alerAddWork (
-    private var collector: RecolectoresEntity,
+class alertUpdateWork(
+    private var collector: String,
+    private var work: WorkEntity,
     var prices: List<SettingEntity>,
     var onClickListener: (WorkEntity) -> Unit
 ): DialogFragment()  {
 
     private lateinit var adapterSpiner : adapterSwiper
     private lateinit var binding: AlertAddWorkBinding
-    private var cantidad = 1
+    private var cantidad = work.amount
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertAddWorkBinding.inflate(LayoutInflater.from(context))
@@ -36,8 +37,9 @@ class alerAddWork (
 
         adsBanner.initLoadAds(binding.banner)
 
-        binding.tvDescription.text = collector.name
+        binding.tvDescription.text = collector
 
+        initViewUpdate()
 
         binding.etWorkDay.setText(cantidad.toString())
 
@@ -50,6 +52,8 @@ class alerAddWork (
             requireContext(),
             prices
         )
+
+        new()
 
         binding.sPrice.adapter = adapterSpiner
 
@@ -88,7 +92,7 @@ class alerAddWork (
             work,
             dateFormat.main(),
             "active",
-            collector.id!!,
+            this.work.collector,
             price.toInt()
         )
 
@@ -96,10 +100,10 @@ class alerAddWork (
     }
 
     private fun plus(){
-       if (cantidad > 0 ){
-           cantidad += 1
-           binding.etWorkDay.setText(cantidad.toString())
-       }
+        if (cantidad > 0 ){
+            cantidad += 1
+            binding.etWorkDay.setText(cantidad.toString())
+        }
     }
 
     private fun minius(){
@@ -108,4 +112,22 @@ class alerAddWork (
             binding.etWorkDay.setText(cantidad.toString())
         }
     }
+
+    private fun initViewUpdate(){
+        binding.etWork.setText(work.total)
+}
+
+    private fun new(){
+
+        val indiceSeleccionado = (0 until adapterSpiner.count).indexOfFirst {
+            val item = adapterSpiner.getItemId(it)
+            item == work.setting.toLong()
+        }
+
+        if (indiceSeleccionado != -1) {
+            adapterSpiner.setSelectedItemId(indiceSeleccionado)
+            Toast.makeText(requireContext(), indiceSeleccionado.toString(), Toast.LENGTH_SHORT).show()
+        }
+    }
+
 }

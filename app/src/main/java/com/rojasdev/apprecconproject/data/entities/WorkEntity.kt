@@ -12,12 +12,12 @@ import androidx.room.PrimaryKey
     ]
 )
 
-class WorkEntity (
+class WorkEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "PK_ID_Trabajo") val ID: Int?,
     @ColumnInfo(name = "cantidad") val amount: Int,
     @ColumnInfo(name = "actividad") val total: String,
     @ColumnInfo(name = "Fecha") val date: String,
     @ColumnInfo(name = "Estado") val state: String?,
-    @ColumnInfo(name = "Fk_recolector") val collector:Int,
+    @ColumnInfo(name = "Fk_recolector") val collector: Int,
     @ColumnInfo(name = "Fk_Configuracion") val setting:Int
 )
