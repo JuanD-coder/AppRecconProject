@@ -54,7 +54,7 @@
                 android:id="@+id/tilWork"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="100dp"
-                android:layout_height="55dp"
+                android:layout_height="80dp"
                 ads:boxCornerRadiusBottomEnd="10dp"
                 ads:boxCornerRadiusBottomStart="10dp"
                 ads:boxCornerRadiusTopEnd="10dp"
@@ -68,7 +68,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etWorkDay"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:gravity="center"
                     android:inputType="numberDecimal"
                     android:text="1" />

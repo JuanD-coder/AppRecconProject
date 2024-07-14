@@ -2,12 +2,10 @@ package com.rojasdev.apprecconproject.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import androidx.core.content.ContextCompat
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.controller.price
 import com.rojasdev.apprecconproject.data.entities.SettingEntity
@@ -32,14 +30,11 @@ class adapterSwiper(val context: Context, val list: List<SettingEntity>) : BaseA
 
     fun setSelectedItemId(itemId: Int) {
         selectedItemId = itemId
-
-        
-
         notifyDataSetChanged() // Notifica al Spinner sobre el cambio
     }
 
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
         val binding = ItemSpinerBinding.bind(
@@ -57,10 +52,19 @@ class adapterSwiper(val context: Context, val list: List<SettingEntity>) : BaseA
                 binding.tvName.text = it + description
             }
         } else {
+            val newList = list.toMutableList()
+            newList.remove(list[position])
+
             val description = " - " + list[selectedItemId!!].feeding
 
             price.priceSplit(list[selectedItemId!!].cost){
                 binding.tvName.text = it + description
+            }
+
+            val descriptionNew = " - " + list[position].feeding
+
+            price.priceSplit(list[position].cost){
+                binding.tvName.text = it + descriptionNew
             }
         }
 

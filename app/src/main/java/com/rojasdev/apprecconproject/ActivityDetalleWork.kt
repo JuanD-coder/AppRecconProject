@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +29,6 @@ class ActivityDetalleWork : AppCompatActivity() {
 
     lateinit var binding: ActivityRecolectionDetailBinding
     private lateinit var adapter: adapterRvWork
-    private lateinit var workTotal: List<collecionTotalCollector>
     private var idCollector: Int? = null
     private var userName: String? = null
     private var prices: List<SettingEntity>? = null
@@ -96,18 +96,30 @@ class ActivityDetalleWork : AppCompatActivity() {
             workUpdate,
             prices!!
         ){
-            //updateCollection(it, idCollector)
+            updateCollection(it, idCollector)
         }.show(supportFragmentManager,"dialog")
     }
 
-    private fun updateCollection(it: RecollectionEntity, idCollector: Int) {
+    private fun updateCollection(it: WorkEntity, idCollector: Int) {
+        Toast.makeText(this, it.total, Toast.LENGTH_SHORT).show()
+ /*
+
         CoroutineScope(Dispatchers.IO).launch {
-            AppDataBase.getInstance(this@ActivityDetalleWork).RecollectionDao().updateCollection(it.ID!!,it.date,it.collector,it.total,it.setting)
+            AppDataBase.getInstance(this@ActivityDetalleWork).WorkDao().updateWork(
+                it.ID!!,
+                it.date,
+                it.collector,
+                it.amount,
+                it.total,
+                it.setting
+            )
             launch(Dispatchers.Main){
                 getRecollection(idCollector)
                 customSnackBar.showCustomSnackBar(binding.rvRecolections,getString(R.string.updateFinish))
             }
         }
+
+  */
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

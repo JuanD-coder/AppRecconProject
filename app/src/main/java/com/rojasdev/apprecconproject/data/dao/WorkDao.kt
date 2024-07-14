@@ -30,4 +30,8 @@ interface WorkDao {
             " WHERE Fk_recolector == :men")
     suspend fun getTotalMoney(men : Int): Int
 
+    @Query("UPDATE WorkEntity SET Cantidad = :cantidad, Fecha = :date,  Fk_Configuracion = :feed, " +
+            "actividad = :activity WHERE PK_ID_Trabajo = :idWork AND Fk_recolector = :idCollector")
+    suspend fun updateWork(idWork:Int, date:String, idCollector:Int, cantidad:Int, activity:String, feed:Int)
+
 }
