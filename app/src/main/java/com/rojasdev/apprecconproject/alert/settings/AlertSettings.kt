@@ -39,7 +39,7 @@ class alertSettings(
 
     private fun buttons (){
         val myListInput = listOf(
-            binding.yesAliment,
+            binding.etNameCollector,
             binding.nowAliment
         )
 
@@ -54,7 +54,7 @@ class alertSettings(
     }
 
     private fun dates() {
-        val yesAliment = binding.yesAliment.text.toString()
+        val yesAliment = binding.etNameCollector.text.toString()
         val nowAliment = binding.nowAliment.text.toString()
 
         val configAlimentYes = SettingEntity(

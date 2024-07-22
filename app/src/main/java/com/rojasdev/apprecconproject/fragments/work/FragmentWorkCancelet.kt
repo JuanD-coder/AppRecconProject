@@ -2,11 +2,14 @@ package com.rojasdev.apprecconproject.fragments.work
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rojasdev.apprecconproject.ActivityInformes
@@ -15,15 +18,18 @@ import com.rojasdev.apprecconproject.ActivityRecolectionDetail
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.adapters.adapterRvCollectionTotal
 import com.rojasdev.apprecconproject.adapters.adapterRvCollectors
+import com.rojasdev.apprecconproject.adapters.adapterRvWorkTotal
 import com.rojasdev.apprecconproject.alert.collection.alertCancelCollection
 import com.rojasdev.apprecconproject.alert.collection.alertCollection
 import com.rojasdev.apprecconproject.alert.collection.alertDeleteCollector
 import com.rojasdev.apprecconproject.alert.messagin.alertMessage
+import com.rojasdev.apprecconproject.controller.controllerTheme
 import com.rojasdev.apprecconproject.controller.customSnackBar
 import com.rojasdev.apprecconproject.controller.price
 import com.rojasdev.apprecconproject.controller.scrolling
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
 import com.rojasdev.apprecconproject.data.dataModel.collecionTotalCollector
+import com.rojasdev.apprecconproject.data.dataModel.workTotalCollector
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconproject.data.entities.RecollectionEntity
 import com.rojasdev.apprecconproject.databinding.FragmentCollectorsAndCollecionBinding
@@ -38,7 +44,7 @@ class FragmentWorkCancelet(
 ) : Fragment() {
 
     private var _binding: FragmentCollectorsAndCollecionBinding? = null
-    private lateinit var adapter: adapterRvCollectionTotal
+    private lateinit var adapter: adapterRvWorkTotal
     private val binding get() = _binding!!
 
 
@@ -55,6 +61,8 @@ class FragmentWorkCancelet(
                 }
             })
 
+        contextTheme()
+
         totalCollectionCollector()
 
         scrolling.scrolling(binding.rvCollectors) {
@@ -67,11 +75,12 @@ class FragmentWorkCancelet(
 
     private fun totalCollectionCollector(){
         CoroutineScope(Dispatchers.IO).launch{
-            val idCollectors = AppDataBase.getInstance((requireContext())).RecolectoresDao().getIDCollectors()
+            val idCollectors = AppDataBase.getInstance((requireContext())).RecolectoresDao().getIDManWork()
             launch(Dispatchers.Main) {
-                val collector = mutableListOf<collecionTotalCollector>()
+                Toast.makeText(requireContext(), idCollectors[0].toString(), Toast.LENGTH_SHORT).show()
+                val collector = mutableListOf<workTotalCollector>()
                 for(item in idCollectors){
-                    val collectionTotal = AppDataBase.getInstance((requireContext())).RecolectoresDao().getCollectorAndCollectionTotal(item.toInt())
+                    val collectionTotal = AppDataBase.getInstance((requireContext())).RecolectoresDao().getManAndWorkTotal(item.toInt())
                     if(collectionTotal[0].name_recolector != null){
                         collector.add(collectionTotal[0])
                     }
@@ -81,9 +90,10 @@ class FragmentWorkCancelet(
         }
     }
 
-    private fun dates(total:List<collecionTotalCollector>) {
-        adapter = adapterRvCollectionTotal(total) {
-            initCancelCollection(it)
+    private fun dates(total:List<workTotalCollector>) {
+        //Toast.makeText(requireContext(), total[0].name_recolector.toString(), Toast.LENGTH_SHORT).show()
+        adapter = adapterRvWorkTotal(total,getColor()) {
+            //initCancelCollection(it)
         }
         binding.rvCollectors.adapter = adapter
         binding.rvCollectors.layoutManager = LinearLayoutManager(requireContext())
@@ -158,6 +168,22 @@ class FragmentWorkCancelet(
             }
         }
     }
+    private fun contextTheme() {
+        binding.lyTotal.backgroundTintList = ColorStateList.valueOf(getColor())
+    }
+
+    private fun getColor():Int{
+        var color: Int? = null
+        controllerTheme.main(requireContext(),
+            day = {
+                color = ContextCompat.getColor(requireContext(), R.color.Orange)
+            },
+            night = {
+                color = ContextCompat.getColor(requireContext(), R.color.OrangeDark)
+            })
+        return color!!
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

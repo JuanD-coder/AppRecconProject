@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.report.FragmentWorkReport">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.07" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.13" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideDays1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.14" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideDays2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.285" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideDays3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.427" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideDays4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.569" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideDays5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.711" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideDays6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.853" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideBottomCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.41" />
+
+        <Spinner
+            android:id="@+id/spinner2"
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="1dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideTop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/monday"
+            style="@style/text"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/guideDays"
+            app:layout_constraintEnd_toStartOf="@+id/guideDays1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideTop" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/tuesday"
+            style="@style/text"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/guideDays"
+            app:layout_constraintEnd_toStartOf="@+id/guideDays2"
+            app:layout_constraintStart_toStartOf="@+id/guideDays1"
+            app:layout_constraintTop_toTopOf="@+id/guideTop" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/tuesday"
+            style="@style/text"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/guideDays"
+            app:layout_constraintEnd_toStartOf="@+id/guideDays3"
+            app:layout_constraintStart_toStartOf="@+id/guideDays2"
+            app:layout_constraintTop_toTopOf="@+id/guideTop" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/thursday"
+            style="@style/text"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/guideDays"
+            app:layout_constraintEnd_toStartOf="@+id/guideDays4"
+            app:layout_constraintStart_toStartOf="@+id/guideDays3"
+            app:layout_constraintTop_toTopOf="@+id/guideTop" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/friday"
+            style="@style/text"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/guideDays"
+            app:layout_constraintEnd_toStartOf="@+id/guideDays5"
+            app:layout_constraintStart_toStartOf="@+id/guideDays4"
+            app:layout_constraintTop_toTopOf="@+id/guideTop" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@string/saturday"
+            style="@style/text"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/guideDays"
+            app:layout_constraintEnd_toStartOf="@+id/guideDays6"
+            app:layout_constraintStart_toStartOf="@+id/guideDays5"
+            app:layout_constraintTop_toTopOf="@+id/guideTop" />
+
+        <TextView
+            android:id="@+id/textView19"
+            style="@style/text"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@string/tuesday"
+            app:layout_constraintBottom_toTopOf="@+id/guideDays"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideDays6"
+            app:layout_constraintTop_toTopOf="@+id/guideTop" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

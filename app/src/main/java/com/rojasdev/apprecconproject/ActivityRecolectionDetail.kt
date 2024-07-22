@@ -108,7 +108,8 @@ class ActivityRecolectionDetail : AppCompatActivity() {
     private fun showAlertEditName() {
         alertUpdateNameCollector(
             idCollector!!,
-            userName.toString()
+            userName.toString(),
+            false
         ){
             CoroutineScope(Dispatchers.IO).launch {
                 AppDataBase.getInstance(this@ActivityRecolectionDetail).RecolectoresDao().updateCollectorName(it.id!!,it.name)

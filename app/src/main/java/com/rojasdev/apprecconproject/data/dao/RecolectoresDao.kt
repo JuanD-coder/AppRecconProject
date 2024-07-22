@@ -9,6 +9,7 @@ import com.rojasdev.apprecconproject.data.dataModel.collectorCollection
 import com.rojasdev.apprecconproject.data.dataModel.monthPdf
 import com.rojasdev.apprecconproject.data.dataModel.totalMonthPdf
 import com.rojasdev.apprecconproject.data.dataModel.weekPdf
+import com.rojasdev.apprecconproject.data.dataModel.workTotalCollector
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 
 @Dao
@@ -38,6 +39,10 @@ interface RecolectoresDao {
     @Query("SELECT PK_ID_Recolector FROM recolectores WHERE estado_recolector == 'active'")
     suspend fun getIDCollectors(): List<Long>
 
+    @Query("SELECT PK_ID_Recolector FROM recolectores WHERE estado_recolector == 'work-active" +
+            "'")
+    suspend fun getIDManWork(): List<Long>
+
     @Query("SELECT PK_ID_Recolector FROM recolectores")
     suspend fun getAll(): List<Long>
 
@@ -48,6 +53,15 @@ interface RecolectoresDao {
             "INNER JOIN configuracion c ON re.Fk_Configuracion = c.PK_ID_Configuracion " +
             "WHERE re.Fk_recolector == :collector AND re.Estado == 'active'")
     suspend fun getCollectorAndCollectionTotal(collector: Int): List<collecionTotalCollector>
+
+
+    @Query("SELECT r.PK_ID_Recolector ,r.name_recolector, sum(wor.Cantidad) " +
+            "AS days_work, sum(wor.Cantidad * c.Precio) AS total " +
+            "FROM recolectores r " +
+            "INNER JOIN workentity wor ON r.PK_ID_Recolector = wor.Fk_recolector " +
+            "INNER JOIN configuracion c ON wor.Fk_Configuracion = c.PK_ID_Configuracion " +
+            "WHERE wor.Fk_recolector == :collector AND wor.Estado == 'active'")
+    suspend fun getManAndWorkTotal(collector: Int): List<workTotalCollector>
 
     @Query("SELECT r.PK_ID_Recolector, r.name_recolector, re.PK_ID_Recoleccion, re.Cantidad, " +
             "con.Precio * re.Cantidad AS result, con.Precio, "  +

@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
+import com.rojasdev.apprecconproject.controller.controllerTheme
 import com.rojasdev.apprecconproject.controller.customSnackBar
 import com.rojasdev.apprecconproject.controller.keyLIstener
 import com.rojasdev.apprecconproject.controller.requireInput
@@ -55,17 +56,25 @@ class alertAddRecolector(
     }
 
     private fun contextTheme() {
-        if (style == true){
-            binding.btAddRecolector.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.Orange))
-            binding.tvDescription.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.Orange))
+        var color: Int? = null
+        controllerTheme.main(requireContext(),
+            day = {
+                color = ContextCompat.getColor(requireContext(), R.color.Orange)
+            },
+            night = {
+                color = ContextCompat.getColor(requireContext(), R.color.OrangeDark)
+            })
 
-            binding.btnClose.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.Orange))
+        if (style == true){
+            binding.btAddRecolector.backgroundTintList = ColorStateList.valueOf(color!!)
+            binding.tvDescription.backgroundTintList = ColorStateList.valueOf(color!!)
+            binding.btnClose.backgroundTintList = ColorStateList.valueOf(color!!)
             binding.btnClose.invalidate()
 
-            binding.tilInputAdd.boxStrokeColor = ContextCompat.getColor(requireContext(), R.color.Orange)
-            binding.tilInputAdd.hintTextColor = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.Orange))
+            binding.tilInputAdd.boxStrokeColor = color!!
+            binding.tilInputAdd.hintTextColor = ColorStateList.valueOf(color!!)
         }else{
-            binding.btnClose.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.Thunderbird))
+            binding.btnClose.backgroundTintList = ColorStateList.valueOf(color!!)
             binding.btnClose.invalidate()
         }
     }

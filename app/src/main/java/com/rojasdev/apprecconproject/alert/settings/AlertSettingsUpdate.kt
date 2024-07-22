@@ -33,7 +33,7 @@ class alertSettingsUpdate(
         builder.setView(binding.root)
 
         val myListInput = listOf(
-            binding.yesAliment
+            binding.etNameCollector,
         )
 
         adsBanner.initLoadAds(binding.banner)
@@ -46,7 +46,7 @@ class alertSettingsUpdate(
             }
         }
 
-        keyLIstener.start(binding.yesAliment){
+        keyLIstener.start(binding.etNameCollector){
             val require = requireInput.validate(myListInput,requireContext())
             if (require){
                 dates()
@@ -66,21 +66,21 @@ class alertSettingsUpdate(
     }
 
     private fun initView() {
-        binding.yesAliment.inputType = InputType.TYPE_CLASS_NUMBER
-        binding.yesAliment.setText(price.toString())
+        binding.etNameCollector.inputType = InputType.TYPE_CLASS_NUMBER
+        binding.etNameCollector.setText(price.toString())
         binding.tvDescription.text = description
 
         if (fending == "yes"){
-            binding.tilSiAlimentacion.setStartIconDrawable(R.drawable.ic_alimentacion)
-            binding.yesAliment.setHint(R.string.yesFeeding)
+            binding.etNameCollector.setHint(R.string.yesFeeding)
+            binding.tilNameCollector.setStartIconDrawable(R.drawable.ic_alimentacion)
         }else{
-            binding.tilSiAlimentacion.setStartIconDrawable(R.drawable.ic_no_alimentacion)
-            binding.yesAliment.setHint(R.string.notFeeding)
+            binding.tilNameCollector.setStartIconDrawable(R.drawable.ic_no_alimentacion)
+            binding.etNameCollector.setHint(R.string.notFeeding)
         }
     }
 
     private fun dates() {
-        val yesAliment = binding.yesAliment.text.toString()
+        val yesAliment = binding.etNameCollector.text.toString()
 
         val configAlimentYes = SettingEntity(
             idSetting,

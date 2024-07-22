@@ -78,7 +78,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilSiAlimentacion"
+                android:id="@+id/tilNameCollector"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilSiAlimentacion" />
+                app:layout_constraintTop_toBottomOf="@+id/tilNameCollector" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

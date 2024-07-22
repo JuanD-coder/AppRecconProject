@@ -101,12 +101,9 @@ class ActivityDetalleWork : AppCompatActivity() {
     }
 
     private fun updateCollection(it: WorkEntity, idCollector: Int) {
-        Toast.makeText(this, it.total, Toast.LENGTH_SHORT).show()
- /*
-
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Default).launch {
             AppDataBase.getInstance(this@ActivityDetalleWork).WorkDao().updateWork(
-                it.ID!!,
+                idCollector,
                 it.date,
                 it.collector,
                 it.amount,
@@ -119,7 +116,6 @@ class ActivityDetalleWork : AppCompatActivity() {
             }
         }
 
-  */
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -137,7 +133,8 @@ class ActivityDetalleWork : AppCompatActivity() {
     private fun showAlertEditName() {
         alertUpdateNameCollector(
             idCollector!!,
-            userName.toString()
+            userName.toString(),
+            true
         ){
             CoroutineScope(Dispatchers.IO).launch {
                 AppDataBase.getInstance(this@ActivityDetalleWork).RecolectoresDao().updateCollectorName(it.id!!,it.name)

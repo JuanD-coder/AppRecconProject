@@ -75,7 +75,7 @@ class FragmentCollection(
     }
 
     private fun dates(total:List<collecionTotalCollector>) {
-    adapter = adapterRvCollectionTotal(total) {
+    adapter = adapterRvCollectionTotal(total,null) {
         initCancelCollection(it)
     }
         binding.rvCollectors.adapter = adapter

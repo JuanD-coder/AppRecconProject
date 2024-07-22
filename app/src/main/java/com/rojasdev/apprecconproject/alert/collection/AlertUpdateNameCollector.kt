@@ -3,16 +3,19 @@ package com.rojasdev.apprecconproject.alert.collection
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconproject.ActivityRecolectionDetail
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
+import com.rojasdev.apprecconproject.controller.controllerTheme
 import com.rojasdev.apprecconproject.controller.keyLIstener
 import com.rojasdev.apprecconproject.controller.requireInput
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
@@ -21,7 +24,9 @@ import com.rojasdev.apprecconproject.databinding.AlertUpdateSettingBinding
 class alertUpdateNameCollector (
     private var idCollector: Int,
     var name: String,
-    var onClickListener: (RecolectoresEntity) -> Unit): DialogFragment() {
+    var styleApp: Boolean?,
+    var onClickListener: (RecolectoresEntity) -> Unit
+): DialogFragment() {
 
     private lateinit var binding: AlertUpdateSettingBinding
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -33,7 +38,7 @@ class alertUpdateNameCollector (
         adsBanner.initLoadAds(binding.banner)
 
         val myListInput = listOf(
-            binding.yesAliment
+            binding.etNameCollector
         )
 
         binding.btReady.setOnClickListener {
@@ -43,7 +48,7 @@ class alertUpdateNameCollector (
             }
         }
 
-        keyLIstener.start(binding.yesAliment){
+        keyLIstener.start(binding.etNameCollector){
             val require = requireInput.validate(myListInput,requireContext())
             if (require){
                 dates()
@@ -63,15 +68,15 @@ class alertUpdateNameCollector (
     }
 
     private fun initView() {
-        binding.yesAliment.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-        binding.yesAliment.setText(name)
+        binding.etNameCollector.inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
+        binding.etNameCollector.setText(name)
         binding.tvDescription.text = getString(R.string.updateName)
-        binding.tilSiAlimentacion.setStartIconDrawable(R.drawable.ic_recolector)
-
+        binding.tilNameCollector.setStartIconDrawable(R.drawable.ic_recolector)
+        contextTheme()
     }
 
     private fun dates() {
-        val newName = binding.yesAliment.text.toString()
+        val newName = binding.etNameCollector.text.toString()
 
         val editNameCollector = RecolectoresEntity(
             idCollector,
@@ -84,5 +89,30 @@ class alertUpdateNameCollector (
             requireContext(), ActivityRecolectionDetail::class.java)
             .putExtra("userId", idCollector).putExtra("userName", newName)
         )
+    }
+
+    private fun contextTheme() {
+        var color: Int? = null
+        controllerTheme.main(requireContext(),
+            day = {
+                color = ContextCompat.getColor(requireContext(), R.color.Orange)
+            },
+            night = {
+                color = ContextCompat.getColor(requireContext(), R.color.OrangeDark)
+            })
+
+        if (styleApp == true){
+            binding.btReady.backgroundTintList = ColorStateList.valueOf(color!!)
+            binding.tvDescription.backgroundTintList = ColorStateList.valueOf(color!!)
+
+            binding.fbClose.backgroundTintList = ColorStateList.valueOf(color!!)
+            binding.fbClose.invalidate()
+
+            binding.tilNameCollector.boxStrokeColor = color!!
+            binding.tilNameCollector.hintTextColor = ColorStateList.valueOf(color!!)
+        }else{
+            binding.fbClose.backgroundTintList = ColorStateList.valueOf(color!!)
+            binding.fbClose.invalidate()
+        }
     }
 }

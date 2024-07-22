@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilSiAlimentacion"
+                    android:id="@+id/tilNameCollector"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                     app:startIconDrawable="@drawable/ic_alimentacion">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/yesAliment"
+                        android:id="@+id/etNameCollector"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number|text"
@@ -82,7 +82,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilSiAlimentacion" />
+                    app:layout_constraintTop_toBottomOf="@+id/tilNameCollector" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -90,11 +90,9 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fbClose"
-        style="@style/floadingButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        app:backgroundTint="@color/Dark_Tan"
         app:layout_constraintBottom_toTopOf="@+id/cvSettings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
