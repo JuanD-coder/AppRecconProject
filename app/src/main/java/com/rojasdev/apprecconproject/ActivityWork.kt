@@ -165,7 +165,7 @@ class ActivityWork : AppCompatActivity() {
     private fun preferencesCollecion() {
         val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
         val editor = preferences.edit()
-        editor.putString("collection","false")
+        editor.putString("workMen","false")
         editor.apply()
     }
 

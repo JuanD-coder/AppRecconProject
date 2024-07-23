@@ -34,4 +34,6 @@ interface WorkDao {
             "actividad = :activity WHERE PK_ID_Trabajo = :idWork AND Fk_recolector = :idCollector")
     suspend fun updateWork(idWork:Int, date:String, idCollector:Int, cantidad:Int, activity:String, feed:Int)
 
+    @Query("UPDATE workentity SET estado = 'archive' WHERE Fk_recolector = :id")
+    suspend fun updateWorkState(id:Int)
 }

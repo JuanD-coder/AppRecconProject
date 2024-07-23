@@ -9,6 +9,7 @@ import com.rojasdev.apprecconproject.data.dataModel.collectorCollection
 import com.rojasdev.apprecconproject.data.dataModel.monthPdf
 import com.rojasdev.apprecconproject.data.dataModel.totalMonthPdf
 import com.rojasdev.apprecconproject.data.dataModel.weekPdf
+import com.rojasdev.apprecconproject.data.dataModel.workMen
 import com.rojasdev.apprecconproject.data.dataModel.workTotalCollector
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 
@@ -70,6 +71,15 @@ interface RecolectoresDao {
             "INNER JOIN Configuracion con ON re.Fk_Configuracion = con.PK_ID_Configuracion " +
             "WHERE re.Estado == :state AND re.Fk_recolector LIKE :id  ORDER BY re.Fecha DESC")
     suspend fun getCollectorAndCollection(state: String, id: Int): List<collectorCollection>
+
+    @Query("SELECT r.PK_ID_Recolector, r.name_recolector, wo.PK_ID_Trabajo, wo.cantidad, " +
+            "con.Precio * wo.Cantidad AS result, con.Precio, "  +
+            "wo.Estado, con.Alimentacion, wo.Fecha, wo.Fk_Configuracion " +
+            "FROM recolectores r " +
+            "INNER JOIN WorkEntity wo ON r.PK_ID_Recolector = wo.Fk_recolector " +
+            "INNER JOIN Configuracion con ON wo.Fk_Configuracion = con.PK_ID_Configuracion " +
+            "WHERE wo.Estado == :state AND wo.Fk_recolector LIKE :id  ORDER BY wo.Fecha DESC")
+    suspend fun getMenAndWork(state: String, id: Int): List<workMen>
 
     @Query("SELECT r.PK_ID_Recolector, r.name_recolector, re.PK_ID_Recoleccion, SUM(re.Cantidad) AS Cantidad, " +
             "SUM(re.Cantidad * con.Precio) AS result, con.Precio, " +

@@ -108,7 +108,7 @@ class FragmentWork(
     }
 
     private fun initAlertDelete(it: RecolectoresEntity) {
-        alertDeleteCollector(it.name){
+        alertDeleteCollector(it.name,true){
             customSnackBar.showCustomSnackBar(requireView(),getString(R.string.deleteCollector))
 
             CoroutineScope(Dispatchers.IO).launch {

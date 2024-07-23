@@ -23,6 +23,7 @@ import com.rojasdev.apprecconproject.alert.collection.alertCancelCollection
 import com.rojasdev.apprecconproject.alert.collection.alertCollection
 import com.rojasdev.apprecconproject.alert.collection.alertDeleteCollector
 import com.rojasdev.apprecconproject.alert.messagin.alertMessage
+import com.rojasdev.apprecconproject.alert.work.alertCancelWork
 import com.rojasdev.apprecconproject.controller.controllerTheme
 import com.rojasdev.apprecconproject.controller.customSnackBar
 import com.rojasdev.apprecconproject.controller.price
@@ -77,7 +78,6 @@ class FragmentWorkCancelet(
         CoroutineScope(Dispatchers.IO).launch{
             val idCollectors = AppDataBase.getInstance((requireContext())).RecolectoresDao().getIDManWork()
             launch(Dispatchers.Main) {
-                Toast.makeText(requireContext(), idCollectors[0].toString(), Toast.LENGTH_SHORT).show()
                 val collector = mutableListOf<workTotalCollector>()
                 for(item in idCollectors){
                     val collectionTotal = AppDataBase.getInstance((requireContext())).RecolectoresDao().getManAndWorkTotal(item.toInt())
@@ -91,20 +91,19 @@ class FragmentWorkCancelet(
     }
 
     private fun dates(total:List<workTotalCollector>) {
-        //Toast.makeText(requireContext(), total[0].name_recolector.toString(), Toast.LENGTH_SHORT).show()
         adapter = adapterRvWorkTotal(total,getColor()) {
-            //initCancelCollection(it)
+            initCancelCollection(it)
         }
         binding.rvCollectors.adapter = adapter
         binding.rvCollectors.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun initCancelCollection(collectionTotal: collecionTotalCollector) {
+    private fun initCancelCollection(collectionTotal: workTotalCollector) {
         CoroutineScope(Dispatchers.IO).launch{
-            val collection = AppDataBase.getInstance((requireContext())).RecolectoresDao().getCollectorAndCollection("active",collectionTotal.PK_ID_Recolector)
+            val collection = AppDataBase.getInstance((requireContext())).RecolectoresDao().getMenAndWork("active",collectionTotal.PK_ID_Recolector)
 
             launch(Dispatchers.Main) {
-                alertCancelCollection(listOf(collectionTotal), collection) {
+                alertCancelWork(listOf(collectionTotal), collection) {
                     updateCollection(it)
                 }.show(parentFragmentManager,"dialog")
             }
@@ -116,7 +115,7 @@ class FragmentWorkCancelet(
             val dataBase = AppDataBase.getInstance(requireContext())
 
             dataBase.RecolectoresDao().updateCollectorState(idUpdate)
-            dataBase.RecollectionDao().updateCollectionState(idUpdate)
+            dataBase.WorkDao().updateWorkState(idUpdate)
 
             launch(Dispatchers.Main) {
                 customSnackBar.showCustomSnackBar(requireView(),getString(R.string.collectionCanceled))
@@ -129,7 +128,7 @@ class FragmentWorkCancelet(
 
     private fun preferencesUpdate(){
         CoroutineScope(Dispatchers.IO).launch{
-            val idCollectors = AppDataBase.getInstance((requireContext())).RecollectionDao().getFkIdCollectors()
+            val idCollectors = AppDataBase.getInstance((requireContext())).WorkDao().getFkIdCollectors()
             launch(Dispatchers.Main) {
                 if(idCollectors.isEmpty()){
                     alertMessage(
@@ -155,11 +154,11 @@ class FragmentWorkCancelet(
     @SuppressLint("SetTextI18n")
     private fun getTotalCollection(){
         CoroutineScope(Dispatchers.IO).launch{
-            val collectionTotal = AppDataBase.getInstance((requireContext())).SettingDao().getTotalCollectionActive()
+            val collectionTotal = AppDataBase.getInstance((requireContext())).SettingDao().getTotalWorkActive()
             launch(Dispatchers.Main) {
                 if(collectionTotal.isNotEmpty()){
                     binding.lyTotal.visibility = View.VISIBLE
-                    binding.tvCollection.text = "Total recolectado\n ${collectionTotal[0].cantidad.toFloat()}Kg"
+                    binding.tvCollection.text = "Jornales trabajados\n ${collectionTotal[0].cantidad.toInt()}"
 
                     price.priceSplit(collectionTotal[0].total.toInt()){
                         binding.tvTotal.text = "Total a pagar\n $it"

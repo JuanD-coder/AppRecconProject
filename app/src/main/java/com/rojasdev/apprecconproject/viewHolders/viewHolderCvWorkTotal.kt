@@ -23,7 +23,9 @@ class viewHolderCvWorkTotal( var view: View): RecyclerView.ViewHolder(view) {
     ){
         binding.cv.animation = AnimationUtils.loadAnimation(view.context, R.anim.recycler_transition)
         binding.tvNameCollector.text = item.name_recolector
-        binding.tvKg.text = "${item.days_work} kg"
+        binding.tvKg.text = item.days_work.toString()
+        binding.textView6.text = view.context.getString(R.string.daysWork)
+        binding.btReady.setText(view.context.getString(R.string.workCancel))
 
         if(color != null){
             binding.btReady.backgroundTintList = ColorStateList.valueOf(color)

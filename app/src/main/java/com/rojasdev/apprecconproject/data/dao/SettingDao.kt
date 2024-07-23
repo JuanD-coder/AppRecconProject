@@ -39,6 +39,12 @@ interface SettingDao {
             "WHERE re.Estado == 'active'")
     suspend fun getTotalCollectionActive(): List<totalWeekPdf>
 
+    @Query("SELECT con.Precio, sum(wor.cantidad) as cantidad, sum(wor.cantidad * con.Precio) as total " +
+            "FROM configuracion con  " +
+            "INNER JOIN WorkEntity wor ON con.PK_ID_Configuracion = wor.Fk_Configuracion " +
+            "WHERE wor.Estado == 'active'")
+    suspend fun getTotalWorkActive(): List<totalWeekPdf>
+
     @Query("Delete FROM Configuracion")
     suspend fun delete()
 }
