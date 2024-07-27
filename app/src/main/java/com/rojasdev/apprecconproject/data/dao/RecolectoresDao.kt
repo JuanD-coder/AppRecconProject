@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.rojasdev.apprecconproject.data.dataModel.allCollecionAndCollector
+import com.rojasdev.apprecconproject.data.dataModel.allWorkAndCollector
 import com.rojasdev.apprecconproject.data.dataModel.collecionTotalCollector
 import com.rojasdev.apprecconproject.data.dataModel.collectorCollection
 import com.rojasdev.apprecconproject.data.dataModel.monthPdf
@@ -90,6 +91,16 @@ interface RecolectoresDao {
             "WHERE re.Fecha LIKE :dates AND r.PK_ID_Recolector == :id " +
             "ORDER BY re.Fecha DESC")
     suspend fun getAllCollectorAndCollectionId(dates: String, id: Int): List<allCollecionAndCollector>
+
+    @Query("SELECT r.PK_ID_Recolector, r.name_recolector, wor.PK_ID_Trabajo, SUM(wor.Cantidad) AS cantidad, " +
+            "SUM(wor.cantidad * con.Precio) AS result, con.Precio, " +
+            "wor.Fecha, wor.Fk_Configuracion, wor.actividad " +
+            "FROM recolectores r " +
+            "INNER JOIN WorkEntity wor ON r.PK_ID_Recolector = wor.Fk_recolector " +
+            "INNER JOIN Configuracion con ON wor.Fk_Configuracion = con.PK_ID_Configuracion " +
+            "WHERE wor.Fecha LIKE :dates AND r.PK_ID_Recolector == :id " +
+            "ORDER BY wor.Fecha DESC")
+    suspend fun getAllCollectorAndWorkId(dates: String, id: Int): List<allWorkAndCollector>
 
     @Query("SELECT r.PK_ID_Recolector, r.name_recolector, re.PK_ID_Recoleccion, sum(re.Cantidad) AS Cantidad, " +
             "sum(re.Cantidad * con.Precio) AS result, con.Precio, " +

@@ -12,7 +12,7 @@ class adapterItemDate(
     ) :RecyclerView.Adapter<viewHolderItemDate>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolderItemDate {
-        return viewHolderItemDate(LayoutInflater.from(parent.context).inflate(R.layout.item_rv_all_recolection_date, parent, false))
+        return viewHolderItemDate(LayoutInflater.from(parent.context).inflate(R.layout.item_dates, parent, false))
     }
 
     override fun onBindViewHolder(holder: viewHolderItemDate, position: Int) {

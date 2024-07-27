@@ -18,6 +18,10 @@ interface SettingDao {
     @Query("SELECT * FROM configuracion WHERE Estado == 'active' AND Alimentacion == :aliment")
     suspend fun getAliment(aliment: String): List<SettingEntity>
 
+    @Query("SELECT * FROM configuracion WHERE Estado == 'active' AND Alimentacion != 'yes' " +
+            "AND Alimentacion != 'no'")
+    suspend fun getPriceWork(): List<SettingEntity>
+
     @Query("SELECT * FROM configuracion WHERE Estado == 'archived' ORDER BY PK_ID_Configuracion DESC")
     suspend fun getAlimentArchived(): List<SettingEntity>
 

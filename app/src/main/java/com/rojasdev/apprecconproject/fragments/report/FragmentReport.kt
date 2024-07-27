@@ -59,8 +59,8 @@ class FragmentReport : Fragment() {
             launch(Dispatchers.Main) {
                 val listModification = list.map { it.dropLast(9) }
                 val month = getDaysMonth(it.first,it.second)
-                adapterDates = adapter(month,listModification){
-                    showAllRecollection(it)
+                adapterDates = adapter("24",month,listModification,listModification){
+                    showAllRecollection(it.first)
                 }
 
                 binding.rvDate.adapter = adapterDates

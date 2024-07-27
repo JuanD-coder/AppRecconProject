@@ -3,12 +3,15 @@ package com.rojasdev.apprecconproject.data.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.rojasdev.apprecconproject.data.dataModel.totalCollection
 import com.rojasdev.apprecconproject.data.dataModel.workSettings
 import com.rojasdev.apprecconproject.data.entities.SettingEntity
 import com.rojasdev.apprecconproject.data.entities.WorkEntity
 
 @Dao
 interface WorkDao {
+    @Query("SELECT Fecha FROM WorkEntity")
+    suspend fun getDateWork(): List<String>
 
     @Insert
     suspend fun insert(config: WorkEntity)
@@ -36,4 +39,11 @@ interface WorkDao {
 
     @Query("UPDATE workentity SET estado = 'archive' WHERE Fk_recolector = :id")
     suspend fun updateWorkState(id:Int)
+
+    @Query("SELECT sum(wor.cantidad) AS Cantidad, " +
+            "sum(wor.cantidad * con.Precio) AS result " +
+            "FROM WorkEntity wor " +
+            "INNER JOIN Configuracion con ON wor.Fk_Configuracion = con.PK_ID_Configuracion " +
+            "WHERE wor.Fecha LIKE :dates ")
+    suspend fun getTotalWorkDate(dates: String): totalCollection
 }
