@@ -24,6 +24,9 @@ import com.itextpdf.text.pdf.PdfWriter
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.controller.price
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
+import com.rojasdev.apprecconproject.data.dataModel.pdfModel
+import com.rojasdev.apprecconproject.data.dataModel.totalMonthPdf
+import com.rojasdev.apprecconproject.data.entities.SettingEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,24 +37,35 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class
-generateMonthPDF(
+class generatePDF(
     var context: Context,
     var resources: Resources,
+    var settingActive: List<SettingEntity>,
+    var settingArchive: List<SettingEntity>,
+    var collectionYes: List<pdfModel>,
+    var collectionNo: List<pdfModel>,
+    var totalYes: totalMonthPdf,
+    var totalNo: totalMonthPdf,
+    /*
+    var workActive: SettingEntity,
+    var workArchive: SettingEntity,
+    var work: pdfModel,
+    var workTotal: totalMonthPdf,
+     */
     var location: () -> Unit
 ) {
-     // Get phone date
-     private val calendar = Calendar.getInstance().time
-     private val formatOriginal = SimpleDateFormat("yyyy-MM", Locale("es", "CO"))
-     private val format = SimpleDateFormat("MMMM 'del Año' yyyy", Locale("es", "CO"))
+    // Get phone date
+    private val calendar = Calendar.getInstance().time
+    private val formatOriginal = SimpleDateFormat("yyyy-MM", Locale("es", "CO"))
+    private val format = SimpleDateFormat("MMMM 'del Año' yyyy", Locale("es", "CO"))
 
     private val date = formatOriginal.format(calendar)
     private val fechaParseada: Date = try {
-                    formatOriginal.parse(date) ?: Date()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    Date()
-                }
+        formatOriginal.parse(date) ?: Date()
+    } catch (e: Exception) {
+        e.printStackTrace()
+        Date()
+    }
     private val dateMonth = format.format(fechaParseada)
 
     private var txtFont: Font = FontFactory.getFont("arial", 12f, Font.BOLD)
@@ -64,7 +78,7 @@ generateMonthPDF(
             val document = Document()
             val outputStream = context.contentResolver.openOutputStream(uri)
             val writer = PdfWriter.getInstance(document, outputStream)
-                document.open()
+            document.open()
 
             val contentByte: PdfContentByte = writer.directContentUnder
             val byte: PdfContentByte = writer.directContentUnder
@@ -89,32 +103,32 @@ generateMonthPDF(
             square.fillStroke()
 
             val table = PdfPTable(3)
-                table.widthPercentage = 100f
+            table.widthPercentage = 100f
 
             // Logo Image
             val drawableImageLogo = BitmapFactory.decodeResource(resources, R.drawable.reccon_pdf)
             val byteArrayOutputStream = ByteArrayOutputStream()
-                drawableImageLogo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+            drawableImageLogo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
             val byteArray = byteArrayOutputStream.toByteArray()
             val image = Image.getInstance(byteArray)
-                image.scaleToFit(130f, 130f)
+            image.scaleToFit(130f, 130f)
 
             // Pdf Title
             val titleFont: Font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 21F, BaseColor.WHITE)
             val titlePdf = Paragraph("\n${context.getString(R.string.titlePdfMonth)}\n", titleFont)
 
             val cellText = PdfPCell(titlePdf)
-                cellText.verticalAlignment = PdfPCell.ALIGN_CENTER
-                cellText.horizontalAlignment = PdfPCell.ALIGN_LEFT
-                cellText.borderWidth = 0f
-                cellText.paddingRight = 8f
-                cellText.colspan = 2
+            cellText.verticalAlignment = PdfPCell.ALIGN_CENTER
+            cellText.horizontalAlignment = PdfPCell.ALIGN_LEFT
+            cellText.borderWidth = 0f
+            cellText.paddingRight = 8f
+            cellText.colspan = 2
 
             val cellImage = PdfPCell(image)
-                cellImage.verticalAlignment = PdfPCell.ALIGN_TOP
-                cellImage.horizontalAlignment = PdfPCell.ALIGN_CENTER
-                cellImage.borderWidth = 0f
-                cellImage.colspan = 1
+            cellImage.verticalAlignment = PdfPCell.ALIGN_TOP
+            cellImage.horizontalAlignment = PdfPCell.ALIGN_CENTER
+            cellImage.borderWidth = 0f
+            cellImage.colspan = 1
 
             table.addCell(cellText)
             table.addCell(cellImage)
@@ -130,9 +144,9 @@ generateMonthPDF(
             val txtPdf = Paragraph("${context.getString(R.string.txtPdfMonth)} $dateMonth \n", txtFont)
 
             val cellInfo = PdfPCell(txtPdf)
-                cellInfo.verticalAlignment = PdfPCell.ALIGN_LEFT
-                cellInfo.horizontalAlignment = PdfPCell.ALIGN_LEFT
-                cellInfo.borderWidth = 0f
+            cellInfo.verticalAlignment = PdfPCell.ALIGN_LEFT
+            cellInfo.horizontalAlignment = PdfPCell.ALIGN_LEFT
+            cellInfo.borderWidth = 0f
 
             tableInfo.addCell(cellInfo)
             document.add(tableInfo)
@@ -141,16 +155,16 @@ generateMonthPDF(
             txtInfoMonth.alignment = Element.ALIGN_LEFT
 
             // Function
-        createTableAliment("active", context, context.getString(R.string.actualPrice), document) {
-            createTableAliment("archived", context, context.getString(R.string.previousPrice), document) {
-                document.add(txtInfoMonth)
-                    createTableMonth(context.getString(R.string.notAliment), document, "no", false) {
-                        createTableMonth(context.getString(R.string.yesAliment), document, "yes", false) {
+            createTableAliment(settingActive, context.getString(R.string.actualPrice), document) {
+                createTableAliment(settingArchive,context.getString(R.string.previousPrice), document) {
+                    document.add(txtInfoMonth)
+                    createTableMonth(collectionNo,context.getString(R.string.notAliment), document, false) {
+                        createTableMonth(collectionYes,context.getString(R.string.yesAliment), document, false) {
                             finish(document)
                         }
                     }
+                }
             }
-        }
 
         } catch (e: DocumentException) {
             e.printStackTrace()
@@ -160,20 +174,20 @@ generateMonthPDF(
 
     }
 
-    private fun createTableAliment(state: String, context: Context, title: String, document: Document, ready : () -> Unit){
-        CoroutineScope(Dispatchers.IO).launch{
-              val query = AppDataBase.getInstance(context).SettingDao().getAlimentState(state)
-            launch(Dispatchers.Main) {
+    private fun createTableAliment(
+        query:List<SettingEntity>,
+        title: String,
+        document: Document, ready : () -> Unit){
                 if (query.isEmpty()){
                     notData(title,document){
                         ready()
                     }
                 } else {
                     val tablePrice = PdfPTable(2)
-                        tablePrice.horizontalAlignment = Element.ALIGN_LEFT
-                        tablePrice.widthPercentage = 50f
+                    tablePrice.horizontalAlignment = Element.ALIGN_LEFT
+                    tablePrice.widthPercentage = 50f
                     val header = PdfPCell()
-                        txtFont.color = BaseColor.BLACK
+                    txtFont.color = BaseColor.BLACK
 
 
                     tableTitle(title,50f, document,false)
@@ -208,38 +222,36 @@ generateMonthPDF(
                     document.add(tablePrice)
                     ready()
                 }
-            }
-        }
+
+
     }
 
     @SuppressLint("SuspiciousIndentation")
     private fun createTableMonth(
-        title: String, document:
-        Document, aliment: String,
+        query: List<pdfModel>,
+        title: String,
+        document: Document,
         work: Boolean,
         ready: () -> Unit){
-        CoroutineScope(Dispatchers.IO).launch {
-            val query = AppDataBase.getInstance(context).RecolectoresDao().getPdfInfo("${date}%", aliment)
-            launch(Dispatchers.Main) {
                 if (query.isNotEmpty()){
                     val columns = PdfPTable(5)
-                        columns.horizontalAlignment = Element.ALIGN_LEFT
-                        columns.widthPercentage = 100f
+                    columns.horizontalAlignment = Element.ALIGN_LEFT
+                    columns.widthPercentage = 100f
                     val header = PdfPCell()
-                        header.verticalAlignment = Element.ALIGN_CENTER
-                        header.horizontalAlignment = Element.ALIGN_CENTER
+                    header.verticalAlignment = Element.ALIGN_CENTER
+                    header.horizontalAlignment = Element.ALIGN_CENTER
 
                     tableTitle(title,100f, document, work) // title
                     itemsTable(columns, header)
 
                     for (item in query){
                         header.phrase = Phrase(item.name_recolector)
-                            columns.addCell(header)
+                        columns.addCell(header)
                         header.phrase = Phrase("${item.result} Kg")
-                            columns.addCell(header)
+                        columns.addCell(header)
                         price.priceSplit(item.total.toInt()){
                             header.phrase = Phrase(it)
-                                columns.addCell(header)
+                            columns.addCell(header)
                         }
 
                         header.phrase = Phrase(item.Fecha)
@@ -247,7 +259,7 @@ generateMonthPDF(
 
                         if (item.Estado == "active"){
                             header.phrase = Phrase(context.getString(R.string.stateActive))
-                                columns.addCell(header)
+                            columns.addCell(header)
                         } else {
                             header.phrase = Phrase(context.getString(R.string.stateArchive))
                             columns.addCell(header)
@@ -259,21 +271,17 @@ generateMonthPDF(
 
                     val txtInfoFont: Font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18F, BaseColor.BLACK)
                     val txtInfo =  Paragraph("${context.getString(R.string.totalInfoYear)} \n\n", txtInfoFont)
-                        txtInfo.alignment = Element.ALIGN_LEFT
+                    txtInfo.alignment = Element.ALIGN_LEFT
 
                     document.add(txtInfo)
 
-                    totalTable(document, aliment){
-                        ready()
-                    }
 
                 }else{
                     notData(title, document){
                         ready()
                     }
                 }
-            }
-        }
+
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -283,11 +291,11 @@ generateMonthPDF(
             launch(Dispatchers.Main) {
                 if (query.isNotEmpty()){
                     val columns = PdfPTable(4)
-                        columns.widthPercentage = 100f
+                    columns.widthPercentage = 100f
                     val header = PdfPCell()
-                        header.verticalAlignment = Element.ALIGN_CENTER
-                        header.horizontalAlignment = Element.ALIGN_CENTER
-                        header.borderWidth = 0f
+                    header.verticalAlignment = Element.ALIGN_CENTER
+                    header.horizontalAlignment = Element.ALIGN_CENTER
+                    header.borderWidth = 0f
 
                     val listCell = listOf(
                         context.getString(R.string.princeTotal),
@@ -301,14 +309,14 @@ generateMonthPDF(
                     txtFont.size = 12f
 
                     header.phrase = Phrase("")
-                        columns.addCell(header)
+                    columns.addCell(header)
                     header.borderWidth = 0.5f
                     header.backgroundColor = BaseColor(74, 120, 74)
 
                     for (item in listCell){
                         header.horizontalAlignment = Element.ALIGN_CENTER
                         header.phrase = Phrase(item, txtFont)
-                            columns.addCell(header)
+                        columns.addCell(header)
                     }
 
                     header.backgroundColor = BaseColor.WHITE
@@ -318,11 +326,11 @@ generateMonthPDF(
                     }
 
                     header.phrase = Phrase("${query[0].result} Kg")
-                        columns.addCell(header)
+                    columns.addCell(header)
 
                     price.priceSplit(query[0].total.toInt()){
                         header.phrase = Phrase(it)
-                            columns.addCell(header)
+                        columns.addCell(header)
                     }
 
                     document.add(columns)
@@ -332,21 +340,21 @@ generateMonthPDF(
         }
     }
 
-    private fun tableTitle(title: String, width: Float, document: Document,work:Boolean){
+    private fun tableTitle(title: String, width: Float, document: Document, work:Boolean){
         val tableTitle = PdfPTable(1)
-            tableTitle.horizontalAlignment = Element.ALIGN_LEFT
-            tableTitle.widthPercentage = width
-            tableTitle.spacingBefore = 20f
+        tableTitle.horizontalAlignment = Element.ALIGN_LEFT
+        tableTitle.widthPercentage = width
+        tableTitle.spacingBefore = 20f
 
-            txtFont.size = 16f
-            txtFont.color = BaseColor.WHITE
+        txtFont.size = 16f
+        txtFont.color = BaseColor.WHITE
         val titlePrice = Paragraph(title, txtFont)
         val header = PdfPCell()
 
-            header.horizontalAlignment = Element.ALIGN_CENTER
-            header.backgroundColor = BaseColor(74, 120, 74)
-            header.phrase = Phrase(titlePrice)
-            tableTitle.addCell(header)
+        header.horizontalAlignment = Element.ALIGN_CENTER
+        header.backgroundColor = BaseColor(74, 120, 74)
+        header.phrase = Phrase(titlePrice)
+        tableTitle.addCell(header)
 
         document.add(tableTitle)
     }
@@ -371,7 +379,7 @@ generateMonthPDF(
     private fun finish(document: Document){
         val titleFont: Font = FontFactory.getFont(FontFactory.HELVETICA, 16f, BaseColor.BLACK)
         val title = Paragraph("\n${context.getString(R.string.pdfFinish)}", titleFont)
-            title.alignment = Element.ALIGN_CENTER
+        title.alignment = Element.ALIGN_CENTER
         document.add(title)
         document.close()
 
@@ -381,19 +389,9 @@ generateMonthPDF(
     private fun notData(message: String, document: Document, ready: () -> Unit) {
         val titleFont: Font = FontFactory.getFont(FontFactory.HELVETICA, 20f, BaseColor.GRAY)
         val titleNotData = Paragraph("No se registraron $message", titleFont)
-            titleNotData.alignment = Element.ALIGN_CENTER
+        titleNotData.alignment = Element.ALIGN_CENTER
         document.add(titleNotData)
         ready()
-    }
-
-    private fun generatePdf(){
-        CoroutineScope(Dispatchers.IO).launch {
-            val yesAliment = AppDataBase.getInstance(context).RecolectoresDao().getTotalPdf("${date}%", "yes")
-            val noAliment = AppDataBase.getInstance(context).RecolectoresDao().getTotalPdf("${date}%", "no")
-            launch(Dispatchers.Main) {
-
-            }
-        }
     }
 
 }

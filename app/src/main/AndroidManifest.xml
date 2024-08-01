@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_reccon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppRecconProject">
+
         <activity
             android:name=".ActivityDetalleWork"
             android:exported="false"
