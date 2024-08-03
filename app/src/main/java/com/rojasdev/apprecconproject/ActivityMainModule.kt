@@ -4,23 +4,23 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
-import com.rojasdev.apprecconproject.alert.settings.alertAddPriceWork
 import com.rojasdev.apprecconproject.alert.collection.alertAddRecolector
 import com.rojasdev.apprecconproject.alert.messagin.alertApoyo
 import com.rojasdev.apprecconproject.alert.messagin.alertCountDown
 import com.rojasdev.apprecconproject.alert.messagin.alertHelp
 import com.rojasdev.apprecconproject.alert.messagin.alertMessage
-import com.rojasdev.apprecconproject.alert.settings.alertSettings
 import com.rojasdev.apprecconproject.alert.messagin.alertWelcome
+import com.rojasdev.apprecconproject.alert.settings.alertAddPriceWork
+import com.rojasdev.apprecconproject.alert.settings.alertSettings
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.customSnackBar
@@ -33,6 +33,7 @@ import com.rojasdev.apprecconproject.databinding.ActivityMainModuleBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
 class ActivityMainModule : AppCompatActivity() {
 
     private lateinit var consentInformation: ConsentInformation

@@ -11,6 +11,7 @@ import com.rojasdev.apprecconproject.fragments.report.FragmentPdf
 class ActivityInformes : AppCompatActivity() {
 
     lateinit var binding: ActivityInformesBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityInformesBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -18,7 +19,6 @@ class ActivityInformes : AppCompatActivity() {
 
         title = getString(R.string.informedTitle)
         openFragment(FragmentReport())
-
 
         adsBanner.initLoadAds(binding.banner)
         //configuracion de la barra de navigation

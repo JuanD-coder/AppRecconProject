@@ -3,13 +3,24 @@ package com.rojasdev.apprecconproject.data.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "WorkEntity",
+@Entity(
+    tableName = "WorkEntity",
     foreignKeys = [
-        ForeignKey(entity = RecolectoresEntity::class, parentColumns = ["PK_ID_Recolector"], childColumns = ["Fk_recolector"]),
-        ForeignKey(entity = SettingEntity::class, parentColumns = ["PK_ID_Configuracion"], childColumns = ["Fk_Configuracion"])
-    ]
+        ForeignKey(
+            entity = RecolectoresEntity::class,
+            parentColumns = ["PK_ID_Recolector"],
+            childColumns = ["Fk_recolector"]
+        ),
+        ForeignKey(
+            entity = SettingEntity::class,
+            parentColumns = ["PK_ID_Configuracion"],
+            childColumns = ["Fk_Configuracion"]
+        )
+    ],
+    indices = [Index(value = ["Fk_recolector"]), Index(value = ["Fk_Configuracion"])]
 )
 
 class WorkEntity(
@@ -19,5 +30,5 @@ class WorkEntity(
     @ColumnInfo(name = "Fecha") val date: String,
     @ColumnInfo(name = "Estado") val state: String?,
     @ColumnInfo(name = "Fk_recolector") val collector: Int,
-    @ColumnInfo(name = "Fk_Configuracion") val setting:Int
+    @ColumnInfo(name = "Fk_Configuracion") val setting: Int
 )

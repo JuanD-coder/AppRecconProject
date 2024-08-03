@@ -43,7 +43,9 @@ class FragmentReport : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(
                 viewLifecycleOwner,object : OnBackPressedCallback(true
             ){
-                override fun handleOnBackPressed() { startActivity(Intent(requireContext(),ActivityMainModule::class.java)) }
+                override fun handleOnBackPressed() {
+                    startActivity(Intent(requireContext(),ActivityMainModule::class.java))
+                }
             })
 
         binding.tvShowPay.visibility = View.GONE
