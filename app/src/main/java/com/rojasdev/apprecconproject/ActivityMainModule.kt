@@ -21,6 +21,8 @@ import com.rojasdev.apprecconproject.alert.messagin.alertMessage
 import com.rojasdev.apprecconproject.alert.messagin.alertWelcome
 import com.rojasdev.apprecconproject.alert.settings.alertAddPriceWork
 import com.rojasdev.apprecconproject.alert.settings.alertSettings
+import com.rojasdev.apprecconproject.alert.messagin.alertWelcome
+import com.rojasdev.apprecconproject.controller.FontScaleIgnoringContext
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.customSnackBar

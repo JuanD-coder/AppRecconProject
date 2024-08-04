@@ -198,6 +198,11 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <!--layout work theme-->
+    <style name="layoutWork">
+        <item name="android:background">@color/OrangeDark</item>
+    </style>
+
     <!--buttons Work theme-->
     <style name="buttonsWork">
         <item name="android:background">@drawable/border_radius_btn</item>

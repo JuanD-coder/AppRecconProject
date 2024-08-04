@@ -27,8 +27,13 @@ class viewHolderSettings( var view: View): RecyclerView.ViewHolder(view) {
             price.priceSplit(item.cost){
                 binding.tvAlimentPrice.text = it
             }
-        }else{
+        }else  if(item.feeding == "no"){
             binding.tvAliment.text = "Precio por kilogramo sin alimentacion"
+            price.priceSplit(item.cost){
+                binding.tvAlimentPrice.text = it
+            }
+        } else {
+            binding.tvAliment.text = "${view.context.getString(R.string.workPrice)} por ${item.feeding}"
             price.priceSplit(item.cost){
                 binding.tvAlimentPrice.text = it
             }

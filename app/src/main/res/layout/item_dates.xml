@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvHora"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="18dp"
+        android:text="20:50:56"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image"
+        style="@style/itemRecolectionInfo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_recolector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ly"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHora"
+        app:tint="@color/black" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/Green_calendar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvHora"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/Green_calendar"
+        app:layout_constraintBottom_toBottomOf="@+id/tvHora"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvHora"
+        app:layout_constraintTop_toTopOf="@+id/tvHora" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNameCollector"
+        style="@style/text"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="2dp"
+        android:lines="1"
+        android:text="actividades realizadas"
+        android:textColor="@color/black"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@+id/ly"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/ly"
+        app:layout_constraintTop_toBottomOf="@+id/view5" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ly"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/item_dates"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view4">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvKilos"
+            style="@style/texViewKg"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="1000
+                Kg"
+            android:textColor="@color/black"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvActividad" />
+
+        <TextView
+            android:id="@+id/tvWorkDes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recolection"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvKilos"
+            app:layout_constraintStart_toStartOf="@+id/tvKilos"
+            app:layout_constraintTop_toBottomOf="@+id/tvKilos" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPrice"
+            style="@style/texViewKg"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:maxLines="1"
+            android:text="1000
+                Kg"
+            android:textColor="@color/black"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toStartOf="@+id/tvTotal"
+            app:layout_constraintStart_toEndOf="@+id/tvKilos"
+            app:layout_constraintTop_toBottomOf="@+id/tvActividad" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/priceDes"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvPrice"
+            app:layout_constraintStart_toStartOf="@+id/tvPrice"
+            app:layout_constraintTop_toBottomOf="@+id/tvPrice" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTotal"
+            style="@style/texViewKg"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="1"
+            android:text="1000
+                Kg"
+            android:textColor="@color/black"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvActividad" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvTotal"
+            app:layout_constraintStart_toStartOf="@+id/tvTotal"
+            app:layout_constraintTop_toBottomOf="@+id/tvTotal" />
+
+        <TextView
+            android:id="@+id/tvActividad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:visibility="gone"
+            style="@style/text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

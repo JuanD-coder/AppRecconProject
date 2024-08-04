@@ -2,15 +2,18 @@ package com.rojasdev.apprecconproject.alert.settings
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
+import com.rojasdev.apprecconproject.controller.controllerTheme
 import com.rojasdev.apprecconproject.controller.dateFormat
 import com.rojasdev.apprecconproject.controller.keyLIstener
 import com.rojasdev.apprecconproject.controller.requireInput
@@ -22,6 +25,7 @@ class alertSettingsUpdate(
     private var fending: String,
     private var idSetting: Int,
     var price: Int,
+    private var style: Boolean?,
     var onClickListener: (SettingEntity) -> Unit ): DialogFragment() {
 
     private lateinit var binding: AlertUpdateSettingBinding
@@ -31,6 +35,8 @@ class alertSettingsUpdate(
         animatedAlert.animatedInit(binding.cvSettings)
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
+
+        contextTheme()
 
         val myListInput = listOf(
             binding.etNameCollector,
@@ -91,5 +97,30 @@ class alertSettingsUpdate(
         )
 
         onClickListener(configAlimentYes)
+    }
+
+    private fun contextTheme() {
+        var color: Int? = null
+        controllerTheme.main(requireContext(),
+            day = {
+                color = ContextCompat.getColor(requireContext(), R.color.Orange)
+            },
+            night = {
+                color = ContextCompat.getColor(requireContext(), R.color.OrangeDark)
+            })
+
+        if (style == true){
+            binding.btReady.backgroundTintList = ColorStateList.valueOf(color!!)
+            binding.tvDescription.backgroundTintList = ColorStateList.valueOf(color!!)
+
+            binding.fbClose.backgroundTintList = ColorStateList.valueOf(color!!)
+            binding.fbClose.invalidate()
+
+            binding.tilNameCollector.boxStrokeColor = color!!
+            binding.tilNameCollector.hintTextColor = ColorStateList.valueOf(color!!)
+        }else{
+            binding.fbClose.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(),R.color.Dark_Tan))
+            binding.fbClose.invalidate()
+        }
     }
 }

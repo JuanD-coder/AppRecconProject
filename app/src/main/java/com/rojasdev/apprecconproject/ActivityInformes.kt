@@ -7,6 +7,7 @@ import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.databinding.ActivityInformesBinding
 import com.rojasdev.apprecconproject.fragments.report.FragmentReport
 import com.rojasdev.apprecconproject.fragments.report.FragmentPdf
+import com.rojasdev.apprecconproject.fragments.report.FragmentWorkReport
 
 class ActivityInformes : AppCompatActivity() {
 
@@ -17,8 +18,8 @@ class ActivityInformes : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        title = getString(R.string.informedTitle)
-        openFragment(FragmentReport())
+        title = getString(R.string.calendarCollection)
+        openFragment(FragmentWorkReport())
 
         adsBanner.initLoadAds(binding.banner)
         //configuracion de la barra de navigation
@@ -26,8 +27,8 @@ class ActivityInformes : AppCompatActivity() {
             meniItem ->
             when(meniItem.itemId){
                 R.id.list ->{
-                    title = getString(R.string.informedTitle)
-                    openFragment(FragmentReport())
+                    title = getString(R.string.calendarCollection)
+                    openFragment(FragmentWorkReport())
                     true
                 }
                 R.id.pdf ->{

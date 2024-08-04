@@ -16,7 +16,7 @@
     <string name="report">Informe</string>
     <string name="descriptionReport">Obtén una visión completa de tu producción cafetera y toma decisiones informadas para el éxito de tu negocio.</string>
     <string name="userInfo">Selecciona una fecha en el calendario de recolección para generar un informe detallado de ese día</string>
-    <string name="calendarCollection">Calendario de recolección</string>
+    <string name="calendarCollection">Calendario de registros</string>
     <string name="pdf">Informes en PDF</string>
 
     <!-- Recoleccion -->
@@ -84,11 +84,11 @@
     <string name="IMonthDescription">Analiza datos como la productividad y los costos mensuales de la recolección de cafe.</string>
     <string name="monthLoadingPdf">Generando tu informe Mensual de recolección cafetera. ¡Gracias por tu paciencia, valdrá la pena la espera!</string>
     <string name="titlePdfMonth">¡Bienvenido a los Informes Mesuales sobre Administración de la Recolección de Café!</string>
-    <string name="txtPdfMonth">Resumen Mensual de los precios de la Alimentación de </string>
+    <string name="txtPdfMonth">Resumen de los precios de la Alimentación de </string>
     <string name="infoPdfMonth">Información de lo recolectado durante el Mes de </string>
 
     <!-- Recursos del Pdf -->
-    <string name="actualPrice">Precios vigentes</string>
+    <string name="actualPrice">Precios de Recoleccion</string>
     <string name="previousPrice">Precios Anteriores</string>
     <string name="notAliment">Recolección sin alimentación</string>
     <string name="yesAliment">Recolección con alimentación</string>
@@ -224,6 +224,9 @@
     <string name="WorkNumerb">Jornales trabajados</string>
     <string name="daysWork">Jornales</string>
     <string name="workPrice">precio\n</string>
+    <string name="actualPriceWork">Precios de Jornal</string>
+    <string name="priceDes">precio</string>
+    <string name="noDates">no se reguistro informacion</string>
     <string name="default_notification_channel_id">FCM_CHANNEL_ID</string>
 
 </resources>

@@ -3,7 +3,9 @@ package com.rojasdev.apprecconproject
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.rojasdev.apprecconproject.adapters.adapterRvPricesWork
 import com.rojasdev.apprecconproject.adapters.adapterRvSettings
 import com.rojasdev.apprecconproject.alert.settings.alertSettingsUpdate
 import com.rojasdev.apprecconproject.controller.adsBanner
@@ -24,6 +26,7 @@ class ActivitySettings : AppCompatActivity() {
     private var idYesAliment : Int? = null
     private var priceYesAliment : Int? = null
     private var priceNoAliment : Int? = null
+    lateinit var adapterRvPricesWork : adapterRvPricesWork
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -35,10 +38,11 @@ class ActivitySettings : AppCompatActivity() {
 
         getNoAliment()
         getYesAliment()
+        getPricesWork()
 
         binding.btUpdateNoAliment.setOnClickListener {
             animatedAlert.animatedClick(binding.cvNoAliment)
-            alertSettingsUpdate(getString(R.string.notFeeding),"no", idNoAliment!!, priceNoAliment!!){
+            alertSettingsUpdate(getString(R.string.notFeeding),"no", idNoAliment!!, priceNoAliment!!,false){
                 insertNewSetting(it){
                     getNoAliment()
                     setupRecyclerView()
@@ -48,7 +52,7 @@ class ActivitySettings : AppCompatActivity() {
 
         binding.btUpdateYesAliment.setOnClickListener {
             animatedAlert.animatedClick(binding.cvYesAliment)
-            alertSettingsUpdate(getString(R.string.yesFeeding),"yes",idYesAliment!!,priceYesAliment!!){
+            alertSettingsUpdate(getString(R.string.yesFeeding),"yes",idYesAliment!!,priceYesAliment!!,false){
                 insertNewSetting(it){
                     getYesAliment()
                     setupRecyclerView()
@@ -68,6 +72,28 @@ class ActivitySettings : AppCompatActivity() {
 
         setupRecyclerView()
     }
+
+   private fun getPricesWork(){
+       CoroutineScope(Dispatchers.IO).launch{
+           val query = AppDataBase.getInstance(this@ActivitySettings).SettingDao().getPriceWork()
+           launch(Dispatchers.Main) {
+               if (query.isNotEmpty()){
+                   Toast.makeText(this@ActivitySettings, query[0].feeding, Toast.LENGTH_SHORT).show()
+                   adapterRvPricesWork = adapterRvPricesWork(query){
+                       alertSettingsUpdate(it.feeding,it.feeding, it.Id!!, it.cost, true){
+                           insertNewSetting(it){
+                               getPricesWork()
+                               setupRecyclerView()
+                           }
+                       }.show(supportFragmentManager,"dialog")
+                   }
+                   binding.rvPricesWork.adapter = adapterRvPricesWork
+                   binding.rvPricesWork.layoutManager = LinearLayoutManager(this@ActivitySettings)
+               }
+           }
+       }
+   }
+
     private fun getNoAliment(){
         animatedAlert.animatedCv(binding.cvNoAliment)
         CoroutineScope(Dispatchers.IO).launch{
@@ -176,6 +202,4 @@ class ActivitySettings : AppCompatActivity() {
         val date = dateFormat.format(it.date)
         customSnackBar.showCustomSnackBar(binding.rvSetTingHistory,"$message\n ${it.cost}\n ${date.first}" )
     }
-
-
 }

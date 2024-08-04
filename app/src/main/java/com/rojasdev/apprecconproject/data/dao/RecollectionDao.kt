@@ -3,6 +3,8 @@ package com.rojasdev.apprecconproject.data.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.rojasdev.apprecconproject.data.dataModel.allCollecionAndCollector
+import com.rojasdev.apprecconproject.data.dataModel.totalCollection
 import com.rojasdev.apprecconproject.data.entities.RecollectionEntity
 
 @Dao
@@ -25,4 +27,11 @@ interface RecollectionDao {
 
     @Query("Delete FROM recoleccion")
     suspend fun delete()
+
+    @Query("SELECT sum(re.Cantidad) AS Cantidad, " +
+            "sum(re.Cantidad * con.Precio) AS result " +
+            "FROM Recoleccion re " +
+            "INNER JOIN Configuracion con ON re.Fk_Configuracion = con.PK_ID_Configuracion " +
+            "WHERE re.Fecha LIKE :dates ")
+    suspend fun getTotalKgDate(dates: String): totalCollection
 }
