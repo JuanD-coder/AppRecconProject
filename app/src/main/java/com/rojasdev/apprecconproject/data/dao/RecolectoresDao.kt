@@ -181,6 +181,7 @@ interface RecolectoresDao {
             "FROM recolectores r " +
             "INNER JOIN WorkEntity wor ON r.PK_ID_Recolector = wor.Fk_recolector " +
             "INNER JOIN Configuracion con ON wor.Fk_Configuracion = con.PK_ID_Configuracion " +
-            "WHERE wor.Fecha >= :startDate AND wor.Fecha <= :endDate ")
+            "WHERE wor.Fecha >= :startDate AND wor.Fecha <= :endDate " +
+            "GROUP BY wor.Fk_recolector ")
     suspend fun getWeekPdfWork(startDate:String,endDate:String): List<pdfModel>
 }
