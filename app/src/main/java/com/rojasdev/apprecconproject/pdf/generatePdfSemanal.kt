@@ -270,7 +270,7 @@ class generatePdfSemanal(
                             table.addCell(header)
                     }
 
-                    header.phrase = Phrase("${query[0].cantidad} Kg")
+                    header.phrase = Phrase("${query[0]} Kg")
                         table.addCell(header)
 
                     price.priceSplit(query[0].total.toInt()){

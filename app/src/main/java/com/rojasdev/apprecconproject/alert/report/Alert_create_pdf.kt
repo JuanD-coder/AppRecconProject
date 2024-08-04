@@ -71,8 +71,18 @@ class alert_create_pdf(
                         dialog!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                         dismiss()
                         finished()
+                    }.generatePdfN(uri)
+                }
+               /*
+                binding.textView.text = getString(R.string.monthLoadingPdf)
+                starTimer {
+                    generateMonthPDF(requireContext(), resources){
+                        dialog!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                        dismiss()
+                        finished()
                     }.generatePfd(uri)
                 }
+                */
             }
         }
 

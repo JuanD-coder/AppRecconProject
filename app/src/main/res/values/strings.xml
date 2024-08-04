@@ -84,7 +84,7 @@
     <string name="IMonthDescription">Analiza datos como la productividad y los costos mensuales de la recolección de cafe.</string>
     <string name="monthLoadingPdf">Generando tu informe Mensual de recolección cafetera. ¡Gracias por tu paciencia, valdrá la pena la espera!</string>
     <string name="titlePdfMonth">¡Bienvenido a los Informes Mesuales sobre Administración de la Recolección de Café!</string>
-    <string name="txtPdfMonth">Resumen Mensual de los precios de la Alimentación de </string>
+    <string name="txtPdfMonth">Resumen de los precios de la Alimentación de </string>
     <string name="infoPdfMonth">Información de lo recolectado durante el Mes de </string>
 
     <!-- Recursos del Pdf -->

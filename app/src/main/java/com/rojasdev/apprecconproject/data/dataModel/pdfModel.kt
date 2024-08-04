@@ -6,6 +6,7 @@ data class pdfModel(
     val Estado: String,
     val Alimentacion: String,
     val Fecha: String?,
+    val actividad: String?,
     val Fk_Configuracion: Int,
     val result: Double,
     val total: Double

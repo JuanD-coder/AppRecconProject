@@ -306,10 +306,10 @@ class FragmentWorkReport : Fragment() {
                 visibility = View.GONE
             }
 
-
         binding.rvDatesWork.visibility = visibility
         binding.tvWork.visibility = visibility
         binding.ivWork.visibility = visibility
         binding.lyTotalWork.visibility = visibility
     }
+
 }

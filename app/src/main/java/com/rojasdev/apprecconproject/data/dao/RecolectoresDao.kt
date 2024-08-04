@@ -7,8 +7,8 @@ import com.rojasdev.apprecconproject.data.dataModel.allCollecionAndCollector
 import com.rojasdev.apprecconproject.data.dataModel.allWorkAndCollector
 import com.rojasdev.apprecconproject.data.dataModel.collecionTotalCollector
 import com.rojasdev.apprecconproject.data.dataModel.collectorCollection
-import com.rojasdev.apprecconproject.data.dataModel.monthPdf
-import com.rojasdev.apprecconproject.data.dataModel.totalMonthPdf
+import com.rojasdev.apprecconproject.data.dataModel.pdfModel
+import com.rojasdev.apprecconproject.data.dataModel.totalPdf
 import com.rojasdev.apprecconproject.data.dataModel.weekPdf
 import com.rojasdev.apprecconproject.data.dataModel.workMen
 import com.rojasdev.apprecconproject.data.dataModel.workTotalCollector
@@ -111,6 +111,56 @@ interface RecolectoresDao {
             "WHERE re.Fecha LIKE :dates ORDER BY re.Fecha DESC")
     suspend fun getTotalKgDate(dates: String): List<allCollecionAndCollector>
 
+
+
+    //<-------------------------------- CONSULTAS PARA PFD ---------------------------------------->
+
+    //*PDF-MENSUAL
+
+    //->Recoleccion
+
+    @Query("SELECT r.PK_ID_Recolector, r.name_recolector, re.Estado, con.Alimentacion, " +
+            "re.Fecha, re.Fk_Configuracion, " +
+            "SUM(re.Cantidad) AS result, " +
+            "SUM(con.Precio * re.Cantidad) AS total "  +
+            "FROM recolectores r " +
+            "INNER JOIN Recoleccion re ON r.PK_ID_Recolector = re.Fk_recolector " +
+            "INNER JOIN Configuracion con ON re.Fk_Configuracion = con.PK_ID_Configuracion " +
+            "WHERE re.Fecha LIKE :date AND con.Alimentacion LIKE :aliment " +
+            "GROUP BY re.Fk_recolector, con.Alimentacion")
+    suspend fun getPdfInfo(date: String, aliment: String): List<pdfModel>
+
+    @Query("SELECT con.Precio, " +
+            "SUM(re.Cantidad) AS result, " +
+            "SUM(re.Cantidad * con.Precio) AS total "  +
+            "FROM recolectores r " +
+            "INNER JOIN Recoleccion re ON r.PK_ID_Recolector = re.Fk_recolector " +
+            "INNER JOIN Configuracion con ON re.Fk_Configuracion = con.PK_ID_Configuracion " +
+            "WHERE re.Fecha LIKE :date AND con.Alimentacion LIKE :aliment ")
+    suspend fun getTotalPdf(date: String, aliment: String): List<totalPdf>
+
+    //->Jornales
+
+    @Query("SELECT r.PK_ID_Recolector, r.name_recolector, wor.Estado, wor.actividad, con.Alimentacion, " +
+            "wor.Fecha, wor.Fk_Configuracion, " +
+            "SUM(wor.Cantidad) AS result, " +
+            "SUM(con.Precio * wor.Cantidad) AS total "  +
+            "FROM recolectores r " +
+            "INNER JOIN WorkEntity wor ON r.PK_ID_Recolector = wor.Fk_recolector " +
+            "INNER JOIN Configuracion con ON wor.Fk_Configuracion = con.PK_ID_Configuracion " +
+            "WHERE wor.Fecha LIKE :date " +
+            "GROUP BY wor.Fk_recolector, con.Alimentacion")
+    suspend fun getPdfInfoWork(date: String): List<pdfModel>
+
+    @Query("SELECT con.Precio, " +
+            "SUM(wor.cantidad) AS result, " +
+            "SUM(wor.cantidad * con.Precio) AS total "  +
+            "From WorkEntity wor " +
+            "INNER JOIN Configuracion con ON wor.Fk_Configuracion = con.PK_ID_Configuracion " +
+            "WHERE wor.Fecha LIKE :date")
+    suspend fun getTotalPdfWork(date: String): List<totalPdf>
+//  SEMANAL
+
     @Query("SELECT r.PK_ID_Recolector, r.name_recolector, " +
             "sum(re.Cantidad) AS result, " +
             "sum(con.Precio * re.Cantidad) AS total, "  +
@@ -120,25 +170,17 @@ interface RecolectoresDao {
             "INNER JOIN Configuracion con ON re.Fk_Configuracion = con.PK_ID_Configuracion " +
             "WHERE re.Fecha >= :startDate AND re.Fecha <= :endDate AND con.Alimentacion LIKE :aliment " +
             "GROUP BY re.Fk_recolector, con.Alimentacion")
-    suspend fun getWeekPdf(startDate:String,endDate:String,aliment:String): List<weekPdf>
+    suspend fun getWeekPdf(startDate:String,endDate:String,aliment:String): List<pdfModel>
 
-    @Query("SELECT r.PK_ID_Recolector, r.name_recolector, re.Estado, con.Alimentacion, re.Fecha, re.Fk_Configuracion, " +
-            "SUM(re.Cantidad) AS result, " +
-            "SUM(con.Precio * re.Cantidad) AS total "  +
+    //->Jornales
+
+    @Query("SELECT r.PK_ID_Recolector, r.name_recolector, wor.Estado, wor.actividad, con.Alimentacion, " +
+            "wor.Fecha, wor.Fk_Configuracion, " +
+            "SUM(wor.Cantidad) AS result, " +
+            "SUM(con.Precio * wor.Cantidad) AS total "  +
             "FROM recolectores r " +
-            "INNER JOIN Recoleccion re ON r.PK_ID_Recolector = re.Fk_recolector " +
-            "INNER JOIN Configuracion con ON re.Fk_Configuracion = con.PK_ID_Configuracion " +
-            "WHERE re.Fecha LIKE :date AND con.Alimentacion LIKE :aliment " +
-            "GROUP BY re.Fk_recolector, con.Alimentacion")
-    suspend fun getPdfInfo(date: String, aliment: String): List<monthPdf>
-
-    @Query("SELECT con.Precio, " +
-            "SUM(re.Cantidad) AS result, " +
-            "SUM(re.Cantidad * con.Precio) AS total "  +
-            "FROM recolectores r " +
-            "INNER JOIN Recoleccion re ON r.PK_ID_Recolector = re.Fk_recolector " +
-            "INNER JOIN Configuracion con ON re.Fk_Configuracion = con.PK_ID_Configuracion " +
-            "WHERE re.Fecha LIKE :date AND con.Alimentacion LIKE :aliment ")
-    suspend fun getTotalPdf(date: String, aliment: String): List<totalMonthPdf>
-
+            "INNER JOIN WorkEntity wor ON r.PK_ID_Recolector = wor.Fk_recolector " +
+            "INNER JOIN Configuracion con ON wor.Fk_Configuracion = con.PK_ID_Configuracion " +
+            "WHERE wor.Fecha >= :startDate AND wor.Fecha <= :endDate ")
+    suspend fun getWeekPdfWork(startDate:String,endDate:String): List<pdfModel>
 }
