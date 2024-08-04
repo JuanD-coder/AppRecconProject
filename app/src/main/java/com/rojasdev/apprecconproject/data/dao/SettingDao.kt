@@ -32,13 +32,13 @@ interface SettingDao {
     @Query("SELECT * FROM configuracion WHERE Estado == :state AND Alimentacion != 'yes' AND Alimentacion != 'no'")
     suspend fun getPriceWorkState(state : String): List<SettingEntity>
 
-    @Query("SELECT con.Precio, sum(re.Cantidad) as cantidad, sum(re.Cantidad * con.Precio) as total " +
+    @Query("SELECT con.Precio, sum(re.Cantidad) as result, sum(re.Cantidad * con.Precio) as total " +
             "FROM configuracion con  " +
             "INNER JOIN Recoleccion re ON con.PK_ID_Configuracion = re.Fk_Configuracion " +
             "WHERE re.Fecha >= :startDate AND re.Fecha <= :endDate AND con.Alimentacion LIKE :aliment")
     suspend fun getTotalPdfWeek(startDate:String,endDate:String,aliment:String): List<totalPdf>
 
-    @Query("SELECT con.Precio, sum(wor.Cantidad) as cantidad, sum(wor.Cantidad * con.Precio) as total " +
+    @Query("SELECT con.Precio, sum(wor.Cantidad) as result, sum(wor.Cantidad * con.Precio) as total " +
             "FROM configuracion con  " +
             "INNER JOIN WorkEntity wor ON con.PK_ID_Configuracion = wor.Fk_Configuracion " +
             "WHERE wor.Fecha >= :startDate AND wor.Fecha <= :endDate")

@@ -44,14 +44,13 @@ class alert_create_pdf(
         binding.progressBar.isIndeterminate = true
 
         when (pdf) {
-            getString(R.string.year) -> {
-                binding.textView.text = getString(R.string.yearLoadingPdf)
+            getString(R.string.year) -> {binding.textView.text = getString(R.string.yearLoadingPdf)
                 starTimer {
-                    generateYearPDF(requireContext(), resources){
+                    generatePdfSemanal(requireContext(), resources){
                         dialog!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                         dismiss()
                         finished()
-                    }.generateYearPdf(uri)
+                    }.generatePdfN(uri)
                 }
             }
             getString(R.string.week) -> {
@@ -61,7 +60,7 @@ class alert_create_pdf(
                         dialog!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                         dismiss()
                         finished()
-                    }.generate(uri)
+                    }.generatePdfN(uri)
                 }
             }
             else -> {
@@ -73,16 +72,6 @@ class alert_create_pdf(
                         finished()
                     }.generatePdfN(uri)
                 }
-               /*
-                binding.textView.text = getString(R.string.monthLoadingPdf)
-                starTimer {
-                    generateMonthPDF(requireContext(), resources){
-                        dialog!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-                        dismiss()
-                        finished()
-                    }.generatePfd(uri)
-                }
-                */
             }
         }
 

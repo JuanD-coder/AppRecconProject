@@ -43,15 +43,8 @@ generateMonthPDF(
      // Get phone date
      private val calendar = Calendar.getInstance().time
      private val formatOriginal = SimpleDateFormat("yyyy-MM", Locale("es", "CO"))
-     private val format = SimpleDateFormat("MMMM 'del Año' yyyy", Locale("es", "CO"))
 
     private val date = formatOriginal.format(calendar)
-    private val fechaParseada: Date = try {
-                    formatOriginal.parse(date) ?: Date()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    Date()
-                }
 
     val titlePdf = context.getString(R.string.titlePdfMonth)
 
