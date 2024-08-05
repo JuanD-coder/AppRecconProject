@@ -6,6 +6,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,6 +26,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         startActivity(Intent(this, ActivityMainModule::class.java))
+
+        val url = intent.getStringExtra("url")
+        if (url != null) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(intent)
+        } else {
+            Log.e("ActivityUrl", "No se encontro url")
+        }
+
         askNotificationPermission()
         sheduleNotification()
     }

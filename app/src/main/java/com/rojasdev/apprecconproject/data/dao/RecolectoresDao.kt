@@ -9,7 +9,6 @@ import com.rojasdev.apprecconproject.data.dataModel.collecionTotalCollector
 import com.rojasdev.apprecconproject.data.dataModel.collectorCollection
 import com.rojasdev.apprecconproject.data.dataModel.pdfModel
 import com.rojasdev.apprecconproject.data.dataModel.totalPdf
-import com.rojasdev.apprecconproject.data.dataModel.weekPdf
 import com.rojasdev.apprecconproject.data.dataModel.workMen
 import com.rojasdev.apprecconproject.data.dataModel.workTotalCollector
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
