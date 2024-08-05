@@ -48,34 +48,6 @@ generateMonthPDF(
 
     val titlePdf = context.getString(R.string.titlePdfMonth)
 
-    fun generatePdfN(uri: Uri){
-        CoroutineScope(Dispatchers.IO).launch {
-            val query1 = AppDataBase.getInstance(context).RecolectoresDao().getPdfInfo("${date}%", "yes")
-            val query2 = AppDataBase.getInstance(context).RecolectoresDao().getPdfInfo("${date}%", "no")
-            val yesAlimentTotal = AppDataBase.getInstance(context).RecolectoresDao().getTotalPdf("${date}%", "yes")
-            val noAlimentTotal = AppDataBase.getInstance(context).RecolectoresDao().getTotalPdf("${date}%", "no")
-            val queryWork = AppDataBase.getInstance(context).RecolectoresDao().getPdfInfoWork("${date}%")
-            val workTotal = AppDataBase.getInstance(context).RecolectoresDao().getTotalPdfWork("${date}%")
-            val active = AppDataBase.getInstance(context).SettingDao().getAlimentState("active")
-            val archive = AppDataBase.getInstance(context).SettingDao().getAlimentState("archived")
-            launch(Dispatchers.Main) {
-                generatePDF(
-                    titlePdf,
-                    context,
-                    resources,
-                    active,
-                    archive,
-                    query1,
-                    query2,
-                    yesAlimentTotal,
-                    noAlimentTotal,
-                    queryWork,
-                    workTotal,
-                ){
-                   location()
-                }.generatePfd(uri)
-            }
-        }
-    }
+
 
 }

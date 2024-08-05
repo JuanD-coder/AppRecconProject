@@ -46,11 +46,11 @@ class alert_create_pdf(
         when (pdf) {
             getString(R.string.year) -> {binding.textView.text = getString(R.string.yearLoadingPdf)
                 starTimer {
-                    generatePdfSemanal(requireContext(), resources){
+                    generateYearPDF(requireContext(), resources){
                         dialog!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                         dismiss()
                         finished()
-                    }.generatePdfN(uri)
+                    }.generateYearPdf(uri)
                 }
             }
             getString(R.string.week) -> {
