@@ -213,7 +213,6 @@ class generatePDF(
                             tablePrice.addCell(header)
                         }
                     }
-
                     document.add(tablePrice)
                     ready()
                 }

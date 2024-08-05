@@ -45,7 +45,6 @@ class generatePdfSemanal(
 
     private fun getStarAndEndWeek(): Pair<String, String> {
         val calendar = Calendar.getInstance()
-
         // Encontrar el día de la semana actual
         val diaSemanaActual = calendar.get(Calendar.DAY_OF_WEEK)
 

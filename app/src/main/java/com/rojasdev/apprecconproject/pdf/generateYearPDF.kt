@@ -48,7 +48,6 @@ class generateYearPDF(
     @SuppressLint("SuspiciousIndentation")
     fun generateYearPdf(uri: Uri){
         val titlePdf = context.getString(R.string.titlePdfYear)
-
         fun generatePdfN(uri: Uri){
             CoroutineScope(Dispatchers.IO).launch {
                 val query1 =

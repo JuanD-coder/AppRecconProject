@@ -45,7 +45,6 @@ generateMonthPDF(
      private val formatOriginal = SimpleDateFormat("yyyy-MM", Locale("es", "CO"))
 
     private val date = formatOriginal.format(calendar)
-
     val titlePdf = context.getString(R.string.titlePdfMonth)
 
     fun generatePdfN(uri: Uri){

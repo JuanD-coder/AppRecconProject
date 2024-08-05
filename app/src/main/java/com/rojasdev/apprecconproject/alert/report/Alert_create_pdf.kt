@@ -53,6 +53,7 @@ class alert_create_pdf(
                     }.generatePdfN(uri)
                 }
             }
+
             getString(R.string.week) -> {
                 binding.textView.text = getString(R.string.weekLoadingPdf)
                 starTimer {
@@ -63,6 +64,7 @@ class alert_create_pdf(
                     }.generatePdfN(uri)
                 }
             }
+
             else -> {
                 binding.textView.text = getString(R.string.monthLoadingPdf)
                 starTimer {
