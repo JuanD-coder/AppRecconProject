@@ -43,10 +43,6 @@ class generateYearPDF(
     private val formatOriginal = SimpleDateFormat("yyyy", Locale("es", "ES"))
     private val dateYear = formatOriginal.format(calendar)
 
-    private var txtFont: Font = FontFactory.getFont("arial", 12f, Font.BOLD)
-
-    @SuppressLint("SuspiciousIndentation")
-    fun generateYearPdf(uri: Uri){
         val titlePdf = context.getString(R.string.titlePdfYear)
         fun generatePdfN(uri: Uri){
             CoroutineScope(Dispatchers.IO).launch {
@@ -83,5 +79,4 @@ class generateYearPDF(
                 }
             }
         }
-    }
 }

@@ -50,7 +50,7 @@ class alert_create_pdf(
                         dialog!!.window!!.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                         dismiss()
                         finished()
-                    }.generateYearPdf(uri)
+                    }.generatePdfN(uri)
                 }
             }
 
