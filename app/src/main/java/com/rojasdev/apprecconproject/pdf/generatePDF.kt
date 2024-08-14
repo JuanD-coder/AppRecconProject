@@ -104,8 +104,7 @@ class generatePDF(
             )
             contentByte.fill()
 
-            val squarePosition =
-                Rectangle(PageSize.A4.width - 175.0, PageSize.A4.height - 150.0, 110.0, 110.0)
+            val squarePosition = Rectangle(PageSize.A4.width - 175.0, PageSize.A4.height - 150.0, 110.0, 110.0)
             val borderRadius = 20.0
 
             // Cuadrado
@@ -131,8 +130,7 @@ class generatePDF(
             image.scaleToFit(130f, 130f)
 
             // Pdf Title
-            val titleFont: Font =
-                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 21F, BaseColor.WHITE)
+            val titleFont: Font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 21F, BaseColor.WHITE)
             val titlePdf = Paragraph("\n${title}\n", titleFont)
 
             val cellText = PdfPCell(titlePdf)
@@ -158,35 +156,20 @@ class generatePDF(
             tableInfo.horizontalAlignment = Element.ALIGN_LEFT
             tableInfo.widthPercentage = 75f
 
-            val txtFont: Font =
-                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18F, BaseColor.BLACK)
-
+            val txtFont: Font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18F, BaseColor.BLACK)
+            
             document.add(tableInfo)
 
             // Function
             createTableAliment(settingActive, context.getString(R.string.actualPrice), document) {
 
-                createTableAliment(
-                    settingArchive,
-                    context.getString(R.string.previousPrice),
-                    document
-                ) {
+                createTableAliment(settingArchive,context.getString(R.string.previousPrice), document) {
 
-                    createTableMonth(
-                        collectionNo,
-                        context.getString(R.string.notAliment),
-                        document,
-                        false
-                    ) {
+                    createTableMonth(collectionNo,context.getString(R.string.notAliment), document, false) {
 
-                        totalTable(totalYes, document) {
+                        totalTable(totalYes,document){
 
-                            createTableMonth(
-                                collectionYes,
-                                context.getString(R.string.yesAliment),
-                                document,
-                                false
-                            ) {
+                            createTableMonth(collectionYes,context.getString(R.string.yesAliment), document, false) {
 
                                 totalTable(totalNo, document) {
 
@@ -364,10 +347,8 @@ class generatePDF(
 
             document.add(columns)
 
-            val txtInfoFont: Font =
-                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18F, BaseColor.BLACK)
-            val txtInfo =
-                Paragraph("${context.getString(R.string.totalInfoYear)} \n\n", txtInfoFont)
+            val txtInfoFont: Font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18F, BaseColor.BLACK)
+            val txtInfo =  Paragraph("${context.getString(R.string.totalInfoYear)} \n\n", txtInfoFont)
             txtInfo.alignment = Element.ALIGN_LEFT
 
             document.add(txtInfo)
