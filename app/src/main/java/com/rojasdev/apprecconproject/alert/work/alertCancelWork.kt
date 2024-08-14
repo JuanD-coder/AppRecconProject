@@ -12,14 +12,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rojasdev.apprecconproject.R
-import com.rojasdev.apprecconproject.adapters.adapterRvCancelCollection
 import com.rojasdev.apprecconproject.adapters.adapterRvCancelWork
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.controllerTheme
 import com.rojasdev.apprecconproject.controller.price
-import com.rojasdev.apprecconproject.data.dataModel.collecionTotalCollector
-import com.rojasdev.apprecconproject.data.dataModel.collectorCollection
 import com.rojasdev.apprecconproject.data.dataModel.workMen
 import com.rojasdev.apprecconproject.data.dataModel.workTotalCollector
 import com.rojasdev.apprecconproject.databinding.AlertCancelCollectionBinding

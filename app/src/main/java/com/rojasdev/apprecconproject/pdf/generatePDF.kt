@@ -69,7 +69,7 @@ class generatePDF(
     private var txtFont: Font = FontFactory.getFont("arial", 12f, Font.BOLD)
 
     @SuppressLint("SuspiciousIndentation")
-    fun generatePfd(uri: Uri){
+    fun generatePfd(uri: Uri) {
 
         try {
 
@@ -84,19 +84,38 @@ class generatePDF(
 
             // Background del encabezado
             byte.setColorFill(BaseColor(74, 120, 74))
-            byte.roundRectangle(0f, PageSize.A4.height * 7 / 8, PageSize.A4.width, PageSize.A4.height / 8, 0f)
+            byte.roundRectangle(
+                0f,
+                PageSize.A4.height * 7 / 8,
+                PageSize.A4.width,
+                PageSize.A4.height / 8,
+                0f
+            )
             byte.fill()
 
             // Background del encabezado
             contentByte.setColorFill(BaseColor(74, 120, 74))
-            contentByte.roundRectangle(0f, PageSize.A4.height * 4 / 5, PageSize.A4.width, PageSize.A4.height / 5, 35f)
+            contentByte.roundRectangle(
+                0f,
+                PageSize.A4.height * 4 / 5,
+                PageSize.A4.width,
+                PageSize.A4.height / 5,
+                35f
+            )
             contentByte.fill()
 
-            val squarePosition = Rectangle(PageSize.A4.width - 175.0, PageSize.A4.height - 150.0, 110.0, 110.0)
+            val squarePosition =
+                Rectangle(PageSize.A4.width - 175.0, PageSize.A4.height - 150.0, 110.0, 110.0)
             val borderRadius = 20.0
 
             // Cuadrado
-            square.roundRectangle(squarePosition.x, squarePosition.y, squarePosition.width, squarePosition.height, borderRadius)
+            square.roundRectangle(
+                squarePosition.x,
+                squarePosition.y,
+                squarePosition.width,
+                squarePosition.height,
+                borderRadius
+            )
             square.setColorFill(BaseColor.WHITE)
             square.fillStroke()
 
@@ -112,7 +131,8 @@ class generatePDF(
             image.scaleToFit(130f, 130f)
 
             // Pdf Title
-            val titleFont: Font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 21F, BaseColor.WHITE)
+            val titleFont: Font =
+                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 21F, BaseColor.WHITE)
             val titlePdf = Paragraph("\n${title}\n", titleFont)
 
             val cellText = PdfPCell(titlePdf)
@@ -138,32 +158,47 @@ class generatePDF(
             tableInfo.horizontalAlignment = Element.ALIGN_LEFT
             tableInfo.widthPercentage = 75f
 
-            val txtFont: Font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18F, BaseColor.BLACK)
-            
+            val txtFont: Font =
+                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18F, BaseColor.BLACK)
+
             document.add(tableInfo)
 
             // Function
             createTableAliment(settingActive, context.getString(R.string.actualPrice), document) {
 
-                createTableAliment(settingArchive,context.getString(R.string.previousPrice), document) {
+                createTableAliment(
+                    settingArchive,
+                    context.getString(R.string.previousPrice),
+                    document
+                ) {
 
-                    createTableMonth(collectionNo,context.getString(R.string.notAliment), document, false) {
+                    createTableMonth(
+                        collectionNo,
+                        context.getString(R.string.notAliment),
+                        document,
+                        false
+                    ) {
 
-                        totalTable(totalYes,document){
+                        totalTable(totalYes, document) {
 
-                            createTableMonth(collectionYes,context.getString(R.string.yesAliment), document, false) {
+                            createTableMonth(
+                                collectionYes,
+                                context.getString(R.string.yesAliment),
+                                document,
+                                false
+                            ) {
 
-                               totalTable(totalNo,document){
+                                totalTable(totalNo, document) {
 
-                                   createTableWork(work,"Jornales",document){
+                                    createTableWork(work, "Jornales", document) {
 
-                                       totalTableWork(workTotal,document){
-                                           finish(document)
-                                       }
+                                        totalTableWork(workTotal, document) {
+                                            finish(document)
+                                        }
 
-                                   }
+                                    }
 
-                               }
+                                }
 
                             }
                         }
@@ -180,43 +215,44 @@ class generatePDF(
     }
 
     private fun createTableAliment(
-        query:List<SettingEntity>,
+        query: List<SettingEntity>,
         title: String,
-        document: Document, ready : () -> Unit){
-                if (query.isEmpty()){
-                    notData(title,document){
-                        ready()
-                    }
+        document: Document, ready: () -> Unit
+    ) {
+        if (query.isEmpty()) {
+            notData(title, document) {
+                ready()
+            }
+        } else {
+            val tablePrice = PdfPTable(2)
+            tablePrice.horizontalAlignment = Element.ALIGN_LEFT
+            tablePrice.widthPercentage = 50f
+            val header = PdfPCell()
+
+            tableTitle(title, 50f, document, false)
+
+            for (item in query) {
+                header.horizontalAlignment = Element.ALIGN_CENTER
+                if (item.feeding == "yes") {
+                    header.phrase = Phrase("si")
+                    tablePrice.addCell(header)
+                } else if (item.feeding == "no") {
+                    header.phrase = Phrase("no")
+                    tablePrice.addCell(header)
                 } else {
-                    val tablePrice = PdfPTable(2)
-                    tablePrice.horizontalAlignment = Element.ALIGN_LEFT
-                    tablePrice.widthPercentage = 50f
-                    val header = PdfPCell()
-
-                    tableTitle(title,50f, document,false)
-
-                for(item in query){
-                        header.horizontalAlignment = Element.ALIGN_CENTER
-                        if (item.feeding == "yes"){
-                            header.phrase = Phrase("si")
-                            tablePrice.addCell(header)
-                        }else if (item.feeding == "no"){
-                            header.phrase = Phrase("no")
-                            tablePrice.addCell(header)
-                        }else{
-                            header.phrase = Phrase(item.feeding)
-                            tablePrice.addCell(header)
-                        }
-
-                        price.priceSplit(item.cost){
-                            header.phrase = Phrase(it)
-                            tablePrice.addCell(header)
-                        }
-                    }
-
-                    document.add(tablePrice)
-                    ready()
+                    header.phrase = Phrase(item.feeding)
+                    tablePrice.addCell(header)
                 }
+
+                price.priceSplit(item.cost) {
+                    header.phrase = Phrase(it)
+                    tablePrice.addCell(header)
+                }
+            }
+
+            document.add(tablePrice)
+            ready()
+        }
     }
 
     @SuppressLint("SuspiciousIndentation")
@@ -225,86 +261,25 @@ class generatePDF(
         title: String,
         document: Document,
         work: Boolean,
-        ready: () -> Unit){
-                if (query.isNotEmpty()){
-                    val columns = PdfPTable(5)
-                    columns.horizontalAlignment = Element.ALIGN_LEFT
-                    columns.widthPercentage = 100f
-                    val header = PdfPCell()
-                    header.verticalAlignment = Element.ALIGN_CENTER
-                    header.horizontalAlignment = Element.ALIGN_CENTER
-
-                    tableTitle(title,100f, document, work) // title
-                    itemsTable(columns, header, false)
-
-                    for (item in query){
-                        header.phrase = Phrase(item.name_recolector)
-                        columns.addCell(header)
-                        header.phrase = Phrase("${item.result} Kg")
-                        columns.addCell(header)
-                        price.priceSplit(item.total.toInt()){
-                            header.phrase = Phrase(it)
-                            columns.addCell(header)
-                        }
-
-                        header.phrase = Phrase(item.Fecha)
-                        columns.addCell(header)
-
-                        if (item.Estado == "active"){
-                            header.phrase = Phrase(context.getString(R.string.stateActive))
-                            columns.addCell(header)
-                        } else {
-                            header.phrase = Phrase(context.getString(R.string.stateArchive))
-                            columns.addCell(header)
-                        }
-
-                    }
-
-                    document.add(columns)
-
-                    val txtInfoFont: Font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18F, BaseColor.BLACK)
-                    val txtInfo =  Paragraph("${context.getString(R.string.totalInfoYear)} \n\n", txtInfoFont)
-                    txtInfo.alignment = Element.ALIGN_LEFT
-
-                    document.add(txtInfo)
-
-                    ready()
-                }else{
-                    notData(title, document){
-                        ready()
-                    }
-                }
-
-    }
-
-    @SuppressLint("SuspiciousIndentation")
-    private fun createTableWork(
-        query: List<pdfModel>,
-        title: String,
-        document: Document,
-        ready: () -> Unit){
-        if (query.isNotEmpty()){
-            val columns = PdfPTable(6)
+        ready: () -> Unit
+    ) {
+        if (query.isNotEmpty()) {
+            val columns = PdfPTable(5)
             columns.horizontalAlignment = Element.ALIGN_LEFT
             columns.widthPercentage = 100f
             val header = PdfPCell()
             header.verticalAlignment = Element.ALIGN_CENTER
             header.horizontalAlignment = Element.ALIGN_CENTER
 
-            tableTitle(title,100f, document, true) // title
-            itemsTable(columns, header, true)
+            tableTitle(title, 100f, document, work) // title
+            itemsTable(columns, header, false)
 
-            for (item in query){
+            for (item in query) {
                 header.phrase = Phrase(item.name_recolector)
                 columns.addCell(header)
-
-                header.phrase = Phrase(item.result.toInt().toString())
+                header.phrase = Phrase("${item.result} Kg")
                 columns.addCell(header)
-
-                header.phrase = Phrase(item.actividad)
-                columns.addCell(header)
-
-                price.priceSplit(item.total.toInt()){
+                price.priceSplit(item.total.toInt()) {
                     header.phrase = Phrase(it)
                     columns.addCell(header)
                 }
@@ -312,7 +287,7 @@ class generatePDF(
                 header.phrase = Phrase(item.Fecha)
                 columns.addCell(header)
 
-                if (item.Estado == "active"){
+                if (item.Estado == "active") {
                     header.phrase = Phrase(context.getString(R.string.stateActive))
                     columns.addCell(header)
                 } else {
@@ -324,15 +299,17 @@ class generatePDF(
 
             document.add(columns)
 
-            val txtInfoFont: Font = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18F, BaseColor.BLACK)
-            val txtInfo =  Paragraph("${context.getString(R.string.totalInfoYear)} \n\n", txtInfoFont)
+            val txtInfoFont: Font =
+                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18F, BaseColor.BLACK)
+            val txtInfo =
+                Paragraph("${context.getString(R.string.totalInfoYear)} \n\n", txtInfoFont)
             txtInfo.alignment = Element.ALIGN_LEFT
 
             document.add(txtInfo)
 
             ready()
-        }else{
-            notData(title, document){
+        } else {
+            notData(title, document) {
                 ready()
             }
         }
@@ -340,59 +317,124 @@ class generatePDF(
     }
 
     @SuppressLint("SuspiciousIndentation")
-    private fun totalTable(query: List<totalPdf>, document: Document, ready: () -> Unit){
-                if (query.isNotEmpty()){
-                    val columns = PdfPTable(4)
-                    columns.widthPercentage = 100f
-                    val header = PdfPCell()
-                    header.verticalAlignment = Element.ALIGN_CENTER
-                    header.horizontalAlignment = Element.ALIGN_CENTER
-                    header.borderWidth = 0f
+    private fun createTableWork(
+        query: List<pdfModel>,
+        title: String,
+        document: Document,
+        ready: () -> Unit
+    ) {
+        if (query.isNotEmpty()) {
+            val columns = PdfPTable(6)
+            columns.horizontalAlignment = Element.ALIGN_LEFT
+            columns.widthPercentage = 100f
+            val header = PdfPCell()
+            header.verticalAlignment = Element.ALIGN_CENTER
+            header.horizontalAlignment = Element.ALIGN_CENTER
 
-                    val listCell = listOf(
-                        context.getString(R.string.princeTotal),
-                        context.getString(R.string.tvRecolection),
-                        context.getString(R.string.valorTotal),
-                        context.getString(R.string.total)
+            tableTitle(title, 100f, document, true) // title
+            itemsTable(columns, header, true)
 
-                    )
+            for (item in query) {
+                header.phrase = Phrase(item.name_recolector)
+                columns.addCell(header)
 
-                    txtFont.color = BaseColor.WHITE
-                    txtFont.size = 12f
+                header.phrase = Phrase(item.result.toInt().toString())
+                columns.addCell(header)
 
-                    header.phrase = Phrase("")
+                header.phrase = Phrase(item.actividad)
+                columns.addCell(header)
+
+                price.priceSplit(item.total.toInt()) {
+                    header.phrase = Phrase(it)
                     columns.addCell(header)
-                    header.borderWidth = 0.5f
-                    header.backgroundColor = BaseColor(74, 120, 74)
-
-                    for (item in listCell){
-                        header.horizontalAlignment = Element.ALIGN_CENTER
-                        header.phrase = Phrase(item, txtFont)
-                        columns.addCell(header)
-                    }
-
-                    header.backgroundColor = BaseColor.WHITE
-                    price.priceSplit(query[0].Precio){
-                        header.phrase = Phrase(it)
-                        columns.addCell(header)
-                    }
-
-                    header.phrase = Phrase("${query[0].result} Kg")
-                    columns.addCell(header)
-
-                    price.priceSplit(query[0].total.toInt()){
-                        header.phrase = Phrase(it)
-                        columns.addCell(header)
-                    }
-
-                    document.add(columns)
-                    ready()
                 }
+
+                header.phrase = Phrase(item.Fecha)
+                columns.addCell(header)
+
+                if (item.Estado == "active") {
+                    header.phrase = Phrase(context.getString(R.string.stateActive))
+                    columns.addCell(header)
+                } else {
+                    header.phrase = Phrase(context.getString(R.string.stateArchive))
+                    columns.addCell(header)
+                }
+
+            }
+
+            document.add(columns)
+
+            val txtInfoFont: Font =
+                FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18F, BaseColor.BLACK)
+            val txtInfo =
+                Paragraph("${context.getString(R.string.totalInfoYear)} \n\n", txtInfoFont)
+            txtInfo.alignment = Element.ALIGN_LEFT
+
+            document.add(txtInfo)
+
+            ready()
+        } else {
+            notData(title, document) {
+                ready()
+            }
+        }
+
     }
 
     @SuppressLint("SuspiciousIndentation")
-    private fun totalTableWork(query: List<totalPdf>, document: Document, ready: () -> Unit){
-        if (query.isNotEmpty()){
+    private fun totalTable(query: List<totalPdf>, document: Document, ready: () -> Unit) {
+        if (query.isNotEmpty()) {
+            val columns = PdfPTable(4)
+            columns.widthPercentage = 100f
+            val header = PdfPCell()
+            header.verticalAlignment = Element.ALIGN_CENTER
+            header.horizontalAlignment = Element.ALIGN_CENTER
+            header.borderWidth = 0f
+
+            val listCell = listOf(
+                context.getString(R.string.princeTotal),
+                context.getString(R.string.tvRecolection),
+                context.getString(R.string.valorTotal),
+                context.getString(R.string.total)
+
+            )
+
+            txtFont.color = BaseColor.WHITE
+            txtFont.size = 12f
+
+            header.phrase = Phrase("")
+            columns.addCell(header)
+            header.borderWidth = 0.5f
+            header.backgroundColor = BaseColor(74, 120, 74)
+
+            for (item in listCell) {
+                header.horizontalAlignment = Element.ALIGN_CENTER
+                header.phrase = Phrase(item, txtFont)
+                columns.addCell(header)
+            }
+
+            header.backgroundColor = BaseColor.WHITE
+            price.priceSplit(query[0].Precio) {
+                header.phrase = Phrase(it)
+                columns.addCell(header)
+            }
+
+            header.phrase = Phrase("${query[0].result} Kg")
+            columns.addCell(header)
+
+            price.priceSplit(query[0].total.toInt()) {
+                header.phrase = Phrase(it)
+                columns.addCell(header)
+            }
+
+            document.add(columns)
+            ready()
+        }
+    }
+
+    @SuppressLint("SuspiciousIndentation")
+    private fun totalTableWork(query: List<totalPdf>, document: Document, ready: () -> Unit) {
+        if (query.isNotEmpty()) {
             val columns = PdfPTable(4)
             columns.widthPercentage = 100f
             val header = PdfPCell()
@@ -416,14 +458,14 @@ class generatePDF(
             header.borderWidth = 0.5f
             header.backgroundColor = BaseColor(74, 120, 74)
 
-            for (item in listCell){
+            for (item in listCell) {
                 header.horizontalAlignment = Element.ALIGN_CENTER
                 header.phrase = Phrase(item, txtFont)
                 columns.addCell(header)
             }
 
             header.backgroundColor = BaseColor.WHITE
-            price.priceSplit(query[0].Precio){
+            price.priceSplit(query[0].Precio) {
                 header.phrase = Phrase(it)
                 columns.addCell(header)
             }
@@ -431,7 +473,7 @@ class generatePDF(
             header.phrase = Phrase(query[0].result.toInt().toString())
             columns.addCell(header)
 
-            price.priceSplit(query[0].total.toInt()){
+            price.priceSplit(query[0].total.toInt()) {
                 header.phrase = Phrase(it)
                 columns.addCell(header)
             }
@@ -441,7 +483,7 @@ class generatePDF(
         }
     }
 
-    private fun tableTitle(title: String, width: Float, document: Document, work:Boolean){
+    private fun tableTitle(title: String, width: Float, document: Document, work: Boolean) {
         val tableTitle = PdfPTable(1)
         tableTitle.horizontalAlignment = Element.ALIGN_LEFT
         tableTitle.widthPercentage = width
@@ -460,8 +502,8 @@ class generatePDF(
         document.add(tableTitle)
     }
 
-    private fun itemsTable(columns: PdfPTable, header: PdfPCell, work: Boolean ){
-        val listCell = if (work == true){
+    private fun itemsTable(columns: PdfPTable, header: PdfPCell, work: Boolean) {
+        val listCell = if (work == true) {
             listOf(
                 context.getString(R.string.name),
                 context.getString(R.string.daysWork),
@@ -470,7 +512,7 @@ class generatePDF(
                 context.getString(R.string.date),
                 context.getString(R.string.state)
             )
-        }else{
+        } else {
             listOf(
                 context.getString(R.string.name),
                 context.getString(R.string.recolection),
@@ -481,14 +523,14 @@ class generatePDF(
         }
         txtFont.color = BaseColor.BLACK
 
-        for (it in listCell){
+        for (it in listCell) {
             header.horizontalAlignment = Element.ALIGN_CENTER
             header.phrase = Phrase(it, txtFont)
             columns.addCell(header)
         }
     }
 
-    private fun finish(document: Document){
+    private fun finish(document: Document) {
         val titleFont: Font = FontFactory.getFont(FontFactory.HELVETICA, 16f, BaseColor.BLACK)
         val title = Paragraph("\n${context.getString(R.string.pdfFinish)}", titleFont)
         title.alignment = Element.ALIGN_CENTER

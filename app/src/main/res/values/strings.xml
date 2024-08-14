@@ -11,6 +11,7 @@
     <string name="recolector">Recolector(a)</string>
     <string name="price">$</string>
     <string name="priceTitle">Precios</string>
+    <string name="btnAddPriceWork">Agregar nuevo precio</string>
 
     <!-- Informers -->
     <string name="report">Informe</string>
@@ -214,7 +215,7 @@
     <string name="priceWork">Precio del Jornal</string>
     <string name="descriptionWork">ahora tambien puedes registar tus tareas diarias para gestionar mejor tu empresa</string>
     <string name="Work">Jornal</string>
-    <string name="btnAddWork">guaedar precio</string>
+    <string name="btnAddWork">guardar precio</string>
     <string name="work">Jornales</string>
     <string name="workMen">Jornaleros</string>
     <!-- TODO: Remove or change this placeholder text -->

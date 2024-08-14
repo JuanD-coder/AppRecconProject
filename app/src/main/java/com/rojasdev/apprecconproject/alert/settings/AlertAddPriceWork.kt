@@ -16,14 +16,17 @@ import com.rojasdev.apprecconproject.controller.dateFormat
 import com.rojasdev.apprecconproject.controller.keyLIstener
 import com.rojasdev.apprecconproject.controller.requireInput
 import com.rojasdev.apprecconproject.controller.textListener
+import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
 import com.rojasdev.apprecconproject.data.entities.SettingEntity
 import com.rojasdev.apprecconproject.databinding.AlertPricesWorkBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class alertAddPriceWork(
     val onClickListener: (SettingEntity) -> Unit,
     val finished: (Boolean) -> Unit
-): DialogFragment() {
-    var pricesInsert = 4
+) : DialogFragment() {
     private lateinit var binding: AlertPricesWorkBinding
     private var insertCollector = false
 
@@ -49,23 +52,27 @@ class alertAddPriceWork(
     }
 
     private fun dates(view: View) {
-        if (pricesInsert != 0){
-            pricesInsert = pricesInsert - 1
-            insertCollector = true
-            val priceWork = binding.price.text.toString()
-            var nameWork = binding.nameWork.text.toString()
-            val addUser = SettingEntity(
-                null,
-                nameWork,
-                priceWork.toInt(),
-                "active",
-                dateFormat.main()
-            )
-            customSnackBar.showCustomSnackBar(view,"Precio de  $nameWork guardado. pruedes guardar $pricesInsert mas")
-            onClickListener(addUser)
-        }else{
-            customSnackBar.showCustomSnackBar(view,"Limite de precios")
-            dismiss()
+        val priceWork = binding.price.text.toString()
+        val nameWork = binding.nameWork.text.toString()
+        CoroutineScope(Dispatchers.IO).launch {
+            val count = AppDataBase.getInstance(requireContext()).SettingDao().getPriceWorkCount()
+            val remainingAttempts = 5 - count
+            launch(Dispatchers.Main) {
+                if (count >= 5) {
+                    customSnackBar.showCustomSnackBar(view, "Límite de precios alcanzado")
+                    dismiss()
+                } else {
+                    val addUser = SettingEntity(
+                        null,
+                        nameWork,
+                        priceWork.toInt(),
+                        "active",
+                        dateFormat.main()
+                    )
+                    customSnackBar.showCustomSnackBar(view, "Precio de  $nameWork guardado. Te quedan $remainingAttempts intentos. ")
+                    onClickListener(addUser)
+                }
+            }
         }
     }
 
@@ -78,39 +85,40 @@ class alertAddPriceWork(
         }
     }
 
-    private fun add(){
+    private fun add() {
         binding.btReady.text = getString(R.string.btnAddWork)
         val myListInput = listOf(
             binding.nameWork,
             binding.price
         )
 
-        keyLIstener.start(binding.price){
-            val required = requireInput.validate(myListInput,requireContext())
-            if (required){
+        keyLIstener.start(binding.price) {
+            val required = requireInput.validate(myListInput, requireContext())
+            if (required) {
                 dates(binding.btReady)
                 binding.btReady.setText("")
             }
         }
 
         binding.btReady.setOnClickListener {
-            val required = requireInput.validate(myListInput,requireContext())
-            if (required){
+            val required = requireInput.validate(myListInput, requireContext())
+            if (required) {
                 dates(it)
                 binding.price.setText("")
                 binding.nameWork.setText("")
             }
         }
     }
-    private fun finish(){
+
+    private fun finish() {
         binding.btReady.text = getString(R.string.finish)
         binding.btReady.setOnClickListener {
             allUser()
         }
     }
 
-    private fun buttons (){
-        binding.btnClose.setOnClickListener{
+    private fun buttons() {
+        binding.btnClose.setOnClickListener {
             finished(false)
             dismiss()
         }

@@ -56,7 +56,6 @@ class ActivityMainModule : AppCompatActivity() {
         })
 
         getRGPD()
-
         checkRegister()
 
         binding.cvWork.setOnClickListener {
@@ -257,6 +256,7 @@ class ActivityMainModule : AppCompatActivity() {
             }
         }
     }
+
     private fun getNoAliment(){
         CoroutineScope(Dispatchers.IO).launch{
             val query = AppDataBase.getInstance(this@ActivityMainModule).SettingDao().getAliment("no")

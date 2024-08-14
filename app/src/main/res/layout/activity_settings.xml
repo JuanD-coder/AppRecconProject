@@ -262,12 +262,25 @@
                 android:id="@+id/rvPricesWork"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/btnAddWork"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/view21"
                 tools:listitem="@layout/item_price_work" />
+
+            <Button
+                android:id="@+id/btnAddWork"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btnAddPriceWork"
+                android:layout_marginBottom="10dp"
+                style="@style/buttonsWork"
+                app:layout_constraintTop_toBottomOf="@+id/rvPricesWork"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

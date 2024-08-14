@@ -49,6 +49,7 @@ class ActivityRecolection : AppCompatActivity() {
 
         binding.floatingActionButton.invalidate()
     }
+
     private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.ViewPagerCollectors, fragment)
