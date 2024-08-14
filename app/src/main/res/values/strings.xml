@@ -11,7 +11,6 @@
     <string name="recolector">Recolector(a)</string>
     <string name="price">$</string>
     <string name="priceTitle">Precios</string>
-    <string name="btnAddPriceWork">Agregar nuevo precio</string>
 
     <!-- Informers -->
     <string name="report">Informe</string>
@@ -215,11 +214,9 @@
     <string name="priceWork">Precio del Jornal</string>
     <string name="descriptionWork">ahora tambien puedes registar tus tareas diarias para gestionar mejor tu empresa</string>
     <string name="Work">Jornal</string>
-    <string name="btnAddWork">guardar precio</string>
+    <string name="btnAddWork">guaedar precio</string>
     <string name="work">Jornales</string>
     <string name="workMen">Jornaleros</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="workCancel">Pagar Jornales</string>
     <string name="workDescription">Tarea realizada</string>
     <string name="WorkNumerb">Jornales trabajados</string>
@@ -227,7 +224,9 @@
     <string name="workPrice">precio\n</string>
     <string name="actualPriceWork">Precios de Jornal</string>
     <string name="priceDes">precio</string>
-    <string name="noDates">no se reguistro informacion</string>
+    <string name="noDates">no se registro informacion</string>
     <string name="default_notification_channel_id">FCM_CHANNEL_ID</string>
+    <string name="btnAddPriceWork">Precio por Jornal</string>
+    <string name="txtWorkFull">todo al dia!!</string>
 
 </resources>

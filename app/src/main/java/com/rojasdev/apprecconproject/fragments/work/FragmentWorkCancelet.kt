@@ -136,7 +136,7 @@ class FragmentWorkCancelet(
                         getString(R.string.txtCalendar),
                         getString(R.string.txtGoReport),
                         getString(R.string.txtReturnMenu),
-                        getString(R.string.txtRecolectionFull)
+                        getString(R.string.txtWorkFull)
                     ){
                         if(it == "yes"){
                             preferences()

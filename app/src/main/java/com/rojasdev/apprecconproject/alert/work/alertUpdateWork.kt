@@ -126,7 +126,6 @@ class alertUpdateWork(
 
         if (indiceSeleccionado != -1) {
             adapterSpiner.setSelectedItemId(indiceSeleccionado)
-            Toast.makeText(requireContext(), indiceSeleccionado.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 

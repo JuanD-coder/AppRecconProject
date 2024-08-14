@@ -111,6 +111,15 @@ class alertUpdateNameCollector (
             binding.tilNameCollector.boxStrokeColor = color!!
             binding.tilNameCollector.hintTextColor = ColorStateList.valueOf(color!!)
         }else{
+            controllerTheme.main(
+                requireContext(),
+                day = {
+                    color = ContextCompat.getColor(requireContext(), R.color.Thunderbird)
+                },
+                night = {
+                    color = ContextCompat.getColor(requireContext(), R.color.Dark_Tan)
+                }
+            )
             binding.fbClose.backgroundTintList = ColorStateList.valueOf(color!!)
             binding.fbClose.invalidate()
         }

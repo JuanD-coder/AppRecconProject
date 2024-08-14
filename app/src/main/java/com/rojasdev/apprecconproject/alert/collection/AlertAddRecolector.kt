@@ -74,6 +74,15 @@ class alertAddRecolector(
             binding.tilInputAdd.boxStrokeColor = color!!
             binding.tilInputAdd.hintTextColor = ColorStateList.valueOf(color!!)
         }else{
+            controllerTheme.main(
+                requireContext(),
+                day = {
+                    color = ContextCompat.getColor(requireContext(), R.color.Thunderbird)
+                },
+                night = {
+                    color = ContextCompat.getColor(requireContext(), R.color.Dark_Tan)
+                }
+            )
             binding.btnClose.backgroundTintList = ColorStateList.valueOf(color!!)
             binding.btnClose.invalidate()
         }

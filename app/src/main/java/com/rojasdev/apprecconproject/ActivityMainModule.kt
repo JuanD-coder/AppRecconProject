@@ -305,19 +305,28 @@ class ActivityMainModule : AppCompatActivity() {
         val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
         val collection = preferences.getString("collection","")
         if(collection != "true"){
-            alertMessage(
-                "${binding.tvNoAliment.text}\n ${getString(R.string.notAliment)}",
-                "${binding.tvYesAliment.text}\n ${getString(R.string.yesAliment)}",
-                getString(R.string.btCorrec),
-                getString(R.string.noCorrec),
-                getString(R.string.checkAliment)
-            ){
-                if(it == "yes"){
-                    alertAddRecolcetor()
-                }else{
-                    startActivity(Intent(this,ActivitySettings::class.java))
+                CoroutineScope(Dispatchers.IO).launch{
+                    val query = AppDataBase.getInstance(this@ActivityMainModule).RecollectionDao().getFkIdCollectors()
+                    launch(Dispatchers.Main) {
+                        if(query.isEmpty()){
+                            alertMessage(
+                                "${binding.tvNoAliment.text}\n ${getString(R.string.notAliment)}",
+                                "${binding.tvYesAliment.text}\n ${getString(R.string.yesAliment)}",
+                                getString(R.string.btCorrec),
+                                getString(R.string.noCorrec),
+                                getString(R.string.checkAliment)
+                            ){
+                                if(it == "yes"){
+                                    alertAddRecolcetor()
+                                }else{
+                                    startActivity(Intent(this@ActivityMainModule,ActivitySettings::class.java))
+                                }
+                            }.show(supportFragmentManager,"dialog")
+                        }else{
+                            startActivity(Intent(this@ActivityMainModule,ActivityRecolection::class.java))
+                        }
+                    }
                 }
-            }.show(supportFragmentManager,"dialog")
         }else{
             startActivity(Intent(this,ActivityRecolection::class.java))
         }
