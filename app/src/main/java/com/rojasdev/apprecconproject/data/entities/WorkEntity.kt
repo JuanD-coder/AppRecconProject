@@ -19,8 +19,7 @@ import androidx.room.PrimaryKey
             parentColumns = ["PK_ID_Configuracion"],
             childColumns = ["Fk_Configuracion"]
         )
-    ],
-    indices = [Index(value = ["Fk_recolector"]), Index(value = ["Fk_Configuracion"])]
+    ]
 )
 
 class WorkEntity(

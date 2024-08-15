@@ -212,9 +212,9 @@
     <string name="configWork">puedes agregar 4 precios para tus actividades cafeteras. ejemplo: Guadanada $120.000</string>
     <string name="nameWork">Nombre de la actividad</string>
     <string name="priceWork">Precio del Jornal</string>
-    <string name="descriptionWork">ahora tambien puedes registar tus tareas diarias para gestionar mejor tu empresa</string>
+    <string name="descriptionWork">Ahora también puedes registrar tus tareas diarias y gestionar su pago para mejorar tu empresa.</string>
     <string name="Work">Jornal</string>
-    <string name="btnAddWork">guaedar precio</string>
+    <string name="btnAddWork">Guardar precio</string>
     <string name="work">Jornales</string>
     <string name="workMen">Jornaleros</string>
     <string name="workCancel">Pagar Jornales</string>
@@ -224,9 +224,9 @@
     <string name="workPrice">precio\n</string>
     <string name="actualPriceWork">Precios de Jornal</string>
     <string name="priceDes">precio</string>
-    <string name="noDates">no se registro informacion</string>
+    <string name="noDates">Ups!!!</string>
     <string name="default_notification_channel_id">FCM_CHANNEL_ID</string>
     <string name="btnAddPriceWork">Precio por Jornal</string>
-    <string name="txtWorkFull">todo al dia!!</string>
+    <string name="txtWorkFull">¡Todo al día!</string>
 
 </resources>
