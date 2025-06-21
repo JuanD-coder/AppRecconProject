@@ -1,17 +1,20 @@
 package com.rojasdev.apprecconproject
 
 import android.content.Context
+import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.rojasdev.apprecconproject.alert.alertAddRecolector
+import com.rojasdev.apprecconproject.alert.collection.alertAddRecolector
 import com.rojasdev.apprecconproject.controller.adsBanner
+import com.rojasdev.apprecconproject.controller.controllerTheme
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconproject.databinding.ActivityRecolectionBinding
-import com.rojasdev.apprecconproject.fragments.FragmentCollection
-import com.rojasdev.apprecconproject.fragments.FragmentCollectors
+import com.rojasdev.apprecconproject.fragments.collection.FragmentCollection
+import com.rojasdev.apprecconproject.fragments.collection.FragmentCollectors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,7 +35,21 @@ class ActivityRecolection : AppCompatActivity() {
             initAlertAddRecolcetor()
         }
 
+        binding.bottonNavigationViewCollectors.inflateMenu(R.menu.nav_menu_collectors)
+
+        controllerTheme.main(
+            this,
+            day = {
+                binding.floatingActionButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.Thunderbird))
+            },
+            night = {
+                binding.floatingActionButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.Dark_Tan))
+            }
+        )
+
+        binding.floatingActionButton.invalidate()
     }
+
     private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.ViewPagerCollectors, fragment)
@@ -121,6 +138,7 @@ class ActivityRecolection : AppCompatActivity() {
 
     private fun initAlertAddRecolcetor() {
         alertAddRecolector(
+            false,
             {
                 insertRecolector(it)
             },
@@ -142,4 +160,6 @@ class ActivityRecolection : AppCompatActivity() {
         editor.putString("collection","false")
         editor.apply()
     }
+
+
 }

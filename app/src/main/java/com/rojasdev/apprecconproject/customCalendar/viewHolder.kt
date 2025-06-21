@@ -3,7 +3,10 @@ package com.rojasdev.apprecconproject.customCalendar
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.View
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.rojasdev.apprecconproject.customCalendar.days.adapterDays
 import com.rojasdev.apprecconproject.databinding.ItemDateBinding
 
 class viewHolder( var view: View): RecyclerView.ViewHolder(view) {
@@ -12,127 +15,71 @@ class viewHolder( var view: View): RecyclerView.ViewHolder(view) {
 
     @SuppressLint("ResourceAsColor")
     fun render(
+        hoy : String,
         item: List<dataModelDay>,
         collection: List<String>,
-        onClickListenerNext: (String) -> Unit
+        work: List<String>,
+        onClickListenerNext: (Triple<String,String,Boolean>)-> Unit
     ){
-        dates(item,collection){
+        dates(hoy,item,collection,work){
             onClickListenerNext(it)
         }
     }
 
     private fun dates (
+        hoy : String,
         week: List<dataModelDay>,
         list: List<String>,
-        onClickListener: (String) -> Unit){
-        for(item in week){
-            when (item.dayWeek) {
-                "lunes" -> {
-                    binding.monday.text = item.dayMonth
-                    val result = item.dateTime in list
-                    if (result){
-                        binding.monday.setOnClickListener {
-                            onClickListener(item.dateTime)
-                            binding.monday.setBackgroundColor(Color.GRAY)
-                        }
-                        binding.ivMonday.visibility = View.VISIBLE
-                    }else{
-                        binding.monday.setTextColor(Color.LTGRAY)
-                        binding.monday.setOnClickListener {}
-                        binding.ivMonday.visibility = View.INVISIBLE
+        work: List<String>,
+        onClickListener: (Triple<String,String,Boolean>) -> Unit) {
+        binding.rvDays.isNestedScrollingEnabled = false
+        binding.rvDays.apply {
+
+            if (week.size < 7) {
+                if(week[0].dayMonth == "1"){
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    adapter = adapterDays(hoy,addListWeek(week,week.size), list, work) {
+                        onClickListener(it)
+                    }
+                }else{
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    adapter = adapterDays(hoy,week, list, work) {
+                        onClickListener(it)
                     }
                 }
-                "martes" -> {
-                    binding.tuesday.text = item.dayMonth
-                    val result = item.dateTime in list
-                    if (result){
-                        binding.tuesday.setOnClickListener {
-                            onClickListener(item.dateTime)
-                            binding.tuesday.setBackgroundColor(Color.GRAY)
-                        }
-                        binding.ivTuesday.visibility = View.VISIBLE
-                    }else{
-                        binding.tuesday.setTextColor(Color.LTGRAY)
-                        binding.tuesday.setOnClickListener {}
-                        binding.ivTuesday.visibility = View.INVISIBLE
-                    }
-                }
-                "miércoles" -> {
-                    binding.wednesday.text = item.dayMonth
-                    val result = item.dateTime in list
-                    if (result){
-                        binding.wednesday.setOnClickListener {
-                            onClickListener(item.dateTime)
-                            binding.wednesday.setBackgroundColor(Color.GRAY)
-                        }
-                        binding.ivWednesday.visibility = View.VISIBLE
-                    }else{
-                        binding.wednesday.setTextColor(Color.LTGRAY)
-                        binding.wednesday.setOnClickListener {}
-                        binding.ivWednesday.visibility = View.INVISIBLE
-                    }
-                }
-                "jueves" -> {
-                    binding.thursday.text = item.dayMonth
-                    val result = item.dateTime in list
-                    if (result){
-                        binding.thursday.setOnClickListener {
-                            onClickListener(item.dateTime)
-                            binding.thursday.setBackgroundColor(Color.GRAY)
-                        }
-                        binding.ivThursday.visibility = View.VISIBLE
-                    }else{
-                        binding.thursday.setTextColor(Color.LTGRAY)
-                        binding.thursday.setOnClickListener {}
-                        binding.ivThursday.visibility = View.INVISIBLE
-                    }
-                }
-                "viernes" -> {
-                    binding.friday.text = item.dayMonth
-                    val result = item.dateTime in list
-                    if (result){
-                        binding.friday.setOnClickListener {
-                            onClickListener(item.dateTime)
-                            binding.friday.setBackgroundColor(Color.GRAY)
-                        }
-                        binding.ivFriday.visibility = View.VISIBLE
-                    }else{
-                        binding.friday.setTextColor(Color.LTGRAY)
-                        binding.friday.setOnClickListener {}
-                        binding.ivFriday.visibility = View.INVISIBLE
-                    }
-                }
-                "sábado" -> {
-                    binding.saturday.text = item.dayMonth
-                    val result = item.dateTime in list
-                    if (result){
-                        binding.saturday.setOnClickListener {
-                            onClickListener(item.dateTime)
-                            binding.saturday.setBackgroundColor(Color.GRAY)
-                        }
-                        binding.ivSaturday.visibility = View.VISIBLE
-                    }else{
-                        binding.saturday.setTextColor(Color.LTGRAY)
-                        binding.saturday.setOnClickListener {}
-                        binding.ivSaturday.visibility = View.INVISIBLE
-                    }
-                }
-                "domingo" -> {
-                    binding.sunday.text = item.dayMonth
-                    binding.sunday.setTextColor(Color.RED)
-                    val result = item.dateTime in list
-                    if (result){
-                        binding.sunday.setOnClickListener {
-                            onClickListener(item.dateTime)
-                            binding.sunday.setBackgroundColor(Color.GRAY)
-                        }
-                        binding.ivSunday.visibility = View.VISIBLE
-                    }else{
-                        binding.sunday.setOnClickListener {}
-                        binding.ivSunday.visibility = View.INVISIBLE
-                    }
+            } else {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                adapter = adapterDays(hoy,week, list, work) {
+                    onClickListener(it)
                 }
             }
         }
+    }
+
+    private fun addListWeek(list: List<dataModelDay>, size: Int): List<dataModelDay> {
+        val miList = list.toMutableList()
+        val daysFalse = 6 - size
+        val nullDay = dataModelDay(
+            "null",
+            "null",
+            "null",
+        )
+
+        val newItemLis : MutableList<dataModelDay> = mutableListOf(nullDay)
+
+        for (it in 1 .. daysFalse){
+            val nullDay = dataModelDay(
+                "null",
+                "null",
+                "null",
+            )
+            newItemLis.add(nullDay)
+        }
+
+
+
+        miList.addAll(0, newItemLis.toList())
+
+        return miList.toList()
     }
 }

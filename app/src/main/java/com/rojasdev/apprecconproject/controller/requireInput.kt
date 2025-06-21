@@ -5,9 +5,6 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 object requireInput {
     fun validate(inputList: List<TextInputEditText>,context: Context ):Boolean {
@@ -22,6 +19,7 @@ object requireInput {
         return true
     }
 
+   @Suppress("DEPRECATION")
    fun vibratePhone(context: Context) {
         val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         if (Build.VERSION.SDK_INT >= 26) {

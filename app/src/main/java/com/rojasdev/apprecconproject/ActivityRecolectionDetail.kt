@@ -7,8 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rojasdev.apprecconproject.adapters.adapterRvRecolection
-import com.rojasdev.apprecconproject.alert.alertCollectionUpdate
-import com.rojasdev.apprecconproject.alert.alertUpdateNameCollector
+import com.rojasdev.apprecconproject.alert.collection.alertCollectionUpdate
+import com.rojasdev.apprecconproject.alert.collection.alertUpdateNameCollector
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.customSnackBar
 import com.rojasdev.apprecconproject.controller.price
@@ -108,7 +108,8 @@ class ActivityRecolectionDetail : AppCompatActivity() {
     private fun showAlertEditName() {
         alertUpdateNameCollector(
             idCollector!!,
-            userName.toString()
+            userName.toString(),
+            false
         ){
             CoroutineScope(Dispatchers.IO).launch {
                 AppDataBase.getInstance(this@ActivityRecolectionDetail).RecolectoresDao().updateCollectorName(it.id!!,it.name)

@@ -9,6 +9,7 @@ import com.rojasdev.apprecconproject.viewHolders.viewHolderCvCollectionTotal
 
 class adapterRvCollectionTotal(
     private var items:List<collecionTotalCollector>,
+    private var color: Int?,
     private val onClickListener: (collecionTotalCollector) -> Unit
 ) : RecyclerView.Adapter<viewHolderCvCollectionTotal>(){
 
@@ -18,7 +19,8 @@ class adapterRvCollectionTotal(
 
     override fun onBindViewHolder(holder: viewHolderCvCollectionTotal, position: Int) {
         val item = items[position]
-        holder.render(item,onClickListener)
+        holder.render(item,color,onClickListener)
+
     }
 
     override fun getItemCount(): Int = items.size

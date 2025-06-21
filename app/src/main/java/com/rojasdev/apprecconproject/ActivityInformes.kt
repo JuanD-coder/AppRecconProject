@@ -5,20 +5,20 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.databinding.ActivityInformesBinding
-import com.rojasdev.apprecconproject.fragments.FragmentReport
-import com.rojasdev.apprecconproject.fragments.FragmentPdf
+import com.rojasdev.apprecconproject.fragments.report.FragmentPdf
+import com.rojasdev.apprecconproject.fragments.report.FragmentWorkReport
 
 class ActivityInformes : AppCompatActivity() {
 
     lateinit var binding: ActivityInformesBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityInformesBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        title = getString(R.string.informedTitle)
-        openFragment(FragmentReport())
-
+        title = getString(R.string.calendarCollection)
+        openFragment(FragmentWorkReport())
 
         adsBanner.initLoadAds(binding.banner)
         //configuracion de la barra de navigation
@@ -26,8 +26,8 @@ class ActivityInformes : AppCompatActivity() {
             meniItem ->
             when(meniItem.itemId){
                 R.id.list ->{
-                    title = getString(R.string.informedTitle)
-                    openFragment(FragmentReport())
+                    title = getString(R.string.calendarCollection)
+                    openFragment(FragmentWorkReport())
                     true
                 }
                 R.id.pdf ->{

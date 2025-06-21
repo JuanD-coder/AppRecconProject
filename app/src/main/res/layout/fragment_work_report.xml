@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.report.FragmentWorkReport">
+
+   <androidx.core.widget.NestedScrollView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+
+           <androidx.constraintlayout.widget.ConstraintLayout
+               android:id="@+id/lyCalendar"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:background="@color/Green_calendar"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent">
+
+               <Spinner
+                   android:id="@+id/spinnerMonth"
+                   android:layout_width="100dp"
+                   android:layout_height="0dp"
+                   app:layout_constraintBottom_toTopOf="@+id/guideTop"
+                   app:layout_constraintStart_toStartOf="@+id/rvCalendar"
+                   app:layout_constraintTop_toTopOf="parent" />
+
+               <TextView
+                   style="@style/text"
+                   android:layout_width="0dp"
+                   android:layout_height="0dp"
+                   android:text="del año"
+                   android:gravity="center"
+                   app:layout_constraintBottom_toTopOf="@+id/guideTop"
+                   app:layout_constraintEnd_toStartOf="@+id/spinnerYear"
+                   app:layout_constraintStart_toEndOf="@+id/spinnerMonth"
+                   app:layout_constraintTop_toTopOf="parent" />
+
+               <Spinner
+                   android:id="@+id/spinnerYear"
+                   android:layout_width="100dp"
+                   android:layout_height="0dp"
+                   app:layout_constraintBottom_toTopOf="@+id/guideTop"
+                   app:layout_constraintEnd_toEndOf="@+id/rvCalendar"
+                   app:layout_constraintTop_toTopOf="parent" />
+
+               <androidx.constraintlayout.widget.Guideline
+                   android:id="@+id/guideTop"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   app:layout_constraintGuide_percent="0.10" />
+
+               <androidx.constraintlayout.widget.Guideline
+                   android:id="@+id/guideDays"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   app:layout_constraintGuide_percent="0.20" />
+
+               <androidx.constraintlayout.widget.ConstraintLayout
+                   android:layout_width="300dp"
+                   android:layout_height="0dp"
+                   app:layout_constraintBottom_toTopOf="@+id/guideDays"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toTopOf="@+id/guideTop">
+
+
+                   <androidx.constraintlayout.widget.Guideline
+                       android:id="@+id/guideDays1"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical"
+                       app:layout_constraintGuide_percent="0.14" />
+
+                   <androidx.constraintlayout.widget.Guideline
+                       android:id="@+id/guideDays2"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical"
+                       app:layout_constraintGuide_percent="0.285" />
+
+                   <androidx.constraintlayout.widget.Guideline
+                       android:id="@+id/guideDays3"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical"
+                       app:layout_constraintGuide_percent="0.427" />
+
+                   <androidx.constraintlayout.widget.Guideline
+                       android:id="@+id/guideDays4"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical"
+                       app:layout_constraintGuide_percent="0.569" />
+
+                   <androidx.constraintlayout.widget.Guideline
+                       android:id="@+id/guideDays5"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical"
+                       app:layout_constraintGuide_percent="0.711" />
+
+                   <androidx.constraintlayout.widget.Guideline
+                       android:id="@+id/guideDays6"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical"
+                       app:layout_constraintGuide_percent="0.853" />
+
+
+                   <TextView
+                       android:id="@+id/textView13"
+                       style="@style/text"
+                       android:layout_width="0dp"
+                       android:layout_height="0dp"
+                       android:gravity="center"
+                       android:text="@string/monday"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintEnd_toStartOf="@+id/guideDays1"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toTopOf="parent" />
+
+                   <TextView
+                       android:id="@+id/textView14"
+                       style="@style/text"
+                       android:layout_width="0dp"
+                       android:layout_height="0dp"
+                       android:gravity="center"
+                       android:text="@string/tuesday"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintEnd_toStartOf="@+id/guideDays2"
+                       app:layout_constraintStart_toStartOf="@+id/guideDays1"
+                       app:layout_constraintTop_toTopOf="parent" />
+
+                   <TextView
+                       android:id="@+id/textView15"
+                       style="@style/text"
+                       android:layout_width="0dp"
+                       android:layout_height="0dp"
+                       android:gravity="center"
+                       android:text="@string/tuesday"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintEnd_toStartOf="@+id/guideDays3"
+                       app:layout_constraintStart_toStartOf="@+id/guideDays2"
+                       app:layout_constraintTop_toTopOf="parent" />
+
+                   <TextView
+                       android:id="@+id/textView16"
+                       style="@style/text"
+                       android:layout_width="0dp"
+                       android:layout_height="0dp"
+                       android:gravity="center"
+                       android:text="@string/thursday"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintEnd_toStartOf="@+id/guideDays4"
+                       app:layout_constraintStart_toStartOf="@+id/guideDays3"
+                       app:layout_constraintTop_toTopOf="parent" />
+
+                   <TextView
+                       android:id="@+id/textView17"
+                       style="@style/text"
+                       android:layout_width="0dp"
+                       android:layout_height="0dp"
+                       android:gravity="center"
+                       android:text="@string/friday"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintEnd_toStartOf="@+id/guideDays5"
+                       app:layout_constraintStart_toStartOf="@+id/guideDays4"
+                       app:layout_constraintTop_toTopOf="parent" />
+
+                   <TextView
+                       android:id="@+id/textView18"
+                       style="@style/text"
+                       android:layout_width="0dp"
+                       android:layout_height="0dp"
+                       android:gravity="center"
+                       android:text="@string/saturday"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintEnd_toStartOf="@+id/guideDays6"
+                       app:layout_constraintStart_toStartOf="@+id/guideDays5"
+                       app:layout_constraintTop_toTopOf="parent" />
+
+                   <TextView
+                       android:id="@+id/textView19"
+                       style="@style/text"
+                       android:layout_width="0dp"
+                       android:layout_height="0dp"
+                       android:gravity="center"
+                       android:text="@string/sunday"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintStart_toStartOf="@+id/guideDays6"
+                       app:layout_constraintTop_toTopOf="parent" />
+
+               </androidx.constraintlayout.widget.ConstraintLayout>
+
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/rvCalendar"
+                   android:layout_width="300dp"
+                   android:layout_height="wrap_content"
+                   app:layout_constraintBottom_toBottomOf="parent"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toTopOf="@+id/guideDays" />
+
+           </androidx.constraintlayout.widget.ConstraintLayout>
+
+           <View
+               android:id="@+id/view2"
+               android:layout_width="2dp"
+               android:layout_height="0dp"
+               android:layout_marginStart="16dp"
+               android:layout_marginTop="8dp"
+               android:background="@color/Green_calendar"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintStart_toEndOf="@+id/tvMonthDay"
+               app:layout_constraintTop_toBottomOf="@+id/lyCalendar" />
+
+           <View
+               android:id="@+id/view3"
+               android:layout_width="0dp"
+               android:layout_height="2dp"
+               android:layout_marginTop="8dp"
+               android:background="@color/Green_calendar"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/tvMonthDay" />
+
+           <TextView
+               android:id="@+id/tvMonthDay"
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:layout_marginStart="8dp"
+               android:background="@drawable/sircle"
+               android:backgroundTint="@color/Hippie_Green"
+               android:gravity="center"
+               android:text="1"
+               android:textColor="@color/white"
+               app:layout_constraintEnd_toEndOf="@+id/tvWorkDay"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/tvWorkDay" />
+
+           <TextView
+               android:id="@+id/tvWorkDay"
+               android:layout_width="50dp"
+               android:layout_height="30dp"
+               android:layout_marginStart="8dp"
+               android:text="mar"
+               android:gravity="center"
+               style="@style/text"
+               android:textColor="@color/Hippie_Green"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/lyCalendar" />
+
+           <androidx.constraintlayout.widget.ConstraintLayout
+               android:id="@+id/constraintLayout4"
+               android:layout_width="0dp"
+               android:layout_height="40dp"
+               android:layout_marginTop="8dp"
+               android:layout_marginEnd="8dp"
+               android:background="@drawable/item_dates"
+               app:cardCornerRadius="10dp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toEndOf="@+id/view2"
+               app:layout_constraintTop_toBottomOf="@+id/lyCalendar">
+
+               <TextView
+                   android:id="@+id/tvActivityes"
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:gravity="center"
+                   android:text="actividades realizadas"
+                   android:textColor="@color/black"
+                   app:layout_constraintBottom_toBottomOf="parent"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toTopOf="parent" />
+
+           </androidx.constraintlayout.widget.ConstraintLayout>
+
+           <androidx.constraintlayout.widget.ConstraintLayout
+               android:id="@+id/constraintLayout5"
+               android:layout_width="wrap_content"
+               android:layout_height="40dp"
+               android:layout_marginEnd="8dp"
+               app:cardCornerRadius="10dp"
+               app:layout_constraintBottom_toBottomOf="@+id/view3"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toEndOf="@+id/view2"
+               app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+
+               <TextView
+                   android:id="@+id/tvWork"
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:layout_marginTop="8dp"
+                   android:layout_marginBottom="8dp"
+                   android:background="@drawable/sircle"
+                   android:backgroundTint="@color/Orange"
+                   android:gravity="center"
+                   android:paddingStart="10dp"
+                   android:paddingEnd="10dp"
+                   android:text="jornales"
+                   android:textColor="@color/white"
+                   tools:visibility="visible"
+                   android:visibility="gone"
+                   app:layout_constraintBottom_toBottomOf="parent"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintTop_toTopOf="parent" />
+
+               <TextView
+                   android:id="@+id/tvCollection"
+                   android:layout_width="wrap_content"
+                   android:layout_height="match_parent"
+                   android:layout_marginTop="8dp"
+                   android:layout_marginEnd="8dp"
+                   android:layout_marginBottom="8dp"
+                   android:background="@drawable/sircle"
+                   android:gravity="center"
+                   android:paddingStart="10dp"
+                   android:paddingEnd="10dp"
+                   android:text="recolecion"
+                   tools:visibility="visible"
+                   android:visibility="gone"
+                   android:textColor="@color/white"
+                   app:layout_constraintBottom_toBottomOf="parent"
+                   app:layout_constraintEnd_toStartOf="@+id/tvWork"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toTopOf="parent"
+                   />
+
+           </androidx.constraintlayout.widget.ConstraintLayout>
+
+           <androidx.constraintlayout.widget.ConstraintLayout
+               android:id="@+id/lyTotalCollection"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="8dp"
+               android:layout_marginEnd="8dp"
+               android:background="@drawable/item_dates"
+               android:backgroundTint="@color/Thunderbird"
+               tools:visibility="visible"
+               android:visibility="gone"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toEndOf="@+id/view2"
+               app:layout_constraintTop_toBottomOf="@+id/view3">
+
+               <TextView
+                   android:id="@+id/tvKgTotal"
+                   style="@style/texViewKg"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="16dp"
+                   android:layout_marginEnd="16dp"
+                   android:text="total recolectado
+                   20Kg"
+                   android:textSize="18dp"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toTopOf="parent" />
+
+               <TextView
+                   android:id="@+id/tvPriceTotal"
+                   style="@style/texViewKg"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="16dp"
+                   android:layout_marginEnd="16dp"
+                   android:text="total recolectado
+                   20Kg"
+                   android:textSize="18dp"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toBottomOf="@+id/tvKgTotal" />
+
+
+           </androidx.constraintlayout.widget.ConstraintLayout>
+
+           <ImageView
+               android:id="@+id/ivCollection"
+               style="@style/itemRecolectionInfo"
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:background="@drawable/sircle"
+               android:importantForAccessibility="no"
+               android:padding="10dp"
+               android:src="@drawable/ic_recolector"
+               tools:visibility="visible"
+               android:visibility="gone"
+               app:layout_constraintBottom_toBottomOf="@+id/lyTotalCollection"
+               app:layout_constraintEnd_toEndOf="@+id/tvMonthDay"
+               app:layout_constraintStart_toStartOf="@+id/tvMonthDay"
+               app:layout_constraintTop_toTopOf="@+id/lyTotalCollection" />
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/rvDates"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.0"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/lyTotalCollection" />
+
+           <View
+               android:id="@+id/view4"
+               android:layout_width="0dp"
+               android:layout_height="2dp"
+               android:layout_marginTop="8dp"
+               android:background="@color/Green_calendar"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/rvDates" />
+
+           <androidx.constraintlayout.widget.ConstraintLayout
+               android:id="@+id/lyTotalWork"
+               android:layout_width="0dp"
+               android:layout_height="110dp"
+               android:layout_marginTop="8dp"
+               android:layout_marginEnd="8dp"
+               android:background="@drawable/item_dates"
+               android:backgroundTint="@color/Orange"
+               android:visibility="gone"
+               tools:visibility="visible"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toEndOf="@+id/view2"
+               app:layout_constraintTop_toBottomOf="@+id/view4">
+
+               <TextView
+                   android:id="@+id/tvWorkTotal"
+                   style="@style/texViewKg"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="16dp"
+                   android:layout_marginEnd="16dp"
+                   android:text="total recolectado
+                   20Kg"
+                   android:textSize="18dp"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toTopOf="parent" />
+
+               <TextView
+                   android:id="@+id/tvPriceWorkTotal"
+                   style="@style/texViewKg"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:layout_marginStart="16dp"
+                   android:layout_marginEnd="16dp"
+                   android:text="total recolectado
+                   20Kg"
+                   android:textSize="18dp"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toBottomOf="@+id/tvWorkTotal" />
+
+           </androidx.constraintlayout.widget.ConstraintLayout>
+
+           <ImageView
+               android:id="@+id/ivWork"
+               style="@style/itemRecolectionInfo"
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:background="@drawable/sircle"
+               android:importantForAccessibility="no"
+               android:padding="10dp"
+               android:src="@drawable/ic_construction_24"
+               android:backgroundTint="@color/Orange"
+               tools:visibility="visible"
+               android:visibility="gone"
+               app:layout_constraintBottom_toBottomOf="@+id/lyTotalWork"
+               app:layout_constraintEnd_toEndOf="@+id/tvMonthDay"
+               app:layout_constraintStart_toStartOf="@+id/tvMonthDay"
+               app:layout_constraintTop_toTopOf="@+id/lyTotalWork"
+               app:tint="@color/white" />
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/rvDatesWork"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_marginBottom="16dp"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.0"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/lyTotalWork" />
+
+           <ImageView
+               android:id="@+id/ivNoDates"
+               style="@style/itemRecolectionInfo"
+               android:layout_width="250dp"
+               android:layout_height="250dp"
+               android:layout_marginTop="16dp"
+               android:importantForAccessibility="no"
+               android:src="@drawable/ic_no_dates"
+               android:visibility="gone"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toEndOf="@+id/view2"
+               app:layout_constraintTop_toTopOf="@+id/lyTotalCollection"
+               tools:visibility="visible" />
+
+           <androidx.appcompat.widget.AppCompatTextView
+               android:id="@+id/tvNoDates"
+               style="@style/text"
+               android:layout_width="70dp"
+               android:layout_height="50dp"
+               android:layout_marginEnd="10dp"
+               android:layout_marginBottom="160dp"
+               android:visibility="gone"
+               android:text="@string/noDates"
+               app:autoSizeTextType="uniform"
+               app:layout_constraintBottom_toBottomOf="@+id/ivNoDates"
+               app:layout_constraintEnd_toEndOf="@+id/ivNoDates"
+               app:layout_constraintTop_toTopOf="@+id/ivNoDates" />
+
+       </androidx.constraintlayout.widget.ConstraintLayout>
+
+   </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>
