@@ -9,7 +9,7 @@ import com.rojasdev.apprecconproject.controller.price
 import com.rojasdev.apprecconproject.data.entities.SettingEntity
 import com.rojasdev.apprecconproject.databinding.ItemSettingsBinding
 
-class viewHolderSettings( var view: View): RecyclerView.ViewHolder(view) {
+class viewHolderSettings(var view: View) : RecyclerView.ViewHolder(view) {
 
     val binding = ItemSettingsBinding.bind(view)
 
@@ -17,27 +17,18 @@ class viewHolderSettings( var view: View): RecyclerView.ViewHolder(view) {
     fun render(
         item: SettingEntity,
         onClickListenerNext: (SettingEntity) -> Unit,
-    ){
-        binding.lyItem.animation = AnimationUtils.loadAnimation(view.context, R.anim.recycler_transition)
+    ) {
+        binding.lyItem.animation =
+            AnimationUtils.loadAnimation(view.context, R.anim.recycler_transition)
 
-        binding.tvDate.text = item.date.substring(0,item.date.length - 9)
+        binding.tvDate.text = item.date.substring(0, item.date.length - 9)
 
-        if(item.feeding == "yes"){
-            binding.tvAliment.text = "Precio por kilogramo con alimentacion"
-            price.priceSplit(item.cost){
-                binding.tvAlimentPrice.text = it
-            }
-        }else  if(item.feeding == "no"){
-            binding.tvAliment.text = "Precio por kilogramo sin alimentacion"
-            price.priceSplit(item.cost){
-                binding.tvAlimentPrice.text = it
-            }
-        } else {
-            binding.tvAliment.text = "${view.context.getString(R.string.workPrice)} por ${item.feeding}"
-            price.priceSplit(item.cost){
-                binding.tvAlimentPrice.text = it
-            }
+
+        binding.tvAliment.text = "Precio por kilogramo anteriores"
+        price.priceSplit(item.cost) {
+            binding.tvAlimentPrice.text = it
         }
+
         binding.lyItem.setOnClickListener {
             onClickListenerNext(item)
         }

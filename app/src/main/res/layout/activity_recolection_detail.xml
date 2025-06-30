@@ -34,6 +34,21 @@
             app:layout_constraintTop_toBottomOf="@+id/banner">
 
             <TextView
+                android:id="@+id/tvIdCollector"
+                style="@style/tvItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="30.5sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/tvId" />
+
+            <TextView
                 android:id="@+id/tvTitle"
                 style="@style/tvItem"
                 android:layout_width="wrap_content"
@@ -45,7 +60,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvIdCollector"
                 tools:text="@string/tvRecolection" />
 
             <TextView

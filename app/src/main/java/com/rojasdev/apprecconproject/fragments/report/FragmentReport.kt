@@ -38,13 +38,14 @@ class FragmentReport : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentInformeBinding.inflate(inflater,container,false)
+        _binding = FragmentInformeBinding.inflate(inflater, container, false)
 
         requireActivity().onBackPressedDispatcher.addCallback(
-                viewLifecycleOwner,object : OnBackPressedCallback(true
-            ){
+            viewLifecycleOwner, object : OnBackPressedCallback(
+                true
+            ) {
                 override fun handleOnBackPressed() {
-                    startActivity(Intent(requireContext(),ActivityMainModule::class.java))
+                    startActivity(Intent(requireContext(), ActivityMainModule::class.java))
                 }
             })
 
@@ -55,13 +56,14 @@ class FragmentReport : Fragment() {
         return binding.root
     }
 
-    private fun initCalendar(it:Triple<Int,Int,String>) {
+    private fun initCalendar(it: Triple<Int, Int, String>) {
         CoroutineScope(Dispatchers.IO).launch {
-            val list = AppDataBase.getInstance(requireContext()).RecollectionDao().getDateCollection()
+            val list =
+                AppDataBase.getInstance(requireContext()).RecollectionDao().getDateCollection()
             launch(Dispatchers.Main) {
                 val listModification = list.map { it.dropLast(9) }
-                val month = getDaysMonth(it.first,it.second)
-                adapterDates = adapter("24",month,listModification,listModification){
+                val month = getDaysMonth(it.first, it.second)
+                adapterDates = adapter("24", month, listModification) {
                     showAllRecollection(it.first)
                 }
 
@@ -73,37 +75,40 @@ class FragmentReport : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun showAllRecollection(selectedDate: String) {
-        CoroutineScope(Dispatchers.IO).launch{
+        CoroutineScope(Dispatchers.IO).launch {
             val getAllID = AppDataBase.getInstance(requireContext()).RecolectoresDao().getAll()
-            val getTotalKg = AppDataBase.getInstance(requireContext()).RecolectoresDao().getTotalKgDate("${selectedDate}%")
+            val getTotalKg = AppDataBase.getInstance(requireContext()).RecolectoresDao()
+                .getTotalKgDate("${selectedDate}%")
             launch(Dispatchers.Main) {
                 val showAll = mutableListOf<allCollecionAndCollector>()
-                for (item in getAllID){
-                    val query = AppDataBase.getInstance(requireContext()).RecolectoresDao().getAllCollectorAndCollectionId("${selectedDate}%",item.toInt())
-                    if(query[0].name_recolector != null){
-                        if(query.isNotEmpty()) showAll.add(query[0])
+                for (item in getAllID) {
+                    val query = AppDataBase.getInstance(requireContext()).RecolectoresDao()
+                        .getAllCollectorAndCollectionId("${selectedDate}%", item.toInt())
+                    if (query[0].name_recolector != null) {
+                        if (query.isNotEmpty()) showAll.add(query[0])
                     }
                 }
 
-                binding.tvShowDates.text = "${getString(R.string.tvRecolection)} \n ${getTotalKg[0].Cantidad.toFloat()} Kg"
+                binding.tvShowDates.text =
+                    "${getString(R.string.tvRecolection)} \n ${getTotalKg[0].Cantidad.toFloat()} Kg"
                 binding.tvShowDates.visibility = View.VISIBLE
 
-                if (getTotalKg[0].Estado == "active"){
-                    price.priceSplit(getTotalKg[0].result.toInt()){
+                if (getTotalKg[0].Estado == "active") {
+                    price.priceSplit(getTotalKg[0].result.toInt()) {
                         binding.tvShowPay.text = "${getString(R.string.tvPriceTotal)} \n $it"
                         binding.tvShowPay.visibility = View.VISIBLE
                     }
                 } else {
-                    price.priceSplit(getTotalKg[0].result.toInt()){
+                    price.priceSplit(getTotalKg[0].result.toInt()) {
                         binding.tvShowPay.text = "${getString(R.string.totalPrince)}: \n $it"
                         binding.tvShowPay.visibility = View.VISIBLE
                     }
                 }
 
-                if(showAll.isEmpty()) {
+                if (showAll.isEmpty()) {
                     binding.recyclerView.visibility = View.GONE
                     binding.userInfo.visibility = View.VISIBLE // Show not Data
-                }else{
+                } else {
                     binding.nestedScrollView.smoothScrollTo(0, 900) // Auto Scroll si hay datos
 
                     adapter = adapterItemDate(showAll)
@@ -121,7 +126,7 @@ class FragmentReport : Fragment() {
     fun getDaysMonth(year: Int, month: Int): List<List<dataModelDay>> {
         val diasDelMes = mutableListOf<List<dataModelDay>>()
         val calendar = Calendar.getInstance()
-            calendar.set(year, month - 1, 1)
+        calendar.set(year, month - 1, 1)
         val ultimoDiaDelMes = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
         var week = mutableListOf<dataModelDay>()
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale("es", "ES"))
@@ -132,7 +137,7 @@ class FragmentReport : Fragment() {
             val fechaActual = calendar.time
             val diaDeLaSemana = formatDayWeek.format(fechaActual)
 
-            val day = dataModelDay(dateFormat.format(fechaActual),dia.toString(),diaDeLaSemana)
+            val day = dataModelDay(dateFormat.format(fechaActual), dia.toString(), diaDeLaSemana)
 
             week.add(day)
 
@@ -146,7 +151,7 @@ class FragmentReport : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    fun monthSelected(){
+    fun monthSelected() {
         val calendar = Calendar.getInstance()
         val formatMontNum = SimpleDateFormat("MM", Locale.getDefault())
         val formatMont = SimpleDateFormat("MMMM", Locale.getDefault())
@@ -159,32 +164,35 @@ class FragmentReport : Fragment() {
         var previous = getPreviousMonth("$year-$monthNum")
         var next = getNextMonth("$year-$monthNum")
 
-        var monthCalendar = Triple(year,monthNum.toInt(),monthString)
+        var monthCalendar = Triple(year, monthNum.toInt(), monthString)
 
         binding.tvMonthPrevious.text = previous.first
         binding.tvMonthNext.text = next.first
         binding.tvMonth.text = monthCalendar.third
-        binding.tvTitleCalendar.text = "${getString(R.string.calendarCollection)}\n${monthCalendar.first}"
+        binding.tvTitleCalendar.text =
+            "${getString(R.string.calendarCollection)}\n${monthCalendar.first}"
 
         binding.tvMonthPrevious.setOnClickListener {
-            monthCalendar = Triple(previous.second,previous.third,previous.first)
+            monthCalendar = Triple(previous.second, previous.third, previous.first)
             previous = getPreviousMonth("${monthCalendar.first}-${monthCalendar.second}")
             next = getNextMonth("${monthCalendar.first}-${monthCalendar.second}")
             binding.tvMonthPrevious.text = previous.first
             binding.tvMonthNext.text = next.first
             binding.tvMonth.text = monthCalendar.third
-            binding.tvTitleCalendar.text = "${getString(R.string.calendarCollection)}\n${monthCalendar.first}"
+            binding.tvTitleCalendar.text =
+                "${getString(R.string.calendarCollection)}\n${monthCalendar.first}"
             initCalendar(monthCalendar)
         }
 
         binding.tvMonthNext.setOnClickListener {
-            monthCalendar = Triple(next.second,next.third,next.first)
+            monthCalendar = Triple(next.second, next.third, next.first)
             next = getNextMonth("${monthCalendar.first}-${monthCalendar.second}")
             previous = getPreviousMonth("${monthCalendar.first}-${monthCalendar.second}")
             binding.tvMonthPrevious.text = previous.first
             binding.tvMonthNext.text = next.first
             binding.tvMonth.text = monthCalendar.third
-            binding.tvTitleCalendar.text = "${getString(R.string.calendarCollection)}\n${monthCalendar.first}"
+            binding.tvTitleCalendar.text =
+                "${getString(R.string.calendarCollection)}\n${monthCalendar.first}"
             initCalendar(monthCalendar)
         }
 
@@ -192,12 +200,12 @@ class FragmentReport : Fragment() {
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun getPreviousMonth(fecha: String): Triple<String,Int,Int> {
+    fun getPreviousMonth(fecha: String): Triple<String, Int, Int> {
         val dateFormat = SimpleDateFormat("yyyy-MM")
         val specificDate = dateFormat.parse(fecha)
         val calendar: Calendar = GregorianCalendar()
-            calendar.time = specificDate!!
-            calendar.add(Calendar.MONTH, -1)
+        calendar.time = specificDate!!
+        calendar.add(Calendar.MONTH, -1)
         val monthFormat = SimpleDateFormat("MMMM", Locale("es", "ES"))
         val fullMonth = monthFormat.format(calendar.time)
         val year = calendar.get(Calendar.YEAR)
@@ -206,17 +214,17 @@ class FragmentReport : Fragment() {
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun getNextMonth(fecha: String): Triple<String,Int,Int> {
+    fun getNextMonth(fecha: String): Triple<String, Int, Int> {
         val dayFormat = SimpleDateFormat("yyyy-MM")
         val specificDate = dayFormat.parse(fecha)
         val calendar: Calendar = GregorianCalendar()
-            calendar.time = specificDate!!
-            calendar.add(Calendar.MONTH, + 1)
+        calendar.time = specificDate!!
+        calendar.add(Calendar.MONTH, +1)
         val monthFormat = SimpleDateFormat("MMMM", Locale("es", "ES"))
         val fullMonth = monthFormat.format(calendar.time)
         val year = calendar.get(Calendar.YEAR)
         val monthInt = calendar.get(Calendar.MONTH)
-        return Triple(fullMonth, year, monthInt+ 1)
+        return Triple(fullMonth, year, monthInt + 1)
     }
 
     override fun onDestroyView() {

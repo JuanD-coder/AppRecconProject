@@ -31,22 +31,6 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".ActivityDetalleWork"
-            android:exported="false"
-            android:parentActivityName=".ActivityWork"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppRecconProject.work"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name=".ActivityWork"
-            android:exported="false"
-            android:parentActivityName=".ActivityMainModule"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppRecconProject.work"
-            tools:ignore="LockedOrientationActivity" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.rojasdev.apprecconproject.fileprovider"

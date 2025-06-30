@@ -1,10 +1,10 @@
 package com.rojasdev.apprecconproject
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rojasdev.apprecconproject.adapters.adapterRvRecolection
 import com.rojasdev.apprecconproject.alert.collection.alertCollectionUpdate
@@ -49,10 +49,14 @@ class ActivityRecolectionDetail : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getRecollection(idCollector: Int) {
-        CoroutineScope(Dispatchers.IO).launch{
-            val collection= AppDataBase.getInstance(this@ActivityRecolectionDetail).RecolectoresDao().getCollectorAndCollection("active",idCollector)
+        CoroutineScope(Dispatchers.IO).launch {
+            val collection =
+                AppDataBase.getInstance(this@ActivityRecolectionDetail).RecolectoresDao()
+                    .getCollectorAndCollection("active", idCollector)
 
-            val totalRecolection = AppDataBase.getInstance(this@ActivityRecolectionDetail).RecolectoresDao().getCollectorAndCollectionTotal(idCollector)
+            val totalRecolection =
+                AppDataBase.getInstance(this@ActivityRecolectionDetail).RecolectoresDao()
+                    .getCollectorAndCollectionTotal(idCollector)
             launch(Dispatchers.Main) {
                 collectionUpdate = listOf(collection[0])
                 collectionTotal = listOf(totalRecolection[0])
@@ -60,46 +64,52 @@ class ActivityRecolectionDetail : AppCompatActivity() {
                     // Update Collection
                     alertUpdateRecollection(it, idCollector)
                 }
-                price.priceSplit(totalRecolection[0].price_total.toInt()){
+                price.priceSplit(totalRecolection[0].price_total.toInt()) {
                     binding.tvTotal.text = "${getString(R.string.totalPrinceCancel)}\n $it"
                 }
 
-                binding.tvTitle.text = "${getString(R.string.recolection)}\n ${totalRecolection[0].kg_collection.toFloat()} Kg"
+                binding.tvIdCollector.text = "${getString(R.string.tvId)} - ${collection[0].id_temporal_en_recolector.toInt()}"
+                binding.tvTitle.text =
+                    "${getString(R.string.recolection)}\n ${totalRecolection[0].kg_collection.toFloat()} Kg"
                 binding.rvRecolections.adapter = adapter
-                binding.rvRecolections.layoutManager = LinearLayoutManager(this@ActivityRecolectionDetail)
+                binding.rvRecolections.layoutManager =
+                    LinearLayoutManager(this@ActivityRecolectionDetail)
             }
         }
     }
 
-    private fun alertUpdateRecollection(it:collectorCollection, idCollector: Int){
+    private fun alertUpdateRecollection(it: collectorCollection, idCollector: Int) {
         alertCollectionUpdate(
             it.PK_ID_Recoleccion,
             idCollector,
-            it.Alimentacion,
             it.Cantidad,
             it.name_recolector
-        ){
+        ) {
             updateCollection(it, idCollector)
-        }.show(supportFragmentManager,"dialog")
+        }.show(supportFragmentManager, "dialog")
     }
 
-    private fun updateCollection(it:RecollectionEntity, idCollector: Int) {
+    private fun updateCollection(it: RecollectionEntity, idCollector: Int) {
         CoroutineScope(Dispatchers.IO).launch {
-            AppDataBase.getInstance(this@ActivityRecolectionDetail).RecollectionDao().updateCollection(it.ID!!,it.date,it.collector,it.total,it.setting)
-            launch(Dispatchers.Main){
+            AppDataBase.getInstance(this@ActivityRecolectionDetail).RecollectionDao()
+                .updateCollection(it.id!!, it.date, it.collector, it.total, it.setting)
+            launch(Dispatchers.Main) {
                 getRecollection(idCollector)
-                customSnackBar.showCustomSnackBar(binding.rvRecolections,getString(R.string.updateFinish))
+                customSnackBar.showCustomSnackBar(
+                    binding.rvRecolections,
+                    getString(R.string.updateFinish)
+                )
             }
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.edit,menu)
+        menuInflater.inflate(R.menu.edit, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.editName -> showAlertEditName()
         }
         return super.onOptionsItemSelected(item)
@@ -110,13 +120,17 @@ class ActivityRecolectionDetail : AppCompatActivity() {
             idCollector!!,
             userName.toString(),
             false
-        ){
+        ) {
             CoroutineScope(Dispatchers.IO).launch {
-                AppDataBase.getInstance(this@ActivityRecolectionDetail).RecolectoresDao().updateCollectorName(it.id!!,it.name)
+                AppDataBase.getInstance(this@ActivityRecolectionDetail).RecolectoresDao()
+                    .updateCollectorName(it.id!!, it.name)
                 launch(Dispatchers.Main) {
-                    customSnackBar.showCustomSnackBar(binding.rvRecolections,getString(R.string.editNameReady))
+                    customSnackBar.showCustomSnackBar(
+                        binding.rvRecolections,
+                        getString(R.string.editNameReady)
+                    )
                 }
             }
-        }.show(supportFragmentManager,"dialog")
+        }.show(supportFragmentManager, "dialog")
     }
 }

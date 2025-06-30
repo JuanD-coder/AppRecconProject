@@ -12,7 +12,7 @@ import com.rojasdev.apprecconproject.controller.controllerTheme
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconproject.databinding.ItemCollectorBinding
 
-class viewHolderCvCollectors( var view: View): RecyclerView.ViewHolder(view) {
+class viewHolderCvCollectors(var view: View) : RecyclerView.ViewHolder(view) {
 
     val binding = ItemCollectorBinding.bind(view)
 
@@ -23,20 +23,34 @@ class viewHolderCvCollectors( var view: View): RecyclerView.ViewHolder(view) {
         onClickListenerNext: (RecolectoresEntity) -> Unit,
         onClickListenerDelete: (RecolectoresEntity) -> Unit,
         onClickListenerKg: (RecolectoresEntity) -> Unit
-    ){
-        binding.cvCollector.animation = AnimationUtils.loadAnimation(view.context, R.anim.recycler_transition)
+    ) {
+        binding.cvCollector.animation =
+            AnimationUtils.loadAnimation(view.context, R.anim.recycler_transition)
         binding.tvNameCollector.text = item.name
+        binding.tvIdCollector.text = "ID: ${item.idTemporal}"
 
-        if (item.state == "work-active"){
+        if (item.state == "work-active") {
             controllerTheme.main(
                 view.context,
                 day = {
-                    binding.layout.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(view.context, R.color.Orange))
-                    binding.fbAddKg.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(view.context, R.color.Orange))
+                    binding.layout.backgroundTintList =
+                        ColorStateList.valueOf(ContextCompat.getColor(view.context, R.color.Orange))
+                    binding.fbAddKg.imageTintList =
+                        ColorStateList.valueOf(ContextCompat.getColor(view.context, R.color.Orange))
                 },
                 night = {
-                    binding.layout.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(view.context, R.color.OrangeDark))
-                    binding.fbAddKg.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(view.context, R.color.OrangeDark))
+                    binding.layout.backgroundTintList = ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            view.context,
+                            R.color.OrangeDark
+                        )
+                    )
+                    binding.fbAddKg.imageTintList = ColorStateList.valueOf(
+                        ContextCompat.getColor(
+                            view.context,
+                            R.color.OrangeDark
+                        )
+                    )
                 }
             )
             binding.fbAddKg.setImageResource(R.drawable.ic_edit)
@@ -47,10 +61,10 @@ class viewHolderCvCollectors( var view: View): RecyclerView.ViewHolder(view) {
 
         val result = item.id!!.toLong() in list
 
-        if (result){
-            if (item.state == "work-active"){
+        if (result) {
+            if (item.state == "work-active") {
                 binding.fbDeleteCollector.setImageResource(R.drawable.construction)
-            }else{
+            } else {
                 binding.fbDeleteCollector.setImageResource(R.drawable.ic_bolsa_de_cafe)
             }
             binding.tvDeleteAndDetail.text = "Detalle"
@@ -62,7 +76,7 @@ class viewHolderCvCollectors( var view: View): RecyclerView.ViewHolder(view) {
                 onClickListenerNext(item)
                 animationOnCLick()
             }
-        }else{
+        } else {
             binding.fbDeleteCollector.setImageResource(R.drawable.ic_delete)
             binding.tvDeleteAndDetail.text = "Eliminar"
             binding.fbDeleteCollector.setOnClickListener {
@@ -82,7 +96,9 @@ class viewHolderCvCollectors( var view: View): RecyclerView.ViewHolder(view) {
 
     }
 
-     // Animation
-    private fun animationOnCLick() { animatedAlert.animatedClick(binding.cvCollector) }
+    // Animation
+    private fun animationOnCLick() {
+        animatedAlert.animatedClick(binding.cvCollector)
+    }
 
 }

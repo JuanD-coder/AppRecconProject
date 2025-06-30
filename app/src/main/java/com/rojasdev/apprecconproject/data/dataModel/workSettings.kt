@@ -1,6 +1,5 @@
 package com.rojasdev.apprecconproject.data.dataModel
 
-
 data class workSettings(
     val PK_ID_Trabajo: Int?,
     val cantidad: Int,

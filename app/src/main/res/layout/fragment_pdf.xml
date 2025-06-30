@@ -86,7 +86,7 @@
                     app:layout_constraintTop_toTopOf="@+id/imgViewInfoWeek2" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvNoAliment"
+                    android:id="@+id/tvAliment"
                     style="@style/text"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
@@ -110,7 +110,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/imgViewInfoWeek2"
                     app:layout_constraintEnd_toEndOf="@+id/imgViewInfoWeek2"
                     app:layout_constraintStart_toStartOf="@+id/imgViewInfoWeek2"
-                    app:layout_constraintTop_toBottomOf="@+id/tvNoAliment" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvAliment" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

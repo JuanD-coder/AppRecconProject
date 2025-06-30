@@ -1,11 +1,8 @@
 package com.rojasdev.apprecconproject.pdf
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.net.Uri
-import com.itextpdf.text.Font
-import com.itextpdf.text.FontFactory
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
 import kotlinx.coroutines.CoroutineScope
@@ -25,40 +22,35 @@ class generateYearPDF(
     private val formatOriginal = SimpleDateFormat("yyyy", Locale("es", "ES"))
     private val dateYear = formatOriginal.format(calendar)
 
-        val titlePdf = context.getString(R.string.titlePdfYear)
-        fun generatePdfN(uri: Uri){
-            CoroutineScope(Dispatchers.IO).launch {
-                val query1 =
-                    AppDataBase.getInstance(context).RecolectoresDao().getPdfInfo("${dateYear}%", "yes")
-                val query2 =
-                    AppDataBase.getInstance(context).RecolectoresDao().getPdfInfo("${dateYear}%", "no")
-                val yesAlimentTotal = AppDataBase.getInstance(context).RecolectoresDao()
-                    .getTotalPdf("${dateYear}%", "yes")
-                val noAlimentTotal =
-                    AppDataBase.getInstance(context).RecolectoresDao().getTotalPdf("${dateYear}%", "no")
-                val queryWork =
-                    AppDataBase.getInstance(context).RecolectoresDao().getPdfInfoWork("${dateYear}%")
-                val workTotal =
-                    AppDataBase.getInstance(context).RecolectoresDao().getTotalPdfWork("${dateYear}%")
-                val active = AppDataBase.getInstance(context).SettingDao().getAlimentState("active")
-                val archive = AppDataBase.getInstance(context).SettingDao().getAlimentState("archived")
-                launch(Dispatchers.Main) {
-                    generatePDF(
-                        titlePdf,
-                        context,
-                        resources,
-                        active,
-                        archive,
-                        query1,
-                        query2,
-                        yesAlimentTotal,
-                        noAlimentTotal,
-                        queryWork,
-                        workTotal,
-                    ) {
-                        location()
-                    }.generatePfd(uri)
-                }
+    val titlePdf = context.getString(R.string.titlePdfYear)
+    fun generatePdfN(uri: Uri) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val query1 =
+                AppDataBase.getInstance(context).RecolectoresDao().getPdfInfo("${dateYear}%")
+            val query2 =
+                AppDataBase.getInstance(context).RecolectoresDao().getPdfInfo("${dateYear}%")
+            val yesAlimentTotal = AppDataBase.getInstance(context).RecolectoresDao()
+                .getTotalPdf("${dateYear}%")
+            val noAlimentTotal =
+                AppDataBase.getInstance(context).RecolectoresDao().getTotalPdf("${dateYear}%")
+            val active = AppDataBase.getInstance(context).SettingDao().getAlimentState("active")
+            val archive = AppDataBase.getInstance(context).SettingDao().getAlimentState("archived")
+
+            launch(Dispatchers.Main) {
+                generatePDF(
+                    titlePdf,
+                    context,
+                    resources,
+                    active,
+                    archive,
+                    query1,
+                    query2,
+                    yesAlimentTotal,
+                    noAlimentTotal,
+                ) {
+                    location()
+                }.generatePfd(uri)
             }
         }
+    }
 }

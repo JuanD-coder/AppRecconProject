@@ -12,15 +12,18 @@ import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.databinding.AlertInfoBinding
+
 class alertMessage(
     private val messageA: String,
     private val messageB: String,
     private val btnYes: String,
     private val btnNo: String,
     val message: String,
-    var onClickListener: (String) -> Unit ): DialogFragment() {
+    var onClickListener: (String) -> Unit
+) : DialogFragment() {
 
     private lateinit var binding: AlertInfoBinding
+
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertInfoBinding.inflate(LayoutInflater.from(context))
@@ -40,23 +43,21 @@ class alertMessage(
         buttons()
 
         val dialog = builder.create()
-            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.setCanceledOnTouchOutside(false)
-        animatedAlert.onBackAlert(dialog,requireContext(),getString(R.string.requireDates))
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(false)
+        animatedAlert.onBackAlert(dialog, requireContext(), getString(R.string.requireDates))
         return dialog
     }
 
-    private fun buttons (){
-            binding.btYes.setOnClickListener {
-                onClickListener("yes")
-                dismiss()
-            }
-            binding.btNo.setOnClickListener {
-                onClickListener("no")
-                dismiss()
-
-
-                }
-            }
+    private fun buttons() {
+        binding.btYes.setOnClickListener {
+            onClickListener("yes")
+            dismiss()
+        }
+        binding.btNo.setOnClickListener {
+            onClickListener("no")
+            dismiss()
+        }
+    }
 
 }

@@ -21,12 +21,12 @@ import com.rojasdev.apprecconproject.controller.requireInput
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconproject.databinding.AlertUpdateSettingBinding
 
-class alertUpdateNameCollector (
+class alertUpdateNameCollector(
     private var idCollector: Int,
     var name: String,
     var styleApp: Boolean?,
     var onClickListener: (RecolectoresEntity) -> Unit
-): DialogFragment() {
+) : DialogFragment() {
 
     private lateinit var binding: AlertUpdateSettingBinding
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -42,15 +42,15 @@ class alertUpdateNameCollector (
         )
 
         binding.btReady.setOnClickListener {
-            if (requireInput.validate(myListInput,requireContext())) {
+            if (requireInput.validate(myListInput, requireContext())) {
                 dates()
                 dismiss()
             }
         }
 
-        keyLIstener.start(binding.etNameCollector){
-            val require = requireInput.validate(myListInput,requireContext())
-            if (require){
+        keyLIstener.start(binding.etNameCollector) {
+            val require = requireInput.validate(myListInput, requireContext())
+            if (require) {
                 dates()
                 dismiss()
             }
@@ -79,21 +79,25 @@ class alertUpdateNameCollector (
         val newName = binding.etNameCollector.text.toString()
 
         val editNameCollector = RecolectoresEntity(
-            idCollector,
-            newName,
-            "active"
+            id = idCollector,
+            idTemporal = null,
+            name = newName,
+            state = "active"
         )
         onClickListener(editNameCollector)
 
-        startActivity(Intent(
-            requireContext(), ActivityRecolectionDetail::class.java)
-            .putExtra("userId", idCollector).putExtra("userName", newName)
+        startActivity(
+            Intent(
+                requireContext(), ActivityRecolectionDetail::class.java
+            )
+                .putExtra("userId", idCollector).putExtra("userName", newName)
         )
     }
 
     private fun contextTheme() {
         var color: Int? = null
-        controllerTheme.main(requireContext(),
+        controllerTheme.main(
+            requireContext(),
             day = {
                 color = ContextCompat.getColor(requireContext(), R.color.Orange)
             },
@@ -101,7 +105,7 @@ class alertUpdateNameCollector (
                 color = ContextCompat.getColor(requireContext(), R.color.OrangeDark)
             })
 
-        if (styleApp == true){
+        if (styleApp == true) {
             binding.btReady.backgroundTintList = ColorStateList.valueOf(color!!)
             binding.tvDescription.backgroundTintList = ColorStateList.valueOf(color!!)
 
@@ -110,7 +114,7 @@ class alertUpdateNameCollector (
 
             binding.tilNameCollector.boxStrokeColor = color!!
             binding.tilNameCollector.hintTextColor = ColorStateList.valueOf(color!!)
-        }else{
+        } else {
             controllerTheme.main(
                 requireContext(),
                 day = {

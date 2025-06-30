@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 @Entity (tableName = "Recolectores")
 data class RecolectoresEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "PK_ID_Recolector") var id: Int?,
+    @ColumnInfo(name = "id_temporal_en_recolector") var idTemporal: Int? = 1,
     @ColumnInfo(name = "name_recolector") var name: String,
     @ColumnInfo(name = "estado_recolector") var state: String
 )

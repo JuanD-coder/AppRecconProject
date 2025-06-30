@@ -32,77 +32,82 @@ class generatePdfSemanal(
             Calendar.MONDAY -> {
                 0
             }
+
             Calendar.TUESDAY -> {
                 1
             }
+
             Calendar.WEDNESDAY -> {
                 2
             }
+
             Calendar.THURSDAY -> {
                 3
             }
+
             Calendar.FRIDAY -> {
                 4
             }
+
             Calendar.SATURDAY -> {
                 5
             }
+
             else -> {
                 6
             }
         }
 
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd ",Locale.getDefault())
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd ", Locale.getDefault())
         val currentDate = Calendar.getInstance()
 
         val endWeek = dateFormat.format(currentDate.time)
 
-        currentDate.add(Calendar.DATE, - days)
+        currentDate.add(Calendar.DATE, -days)
         val startWeek = dateFormat.format(currentDate.time)
 
         val horaStar = "00:00:00"
         val horaEnd = "23:59:59"
 
-        return Pair(startWeek+horaStar, endWeek.toString()+horaEnd)
+        return Pair(startWeek + horaStar, endWeek.toString() + horaEnd)
     }
 
     @SuppressLint("SuspiciousIndentation")
 
-        val titlePdf = context.getString(R.string.titlePdfYear)
+    val titlePdf = context.getString(R.string.titlePdfYear)
 
-        fun generatePdfN(uri: Uri){
-            CoroutineScope(Dispatchers.IO).launch {
-                val query1 =
-                    AppDataBase.getInstance(context).RecolectoresDao().getWeekPdf(dateWeek.first,dateWeek.second, "yes")
-                val query2 =
-                    AppDataBase.getInstance(context).RecolectoresDao().getWeekPdf(dateWeek.first,dateWeek.second, "no")
-                val yesAlimentTotal = AppDataBase.getInstance(context).SettingDao().getTotalPdfWeek(dateWeek.first,dateWeek.second, "yes")
-                val noAlimentTotal =
-                    AppDataBase.getInstance(context).SettingDao().getTotalPdfWeek(dateWeek.first,dateWeek.second, "no")
-                val queryWork =
-                    AppDataBase.getInstance(context).RecolectoresDao().getWeekPdfWork(dateWeek.first,dateWeek.second)
-                val workTotal =
-                    AppDataBase.getInstance(context).SettingDao().getTotalPdfWeekWork(dateWeek.first,dateWeek.second)
-                val active = AppDataBase.getInstance(context).SettingDao().getAlimentState("active")
-                val archive = AppDataBase.getInstance(context).SettingDao().getAlimentState("archived")
-                launch(Dispatchers.Main) {
-                    generatePDF(
-                        titlePdf,
-                        context,
-                        resources,
-                        active,
-                        archive,
-                        query1,
-                        query2,
-                        yesAlimentTotal,
-                        noAlimentTotal,
-                        queryWork,
-                        workTotal,
-                    ) {
-                        location()
-                    }.generatePfd(uri)
-                }
+    fun generatePdfN(uri: Uri) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val query1 =
+                AppDataBase.getInstance(context).RecolectoresDao()
+                    .getWeekPdf(dateWeek.first, dateWeek.second)
+            val query2 =
+                AppDataBase.getInstance(context).RecolectoresDao()
+                    .getWeekPdf(dateWeek.first, dateWeek.second)
+            val yesAlimentTotal = AppDataBase.getInstance(context).SettingDao()
+                .getTotalPdfWeek(dateWeek.first, dateWeek.second)
+            val noAlimentTotal =
+                AppDataBase.getInstance(context).SettingDao()
+                    .getTotalPdfWeek(dateWeek.first, dateWeek.second)
+            val active = AppDataBase.getInstance(context).SettingDao().getAlimentState("active")
+            val archive = AppDataBase.getInstance(context).SettingDao().getAlimentState("archived")
+
+            launch(Dispatchers.Main) {
+                generatePDF(
+                    titlePdf,
+                    context,
+                    resources,
+                    active,
+                    archive,
+                    query1,
+                    query2,
+                    yesAlimentTotal,
+                    noAlimentTotal,
+                ) {
+                    location()
+                }.generatePfd(uri)
             }
         }
+    }
 
 }

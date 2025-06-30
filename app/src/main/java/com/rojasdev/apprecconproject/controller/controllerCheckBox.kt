@@ -12,14 +12,14 @@ object controllerCheckBox {
     fun checkBoxFun(cbNo:CheckBox, cbYes:CheckBox, tvAliment:TextView, context: Context, ready:(Int) -> Unit) {
         if(cbNo.isChecked){
             CoroutineScope(Dispatchers.IO).launch{
-                val query = AppDataBase.getInstance(context).SettingDao().getAliment("no")
+                val query = AppDataBase.getInstance(context).SettingDao().getAliment()
                 launch(Dispatchers.Main) {
                     ready(query[0].Id!!)
                 }
             }
         }else if(cbYes.isChecked){
             CoroutineScope(Dispatchers.IO).launch{
-                val query = AppDataBase.getInstance(context).SettingDao().getAliment("yes")
+                val query = AppDataBase.getInstance(context).SettingDao().getAliment()
                 launch(Dispatchers.Main) {
                     ready(query[0].Id!!)
                 }

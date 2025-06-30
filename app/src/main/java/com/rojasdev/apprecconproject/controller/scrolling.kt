@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 object scrolling {
     private var scrollingUp = false
     private var scrollingDown = false
-    fun scrolling(rv: RecyclerView, scroll:(String)-> Unit){
+    fun scrolling(rv: RecyclerView, scroll: (String) -> Unit) {
         val scrollListener = object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0) {

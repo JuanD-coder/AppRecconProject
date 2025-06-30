@@ -10,27 +10,30 @@ import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
-import com.rojasdev.apprecconproject.controller.controllerCheckBox
 import com.rojasdev.apprecconproject.controller.dateFormat
 import com.rojasdev.apprecconproject.controller.requireInput
+import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
 import com.rojasdev.apprecconproject.data.entities.RecollectionEntity
 import com.rojasdev.apprecconproject.databinding.AlertCollectionBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class alertCollectionUpdate(
     private val PK_ID_Recollection: Int,
     private val PK_ID_Recolector: Int,
-    private val feeding: String,
     private val quantity: Double,
     private val nameCollector: String,
     private val onClickListener: (RecollectionEntity) -> Unit,
-): DialogFragment() {
+) : DialogFragment() {
     private lateinit var binding: AlertCollectionBinding
     private var settingsId: Int? = null
+
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertCollectionBinding.inflate(LayoutInflater.from(context))
         val builder = AlertDialog.Builder(requireActivity())
-            builder.setView(binding.root)
+        builder.setView(binding.root)
 
         adsBanner.initLoadAds(binding.banner)
 
@@ -38,39 +41,21 @@ class alertCollectionUpdate(
 
         binding.tvDescription.text = nameCollector
 
-        val myListInput = listOf( binding.etKg )
-
-        if(feeding == "yes"){
-            binding.cbYes.isChecked = true
-        } else {
-            binding.cbNo.isChecked = true
-        }
+        val myListInput = listOf(binding.etKg)
 
         binding.etKg.setText(quantity.toString())
 
-        binding.cbYes.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                binding.cbNo.isChecked = false
-            }
-        }
-
-        binding.cbNo.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                binding.cbYes.isChecked = false
-            }
-        }
-
         binding.btReady.setOnClickListener {
-            val require = requireInput.validate(myListInput,requireContext())
-            if (require){
-                controllerCheckBox.checkBoxFun(
-                    binding.cbNo,
-                    binding.cbYes,
-                    binding.tvAliment,
-                    requireContext()
-                ){
-                    settingsId = it
-                    dates()
+            val require = requireInput.validate(myListInput, requireContext())
+            if (require) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    val query = AppDataBase.getInstance(requireContext()).SettingDao().getAliment()
+                    if (query.isNotEmpty() && query[0].Id != null) {
+                        settingsId = query[0].Id
+                        launch(Dispatchers.Main) {
+                            dates()
+                        }
+                    }
                 }
             }
         }
@@ -80,7 +65,7 @@ class alertCollectionUpdate(
         }
 
         val dialog = builder.create()
-            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return dialog
     }
 
@@ -89,7 +74,7 @@ class alertCollectionUpdate(
         val kg = binding.etKg.text.toString()
 
         val collection = RecollectionEntity(
-            PK_ID_Recollection ,
+            PK_ID_Recollection,
             kg.toDouble(),
             dateFormat.main(),
             "active",

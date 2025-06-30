@@ -3,11 +3,11 @@ package com.rojasdev.apprecconproject.fragments.collection
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rojasdev.apprecconproject.ActivityInformes
 import com.rojasdev.apprecconproject.ActivityMainModule
@@ -39,6 +39,8 @@ class FragmentCollection(
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCollectorsAndCollecionBinding.inflate(inflater, container, false)
+
+        binding.searchViewCollectors.visibility = View.GONE
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
             object : OnBackPressedCallback(true) {

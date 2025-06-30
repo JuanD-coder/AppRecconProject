@@ -22,11 +22,11 @@ import com.rojasdev.apprecconproject.databinding.AlertUpdateSettingBinding
 
 class alertSettingsUpdate(
     private var description: String,
-    private var fending: String,
     private var idSetting: Int,
     var price: Int,
     private var style: Boolean?,
-    var onClickListener: (SettingEntity) -> Unit ): DialogFragment() {
+    var onClickListener: (SettingEntity) -> Unit
+) : DialogFragment() {
 
     private lateinit var binding: AlertUpdateSettingBinding
 
@@ -45,16 +45,16 @@ class alertSettingsUpdate(
         adsBanner.initLoadAds(binding.banner)
 
         binding.btReady.setOnClickListener {
-            val require = requireInput.validate(myListInput,requireContext())
-            if (require){
+            val require = requireInput.validate(myListInput, requireContext())
+            if (require) {
                 dates()
                 dismiss()
             }
         }
 
-        keyLIstener.start(binding.etNameCollector){
-            val require = requireInput.validate(myListInput,requireContext())
-            if (require){
+        keyLIstener.start(binding.etNameCollector) {
+            val require = requireInput.validate(myListInput, requireContext())
+            if (require) {
                 dates()
                 dismiss()
             }
@@ -76,22 +76,17 @@ class alertSettingsUpdate(
         binding.etNameCollector.setText(price.toString())
         binding.tvDescription.text = description
 
-        if (fending == "yes"){
-            binding.etNameCollector.setHint(R.string.yesFeeding)
-            binding.tilNameCollector.setStartIconDrawable(R.drawable.ic_alimentacion)
-        }else{
-            binding.tilNameCollector.setStartIconDrawable(R.drawable.ic_no_alimentacion)
-            binding.etNameCollector.setHint(R.string.notFeeding)
-        }
+        binding.tilNameCollector.setStartIconDrawable(R.drawable.baseline_price_change_24)
+        binding.etNameCollector.setHint(R.string.notFeeding)
+
     }
 
     private fun dates() {
-        val yesAliment = binding.etNameCollector.text.toString()
+        val priceAliment = binding.etNameCollector.text.toString()
 
         val configAlimentYes = SettingEntity(
             idSetting,
-            fending,
-            yesAliment.toInt(),
+            priceAliment.toInt(),
             "active",
             dateFormat.main()
         )
@@ -101,7 +96,8 @@ class alertSettingsUpdate(
 
     private fun contextTheme() {
         var color: Int? = null
-        controllerTheme.main(requireContext(),
+        controllerTheme.main(
+            requireContext(),
             day = {
                 color = ContextCompat.getColor(requireContext(), R.color.Orange)
             },
@@ -109,7 +105,7 @@ class alertSettingsUpdate(
                 color = ContextCompat.getColor(requireContext(), R.color.OrangeDark)
             })
 
-        if (style == true){
+        if (style == true) {
             binding.btReady.backgroundTintList = ColorStateList.valueOf(color!!)
             binding.tvDescription.backgroundTintList = ColorStateList.valueOf(color!!)
 
@@ -118,8 +114,9 @@ class alertSettingsUpdate(
 
             binding.tilNameCollector.boxStrokeColor = color!!
             binding.tilNameCollector.hintTextColor = ColorStateList.valueOf(color!!)
-        }else{
-            binding.fbClose.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(),R.color.Dark_Tan))
+        } else {
+            binding.fbClose.backgroundTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.Dark_Tan))
             binding.fbClose.invalidate()
         }
     }

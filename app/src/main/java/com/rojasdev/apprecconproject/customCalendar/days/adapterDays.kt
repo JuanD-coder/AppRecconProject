@@ -11,7 +11,6 @@ class adapterDays (
     private var hoy : String,
     private var items:List<dataModelDay>,
     private var collection:List<String>,
-    private var work:List<String>,
     private val onClickListenerNext: (Triple<String,String,Boolean>) -> Unit ) : RecyclerView.Adapter<viewHolderDays>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolderDays {
@@ -24,7 +23,7 @@ class adapterDays (
 
     private fun renderView(holder: viewHolderDays,position: Int) {
         val item = items[position]
-        holder.render(hoy,item,collection,work,onClickListenerNext)
+        holder.render(hoy,item,collection,onClickListenerNext)
     }
 
     override fun getItemCount(): Int = items.size

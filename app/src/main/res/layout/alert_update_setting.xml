@@ -48,7 +48,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvDescription"
-                    app:startIconDrawable="@drawable/ic_alimentacion">
+                    app:startIconDrawable="@drawable/baseline_price_change_24">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etNameCollector"

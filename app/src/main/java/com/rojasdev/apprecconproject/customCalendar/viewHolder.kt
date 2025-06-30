@@ -1,9 +1,7 @@
 package com.rojasdev.apprecconproject.customCalendar
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rojasdev.apprecconproject.customCalendar.days.adapterDays
@@ -18,10 +16,9 @@ class viewHolder( var view: View): RecyclerView.ViewHolder(view) {
         hoy : String,
         item: List<dataModelDay>,
         collection: List<String>,
-        work: List<String>,
         onClickListenerNext: (Triple<String,String,Boolean>)-> Unit
     ){
-        dates(hoy,item,collection,work){
+        dates(hoy,item,collection){
             onClickListenerNext(it)
         }
     }
@@ -30,7 +27,6 @@ class viewHolder( var view: View): RecyclerView.ViewHolder(view) {
         hoy : String,
         week: List<dataModelDay>,
         list: List<String>,
-        work: List<String>,
         onClickListener: (Triple<String,String,Boolean>) -> Unit) {
         binding.rvDays.isNestedScrollingEnabled = false
         binding.rvDays.apply {
@@ -38,18 +34,18 @@ class viewHolder( var view: View): RecyclerView.ViewHolder(view) {
             if (week.size < 7) {
                 if(week[0].dayMonth == "1"){
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    adapter = adapterDays(hoy,addListWeek(week,week.size), list, work) {
+                    adapter = adapterDays(hoy,addListWeek(week,week.size), list) {
                         onClickListener(it)
                     }
                 }else{
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    adapter = adapterDays(hoy,week, list, work) {
+                    adapter = adapterDays(hoy,week, list) {
                         onClickListener(it)
                     }
                 }
             } else {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                adapter = adapterDays(hoy,week, list, work) {
+                adapter = adapterDays(hoy,week, list) {
                     onClickListener(it)
                 }
             }

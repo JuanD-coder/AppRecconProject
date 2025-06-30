@@ -8,7 +8,6 @@ data class allCollecionAndCollector (
     val result: Double,
     val Precio: Double,
     val Estado: String?,
-    val Alimentacion: String?,
     val Fecha: String?,
     val Fk_Configuracion: Int
 )

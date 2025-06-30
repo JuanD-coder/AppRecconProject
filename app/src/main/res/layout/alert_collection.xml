@@ -55,7 +55,9 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="18dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
                     android:hint="@string/kgRecolectados"
+                    ads:layout_constraintBottom_toBottomOf="parent"
                     app:boxCornerRadiusBottomEnd="10dp"
                     app:boxCornerRadiusBottomStart="10dp"
                     app:boxCornerRadiusTopEnd="10dp"
@@ -63,6 +65,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvDescription"
+                    ads:layout_constraintBottom_toTopOf="@+id/btReady"
                     app:startIconDrawable="@drawable/ic_kilogramo">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -72,7 +75,6 @@
                         android:inputType="numberDecimal" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
 
                 <Button
                     android:id="@+id/btReady"
@@ -84,53 +86,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="16dp"
-                    app:layout_constraintBottom_toTopOf="@+id/btReady"
-                    app:layout_constraintEnd_toEndOf="@+id/tvAliment"
-                    app:layout_constraintStart_toStartOf="@+id/tvAliment"
-                    app:layout_constraintTop_toBottomOf="@+id/tvAliment">
-
-                    <CheckBox
-                        android:id="@+id/cbNo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_margin="3dp"
-                        android:paddingEnd="8dp"
-                        android:text="@string/no"
-                        tools:ignore="RtlSymmetry" />
-
-                    <CheckBox
-                        android:id="@+id/cbYes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_margin="3dp"
-                        android:paddingEnd="8dp"
-                        android:text="@string/yes"
-                        tools:ignore="RtlSymmetry" />
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/tvAliment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:text="@string/aliment"
-                    android:textSize="18sp"
-                    style="@style/text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tilKg" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -149,7 +104,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_close"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

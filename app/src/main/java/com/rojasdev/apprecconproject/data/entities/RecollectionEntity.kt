@@ -19,10 +19,14 @@ import androidx.room.PrimaryKey
             parentColumns = ["PK_ID_Configuracion"],
             childColumns = ["Fk_Configuracion"]
         )
+    ],
+    indices = [
+        Index(value = ["Fk_recolector"]),
+        Index(value = ["Fk_Configuracion"])
     ]
 )
 data class RecollectionEntity(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "PK_ID_Recoleccion") val ID: Int?,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "PK_ID_Recoleccion") val id: Int?,
     @ColumnInfo(name = "Cantidad") val total: Double,
     @ColumnInfo(name = "Fecha") val date: String,
     @ColumnInfo(name = "Estado") val state: String?,

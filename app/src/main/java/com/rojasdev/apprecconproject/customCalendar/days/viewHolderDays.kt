@@ -2,14 +2,11 @@ package com.rojasdev.apprecconproject.customCalendar.days
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.customCalendar.dataModelDay
-import com.rojasdev.apprecconproject.databinding.ItemDateBinding
 import com.rojasdev.apprecconproject.databinding.ItemDayBinding
 
 class viewHolderDays( var view: View): RecyclerView.ViewHolder(view) {
@@ -21,7 +18,6 @@ class viewHolderDays( var view: View): RecyclerView.ViewHolder(view) {
         hoy : String,
         item: dataModelDay,
         collection: List<String>,
-        work: List<String>,
         onClickListenerNext: (Triple<String,String,Boolean>) -> Unit
     ) {
         if (hoy == item.dayMonth){
@@ -41,8 +37,6 @@ class viewHolderDays( var view: View): RecyclerView.ViewHolder(view) {
         binding.lyDay.setOnClickListener {
             onClickListenerNext(Triple(item.dateTime,item.dayMonth,true))
         }
-
-        activity(item, work, binding.viewWork)
     }
 
     private fun marcarDay() {

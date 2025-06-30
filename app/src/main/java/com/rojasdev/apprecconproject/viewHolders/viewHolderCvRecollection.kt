@@ -35,11 +35,5 @@ class viewHolderCvRecollection(var view: View ): RecyclerView.ViewHolder(view) {
             binding.tvPrice.text = "Precio: $it"
         }
 
-        if (itemDetail.Alimentacion == "yes") {
-            binding.tvFeending.text = "Alimentacion: Si"
-        } else {
-            binding.tvFeending.text = "Alimentacion: No"
-        }
-
     }
 }

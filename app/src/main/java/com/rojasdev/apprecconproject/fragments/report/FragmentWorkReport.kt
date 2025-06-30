@@ -2,26 +2,21 @@ package com.rojasdev.apprecconproject.fragments.report
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.rojasdev.apprecconproject.ActivityWork
-import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.adapters.acapterItemDateWork
 import com.rojasdev.apprecconproject.adapters.adapterItemDate
-import com.rojasdev.apprecconproject.controller.dateFormat
 import com.rojasdev.apprecconproject.controller.price
 import com.rojasdev.apprecconproject.customCalendar.adapter
 import com.rojasdev.apprecconproject.customCalendar.dataModelDay
 import com.rojasdev.apprecconproject.customCalendar.montAndYear
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
 import com.rojasdev.apprecconproject.data.dataModel.allCollecionAndCollector
-import com.rojasdev.apprecconproject.data.dataModel.allWorkAndCollector
 import com.rojasdev.apprecconproject.data.dataModel.totalCollection
 import com.rojasdev.apprecconproject.databinding.FragmentWorkReportBinding
 import kotlinx.coroutines.CoroutineScope
@@ -35,7 +30,7 @@ class FragmentWorkReport : Fragment() {
     private lateinit var adapter: adapterItemDate
     private lateinit var adapterWork: acapterItemDateWork
     private lateinit var adapterDates: adapter
-    private lateinit var dayCalendar: Pair<Int,Int>
+    private lateinit var dayCalendar: Pair<Int, Int>
     private var _binding: FragmentWorkReportBinding? = null
     private val binding get() = _binding!!
 
@@ -43,9 +38,9 @@ class FragmentWorkReport : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentWorkReportBinding.inflate(inflater,container,false)
+        _binding = FragmentWorkReportBinding.inflate(inflater, container, false)
 
-        dayCalendar = Pair(yearActual(),monthActual()-1)
+        dayCalendar = Pair(yearActual(), monthActual() - 1)
 
         initSpinner()
         initSpinnerYear()
@@ -53,45 +48,52 @@ class FragmentWorkReport : Fragment() {
         daySelectedView(
             Pair(
                 dayMonthActual(),
-                dayWeek(dayMonthActual().toInt(),monthActual(),yearActual())
+                dayWeek(dayMonthActual().toInt(), monthActual(), yearActual())
             )
         )
 
         return binding.root
     }
 
-    private fun daySelectedView(day: Pair<String,String>) {
+    private fun daySelectedView(day: Pair<String, String>) {
         binding.tvMonthDay.text = day.first
-        binding.tvWorkDay.text = day.second.substring(0,3)
+        binding.tvWorkDay.text = day.second.substring(0, 3)
     }
 
-    private fun initCalendar(it:Pair<Int,Int>) {
+    private fun initCalendar(it: Pair<Int, Int>) {
         CoroutineScope(Dispatchers.IO).launch {
-            val collection = AppDataBase.getInstance(requireContext()).RecollectionDao().getDateCollection()
-            val work = AppDataBase.getInstance(requireContext()).WorkDao().getDateWork()
+            val collection =
+                AppDataBase.getInstance(requireContext()).RecollectionDao().getDateCollection()
             launch(Dispatchers.Main) {
                 val listModificationCollection = collection.map { it.dropLast(9) }
-                val listModificationWork = work.map { it.dropLast(9) }
-                val month = getDaysMonth(it.first,it.second)
-                calendarView(dayMonthActual(),month,listModificationCollection,listModificationWork)
+                val month = getDaysMonth(it.first, it.second)
+                calendarView(
+                    dayMonthActual(),
+                    month,
+                    listModificationCollection,
+                )
             }
         }
     }
 
-    private fun calendarView(dayMonthActual: String, month: List<List<dataModelDay>>, collection: List<String>,work: List<String>) {
-        adapterDates = adapter(dayMonthActual,month,collection, work){
-           if (it.third == true){
-               calendarView(it.second,month,collection,work)
-           }
+    private fun calendarView(
+        dayMonthActual: String,
+        month: List<List<dataModelDay>>,
+        collection: List<String>,
+    ) {
+        adapterDates = adapter(dayMonthActual, month, collection) {
+            if (it.third == true) {
+                calendarView(it.second, month, collection)
+            }
             showAllRecollection(it.first)
             daySelectedView(
                 Pair(
                     it.second,
                     dayWeek(
                         it.second.toInt(),
-                        it.first.substring(5,7).toInt(),
-                        it.first.substring(0,4).toInt()
-                        )
+                        it.first.substring(5, 7).toInt(),
+                        it.first.substring(0, 4).toInt()
+                    )
                 )
             )
         }
@@ -114,7 +116,7 @@ class FragmentWorkReport : Fragment() {
             val fechaActual = calendar.time
             val diaDeLaSemana = formatDayWeek.format(fechaActual)
 
-            val day = dataModelDay(dateFormat.format(fechaActual),dia.toString(),diaDeLaSemana)
+            val day = dataModelDay(dateFormat.format(fechaActual), dia.toString(), diaDeLaSemana)
 
             week.add(day)
 
@@ -129,15 +131,16 @@ class FragmentWorkReport : Fragment() {
         return diasDelMes
     }
 
-    fun initSpinner(){
-        val adaptador = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, montAndYear.month)
+    fun initSpinner() {
+        val adaptador =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, montAndYear.month)
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         binding.spinnerMonth.adapter = adaptador
 
-        binding.spinnerMonth.setSelection(monthActual()-1)
+        binding.spinnerMonth.setSelection(monthActual() - 1)
 
-        binding.spinnerMonth.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        binding.spinnerMonth.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -148,7 +151,7 @@ class FragmentWorkReport : Fragment() {
                 val mesSeleccionadoLetras = montAndYear.month[position]
 
 
-                dayCalendar = Pair(dayCalendar.first,mesSeleccionadoNumero)
+                dayCalendar = Pair(dayCalendar.first, mesSeleccionadoNumero)
                 initCalendar(dayCalendar)
             }
 
@@ -159,15 +162,19 @@ class FragmentWorkReport : Fragment() {
         }
     }
 
-    fun initSpinnerYear(){
-        val adaptador = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, montAndYear.listYear())
+    fun initSpinnerYear() {
+        val adaptador = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            montAndYear.listYear()
+        )
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         binding.spinnerYear.adapter = adaptador
 
-        binding.spinnerYear.setSelection(montAndYear.listYear().size-1)
+        binding.spinnerYear.setSelection(montAndYear.listYear().size - 1)
 
-        binding.spinnerYear.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        binding.spinnerYear.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -176,7 +183,7 @@ class FragmentWorkReport : Fragment() {
             ) {
                 val yearSelected = montAndYear.listYear()
 
-                dayCalendar = Pair(yearSelected[position],dayCalendar.second)
+                dayCalendar = Pair(yearSelected[position], dayCalendar.second)
                 initCalendar(dayCalendar)
             }
 
@@ -195,14 +202,15 @@ class FragmentWorkReport : Fragment() {
         return Calendar.getInstance().get(Calendar.YEAR)
     }
 
-    fun monthActual(): Int {return Calendar.getInstance().get(Calendar.MONTH) + 1
+    fun monthActual(): Int {
+        return Calendar.getInstance().get(Calendar.MONTH) + 1
     }
 
     fun dayWeek(diaDelMes: Int, mes: Int, año: Int): String {
         val calendario = Calendar.getInstance()
         calendario.set(año, mes - 1, diaDelMes) // Los meses en Calendar van de 0 a 11
 
-        val diaSemana = when(calendario.get(Calendar.DAY_OF_WEEK)) {
+        val diaSemana = when (calendario.get(Calendar.DAY_OF_WEEK)) {
             Calendar.SUNDAY -> "Domingo"
             Calendar.MONDAY -> "Lunes"
             Calendar.TUESDAY -> "Martes"
@@ -218,52 +226,39 @@ class FragmentWorkReport : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun showAllRecollection(selectedDate: String) {
-        CoroutineScope(Dispatchers.IO).launch{
+        CoroutineScope(Dispatchers.IO).launch {
             val getAllID = AppDataBase.getInstance(requireContext()).RecolectoresDao().getAll()
-            val getTotalKg = AppDataBase.getInstance(requireContext()).RecollectionDao().getTotalKgDate("${selectedDate}%")
-            val getTotalWork = AppDataBase.getInstance(requireContext()).WorkDao().getTotalWorkDate("${selectedDate}%")
+            val getTotalKg = AppDataBase.getInstance(requireContext()).RecollectionDao()
+                .getTotalKgDate("${selectedDate}%")
             launch(Dispatchers.Main) {
                 val collectionAll = mutableListOf<allCollecionAndCollector>()
-                val workAll = mutableListOf<allWorkAndCollector>()
-                for (item in getAllID){
-                    val collection = AppDataBase.getInstance(requireContext()).RecolectoresDao().getAllCollectorAndCollectionId("${selectedDate}%",item.toInt())
-                    val work = AppDataBase.getInstance(requireContext()).RecolectoresDao().getAllCollectorAndWorkId("${selectedDate}%",item.toInt())
 
-                    if(collection.isNotEmpty()){
+                for (item in getAllID) {
+                    val collection = AppDataBase.getInstance(requireContext()).RecolectoresDao()
+                        .getAllCollectorAndCollectionId("${selectedDate}%", item.toInt())
+
+                    if (collection.isNotEmpty()) {
                         if (collection[0].name_recolector != null) collectionAll.add(collection[0])
-                    }
-                    if(work.isNotEmpty()){
-                        if (work[0].name_recolector != null) workAll.add(work[0])
                     }
                 }
 
-                if(collectionAll.isEmpty() && workAll.isEmpty()) {
+                if (collectionAll.isEmpty()) {
                     showViewCollection(false)
-                    showViewWork(false)
+
                     binding.tvNoDates.visibility = View.VISIBLE
                     binding.ivNoDates.visibility = View.VISIBLE
-                } else{
+                } else {
                     binding.tvNoDates.visibility = View.GONE
                     binding.ivNoDates.visibility = View.GONE
 
-                    if(collectionAll.isEmpty()) {
+                    if (collectionAll.isEmpty()) {
                         showViewCollection(false)
-                    }else{
+                    } else {
                         showTotalCollection(getTotalKg)
                         showViewCollection(true)
                         adapter = adapterItemDate(collectionAll)
                         binding.rvDates.adapter = adapter
                         binding.rvDates.layoutManager = LinearLayoutManager(requireContext())
-                    }
-
-                    if(workAll.isEmpty()) {
-                        showViewWork(false)
-                    }else{
-                        showViewWork(true)
-                        showTotalWork(getTotalWork)
-                        adapterWork = acapterItemDateWork(workAll)
-                        binding.rvDatesWork.adapter = adapterWork
-                        binding.rvDatesWork.layoutManager = LinearLayoutManager(requireContext())
                     }
                 }
             }
@@ -272,44 +267,22 @@ class FragmentWorkReport : Fragment() {
 
     private fun showTotalCollection(totalKg: totalCollection) {
         binding.tvKgTotal.text = "Total recolectado \n ${totalKg.Cantidad}Kg"
-        price.priceSplit(totalKg.result.toInt()){
+        price.priceSplit(totalKg.result.toInt()) {
             binding.tvPriceTotal.text = "Total pagado \n ${it}"
         }
     }
 
-    private fun showTotalWork(totalKg: totalCollection) {
-        binding.tvWorkTotal.text = "Jornales trabajados \n ${totalKg.Cantidad.toInt()}"
-        price.priceSplit(totalKg.result.toInt()){
-            binding.tvPriceWorkTotal.text = "Total pagado \n ${it}"
-        }
-    }
-
-    private fun showViewCollection(estate : Boolean){
-        val visibility : Any
-        if (estate == true){
-            visibility = View.VISIBLE
-        }else{
-            visibility = View.GONE
+    private fun showViewCollection(estate: Boolean) {
+        val visibility = if (estate == true) {
+            View.VISIBLE
+        } else {
+            View.GONE
         }
 
         binding.rvDates.visibility = visibility
         binding.tvCollection.visibility = visibility
         binding.ivCollection.visibility = visibility
         binding.lyTotalCollection.visibility = visibility
-    }
-
-    private fun showViewWork(estate : Boolean){
-        val visibility : Any
-            if (estate == true){
-                visibility = View.VISIBLE
-            }else{
-                visibility = View.GONE
-            }
-
-        binding.rvDatesWork.visibility = visibility
-        binding.tvWork.visibility = visibility
-        binding.ivWork.visibility = visibility
-        binding.lyTotalWork.visibility = visibility
     }
 
 }

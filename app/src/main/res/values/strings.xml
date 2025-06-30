@@ -4,7 +4,7 @@
     <!-- Setting -->
     <string name="require">¡Importante! Para que RECCON funcione correctamente, asegúrate de proporcionar los precios por kilogramo recolectado. ¡Optimiza tu contabilidad cafetera con nosotros!</string>
     <string name="yesFeeding">Precio por kilo con alimentación</string>
-    <string name="notFeeding">Precio por kilo sin alimentación</string>
+    <string name="notFeeding">Precio por kilogramo</string>
     <string name="todoExit">Volver al módulo de configuración</string>
     <string name="settingsAliment">Configuración de precios</string>
     <string name="todo">Ver todos los precios anteriores</string>
@@ -25,6 +25,7 @@
     <string name="deleteCollection">¿Estás seguro de que deseas eliminar este recolector?</string>
     <string name="finish_collection">¡Recolección finalizada!</string>
     <string name="tvRecolection">Total recolectado:</string>
+    <string name="tvId">ID</string>
     <string name="hintUser">Nombre del Trabajador</string>
     <string name="tvPriceTotal">Total a Pagar:</string>
     <string name="priceCollection">Ganado</string>
@@ -88,7 +89,7 @@
     <string name="infoPdfMonth">Información de lo recolectado durante el Mes de </string>
 
     <!-- Recursos del Pdf -->
-    <string name="actualPrice">Precios de Recoleccion</string>
+    <string name="actualPrice">Precio de Recoleccion</string>
     <string name="previousPrice">Precios Anteriores</string>
     <string name="notAliment">Recolección sin alimentación</string>
     <string name="yesAliment">Recolección con alimentación</string>
@@ -228,5 +229,6 @@
     <string name="default_notification_channel_id">FCM_CHANNEL_ID</string>
     <string name="btnAddPriceWork">Precio por Jornal</string>
     <string name="txtWorkFull">¡Todo al día!</string>
+    <string name="actividad_realizada">Actividad realizada</string>
 
 </resources>

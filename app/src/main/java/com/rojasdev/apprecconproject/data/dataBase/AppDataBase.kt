@@ -4,34 +4,26 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.work.impl.Migration_1_2
 import com.rojasdev.apprecconproject.data.dao.RecolectoresDao
 import com.rojasdev.apprecconproject.data.dao.RecollectionDao
 import com.rojasdev.apprecconproject.data.dao.SettingDao
-import com.rojasdev.apprecconproject.data.dao.WorkDao
-import com.rojasdev.apprecconproject.data.entities.RecollectionEntity
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
+import com.rojasdev.apprecconproject.data.entities.RecollectionEntity
 import com.rojasdev.apprecconproject.data.entities.SettingEntity
-import com.rojasdev.apprecconproject.data.entities.WorkEntity
 
 @Database(
     entities = [RecolectoresEntity::class,
                 RecollectionEntity::class,
-                SettingEntity::class,
-                WorkEntity::class
+                SettingEntity::class
         ],
-    version = 2,
+    version = 1,
     exportSchema = false
 )
-
 abstract class AppDataBase : RoomDatabase() {
 
     abstract fun RecolectoresDao(): RecolectoresDao
     abstract fun RecollectionDao(): RecollectionDao
     abstract fun SettingDao(): SettingDao
-    abstract fun WorkDao(): WorkDao
 
 
     companion object{
@@ -42,31 +34,11 @@ abstract class AppDataBase : RoomDatabase() {
             fun getInstance(context: Context): AppDataBase {
                 if (Instance == null) {
                  Instance = Room.databaseBuilder(context.applicationContext, AppDataBase::class.java, DATABASE_NAME)
-                     .addMigrations(MIGRATION_1_2)
                      .build()
                 }
                    return Instance!!
             }
 
-    }
-
-}
-
-val MIGRATION_1_2 = object : Migration(1,2) {
-    override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL(
-            "CREATE TABLE WorkEntity (\n" +
-                    "    PK_ID_Trabajo INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                    "    cantidad INTEGER NOT NULL,\n" +
-                    "    actividad TEXT NOT NULL,\n" +
-                    "    Fecha TEXT NOT NULL,\n" +
-                    "    Estado TEXT,\n" +
-                    "    Fk_recolector INTEGER NOT NULL,\n" +
-                    "    Fk_Configuracion INTEGER NOT NULL,\n" +
-                    "    FOREIGN KEY (Fk_recolector) REFERENCES Recolectores(PK_ID_Recolector),\n" +
-                    "    FOREIGN KEY (Fk_Configuracion) REFERENCES Configuracion(PK_ID_Configuracion)\n" +
-                    ");"
-        )
     }
 
 }

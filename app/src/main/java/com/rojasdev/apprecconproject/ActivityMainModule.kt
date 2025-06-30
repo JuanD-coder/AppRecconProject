@@ -19,7 +19,6 @@ import com.rojasdev.apprecconproject.alert.messagin.alertCountDown
 import com.rojasdev.apprecconproject.alert.messagin.alertHelp
 import com.rojasdev.apprecconproject.alert.messagin.alertMessage
 import com.rojasdev.apprecconproject.alert.messagin.alertWelcome
-import com.rojasdev.apprecconproject.alert.settings.alertAddPriceWork
 import com.rojasdev.apprecconproject.alert.settings.alertSettings
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
@@ -49,7 +48,7 @@ class ActivityMainModule : AppCompatActivity() {
 
         title = getString(R.string.priceTitle)
 
-        this.onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
+        this.onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 finishAffinity()
             }
@@ -58,29 +57,23 @@ class ActivityMainModule : AppCompatActivity() {
         getRGPD()
         checkRegister()
 
-        binding.cvWork.setOnClickListener {
-            checkRegister()
-            animatedAlert.animatedClick(binding.cvWork)
-            checkWork()
-        }
-
         binding.cvInformes.setOnClickListener {
             checkRegister()
             animatedAlert.animatedClick(binding.cvInformes)
-            val intent = Intent(this,ActivityInformes::class.java)
-            intent.putExtra("fragment","")
+            val intent = Intent(this, ActivityInformes::class.java)
+            intent.putExtra("fragment", "")
             startActivity(intent)
         }
 
         binding.cvCollection.setOnClickListener {
             checkRegister()
             animatedAlert.animatedClick(binding.cvCollection)
-                checkCollection()
+            checkCollection()
         }
 
         binding.btSettings.setOnClickListener {
             checkRegister()
-            startActivity(Intent(this,ActivitySettings::class.java))
+            startActivity(Intent(this, ActivitySettings::class.java))
         }
 
     }
@@ -105,62 +98,74 @@ class ActivityMainModule : AppCompatActivity() {
             }
         )
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu,menu)
+        menuInflater.inflate(R.menu.menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.support -> help("¡Holaa amigos de RECCON!")
-            R.id.apoyo -> alertApoyo().show(supportFragmentManager,"dialog")
+            R.id.apoyo -> alertApoyo().show(supportFragmentManager, "dialog")
             R.id.delete -> alertDeleteTODO()
         }
         return super.onOptionsItemSelected(item)
     }
 
     private fun alertDeleteTODO() {
-                alertMessage(
-                    getString(R.string.deleteA),
-                    getString(R.string.deleteB),
-                    getString(R.string.deleteBtn),
-                    getString(R.string.txtStop),
-                    getString(R.string.cuidado)
-                ){
-                    if (it == "yes"){
-                        deleteDB()
-                    }else{
-                        startActivity(Intent(this,ActivityMainModule::class.java))
-                    }
-                }.show(supportFragmentManager,"dialog")
+        alertMessage(
+            getString(R.string.deleteA),
+            getString(R.string.deleteB),
+            getString(R.string.deleteBtn),
+            getString(R.string.txtStop),
+            getString(R.string.cuidado)
+        ) {
+            if (it == "yes") {
+                deleteDB()
+            } else {
+                startActivity(Intent(this, ActivityMainModule::class.java))
+            }
+        }.show(supportFragmentManager, "dialog")
     }
 
     private fun deleteDB() {
-        CoroutineScope(Dispatchers.IO).launch{
-            val query = AppDataBase.getInstance(this@ActivityMainModule).RecollectionDao().getFkIdCollectors()
+        CoroutineScope(Dispatchers.IO).launch {
+            val query = AppDataBase.getInstance(this@ActivityMainModule).RecollectionDao()
+                .getFkIdCollectors()
             launch(Dispatchers.Main) {
-                if (query.isEmpty()){
-                    alertCountDown{
-                        CoroutineScope(Dispatchers.IO).launch{
-                            AppDataBase.getInstance(this@ActivityMainModule).RecollectionDao().delete()
-                            AppDataBase.getInstance(this@ActivityMainModule).RecolectoresDao().delete()
+                if (query.isEmpty()) {
+                    alertCountDown {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            AppDataBase.getInstance(this@ActivityMainModule).RecollectionDao()
+                                .delete()
+                            AppDataBase.getInstance(this@ActivityMainModule).RecolectoresDao()
+                                .delete()
                             AppDataBase.getInstance(this@ActivityMainModule).SettingDao().delete()
                             launch(Dispatchers.Main) {
-                                startActivity(Intent(this@ActivityMainModule, ActivityMainModule::class.java))
+                                startActivity(
+                                    Intent(
+                                        this@ActivityMainModule,
+                                        ActivityMainModule::class.java
+                                    )
+                                )
                                 customSnackBar.showCustomSnackBar(binding.textView, "")
                                 alerts()
                             }
                         }
-                    }.show(supportFragmentManager,"dialog")
-                }else{
-                    customSnackBar.showCustomSnackBar(binding.textView,getString(R.string.errorDeleteDates))
+                    }.show(supportFragmentManager, "dialog")
+                } else {
+                    customSnackBar.showCustomSnackBar(
+                        binding.textView,
+                        getString(R.string.errorDeleteDates)
+                    )
                 }
             }
         }
     }
 
     private fun help(message: String) {
-        alertHelp{
+        alertHelp {
             try {
                 val phone = "573170157414"
                 val sendIntent = Intent()
@@ -168,37 +173,39 @@ class ActivityMainModule : AppCompatActivity() {
                 val uri = "whatsapp://send?phone=${phone}&text=${message}"
                 sendIntent.data = Uri.parse(uri)
                 startActivity(sendIntent)
-            } catch (e: ActivityNotFoundException){
+            } catch (e: ActivityNotFoundException) {
                 alertMessage(
                     getString(R.string.install),
                     getString(R.string.message),
                     getString(R.string.playSore),
                     getString(R.string.ready),
                     getString(R.string.noWhatsApp)
-                ){
-                    if (it == "yes"){
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=whatsapp&c=apps&hl=es_419&gl=US"))
+                ) {
+                    if (it == "yes") {
+                        val intent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/search?q=whatsapp&c=apps&hl=es_419&gl=US")
+                        )
                         startActivity(intent)
-                    }else{
-                        startActivity(Intent(this,ActivityMainModule::class.java))
+                    } else {
+                        startActivity(Intent(this, ActivityMainModule::class.java))
                     }
-                }.show(supportFragmentManager,"dialog")
+                }.show(supportFragmentManager, "dialog")
             }
-        }.show(supportFragmentManager,"dialog")
+        }.show(supportFragmentManager, "dialog")
     }
 
-    private fun alerts(){
-        alertWelcome{
-            alertSettings{
+    private fun alerts() {
+        alertWelcome {
+            alertSettings {
                 insertSettings(it)
             }.show(supportFragmentManager, "dialog")
-        }.show(supportFragmentManager,"dialog")
+        }.show(supportFragmentManager, "dialog")
     }
 
-
-    private fun insertSettings(settings: SettingEntity){
+    private fun insertSettings(settings: SettingEntity) {
         preferences()
-        CoroutineScope(Dispatchers.IO).launch{
+        CoroutineScope(Dispatchers.IO).launch {
             AppDataBase.getInstance(this@ActivityMainModule).SettingDao().insertConfig(settings)
             launch {
                 checkRegister()
@@ -206,183 +213,105 @@ class ActivityMainModule : AppCompatActivity() {
         }
     }
 
-    private fun preferences (){
-        val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
+    private fun preferences() {
+        val preferences = getSharedPreferences("register", Context.MODE_PRIVATE)
         val editor = preferences.edit()
-        editor.putString("register","true")
-        editor.putString("collection","false")
+        editor.putString("register", "true")
+        editor.putString("collection", "false")
         editor.apply()
     }
 
-    private fun preferencesWork (){
-        val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
-        val editor = preferences.edit()
-        editor.putString("work","true")
-        editor.apply()
-    }
-
-
-    private fun checkRegister(){
-        CoroutineScope(Dispatchers.IO).launch{
-            val query = AppDataBase.getInstance(this@ActivityMainModule).SettingDao().getAliment("yes")
+    private fun checkRegister() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val settingDao = AppDataBase.getInstance(this@ActivityMainModule).SettingDao()
+            val alimentList = settingDao.getAliment()
             launch(Dispatchers.Main) {
-                if(query.isNotEmpty()){
-                    val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
-                    val register = preferences.getString("register","")
-                    if(register != "true"){
+                val preferences = getSharedPreferences("register", Context.MODE_PRIVATE)
+                val isRegistered = preferences.getString("register", "") == "true"
+
+                if (alimentList.isNotEmpty()) {
+                    if (!isRegistered) {
                         alerts()
-                    }else{
-                        CoroutineScope(Dispatchers.IO).launch{
-                            val query1 = AppDataBase.getInstance(this@ActivityMainModule).SettingDao().getAliment("yes")
-                            launch(Dispatchers.Main) {
-                                if(query1.isNotEmpty()){
-                                    getYesAliment()
-                                    getNoAliment()
-                                }else{
-                                    val preferences2 = getSharedPreferences( "register", Context.MODE_PRIVATE)
-                                    val register2 = preferences2.getString("register","")
-                                    if(register2 != "true"){
-                                        alerts()
-                                    }else{
-                                        checkRegister()
-                                    }
-                                }
-                            }
-                        }
+                    } else {
+                        getAliment()
                     }
-                }else{
+                } else {
                     alerts()
                 }
             }
         }
     }
 
-    private fun getNoAliment(){
-        CoroutineScope(Dispatchers.IO).launch{
-            val query = AppDataBase.getInstance(this@ActivityMainModule).SettingDao().getAliment("no")
+    private fun getAliment() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val query = AppDataBase.getInstance(this@ActivityMainModule).SettingDao().getAliment()
             launch(Dispatchers.Main) {
-                price.priceSplit(query[0].cost){
-                    binding.tvNoAliment.text = it
-                }
-            }
-        }
-    }
-
-    private fun getYesAliment(){
-        CoroutineScope(Dispatchers.IO).launch{
-            val query = AppDataBase.getInstance(this@ActivityMainModule).SettingDao().getAliment("yes")
-            launch(Dispatchers.Main) {
-                if(query.isNotEmpty()){
-                    price.priceSplit(query[0].cost){
-                        binding.tvYesAliment.text = it
+                if (query.isNotEmpty()) {
+                    price.priceSplit(query[0].cost) {
+                        binding.tvAliment.text = it
                     }
                 }
             }
         }
     }
 
-    private fun checkWork(){
-        val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
-        val work = preferences.getString("work","")
-        if(work != "true"){
-            alertAddWork()
-        }else{
-            checkWorkMen()
+    private fun checkCollection() {
+        val preferences = getSharedPreferences("register", Context.MODE_PRIVATE)
+        val isCollectionEnabled = preferences.getString("collection", "") == "true"
+
+        if (!isCollectionEnabled) {
+            checkRecollectionData()
+        } else {
+            startActivity(Intent(this, ActivityRecolection::class.java))
         }
     }
 
-    private fun checkWorkMen(){
-        val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
-        val work = preferences.getString("workMen","")
-        if(work != "true"){
-            alertAddWorkMen()
-        }else{
-            startActivity(Intent(this,ActivityWork::class.java))
-        }
-    }
-
-    private fun checkCollection(){
-        val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
-        val collection = preferences.getString("collection","")
-        if(collection != "true"){
-                CoroutineScope(Dispatchers.IO).launch{
-                    val query = AppDataBase.getInstance(this@ActivityMainModule).RecollectionDao().getFkIdCollectors()
-                    launch(Dispatchers.Main) {
-                        if(query.isEmpty()){
-                            alertMessage(
-                                "${binding.tvNoAliment.text}\n ${getString(R.string.notAliment)}",
-                                "${binding.tvYesAliment.text}\n ${getString(R.string.yesAliment)}",
-                                getString(R.string.btCorrec),
-                                getString(R.string.noCorrec),
-                                getString(R.string.checkAliment)
-                            ){
-                                if(it == "yes"){
-                                    alertAddRecolcetor()
-                                }else{
-                                    startActivity(Intent(this@ActivityMainModule,ActivitySettings::class.java))
-                                }
-                            }.show(supportFragmentManager,"dialog")
-                        }else{
-                            startActivity(Intent(this@ActivityMainModule,ActivityRecolection::class.java))
-                        }
-                    }
+    private fun checkRecollectionData() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val recollectionDao = AppDataBase.getInstance(this@ActivityMainModule).RecollectionDao()
+            val fkIdCollectors = recollectionDao.getFkIdCollectors()
+            launch(Dispatchers.Main) {
+                if (fkIdCollectors.isEmpty()) {
+                    showNoFeedingAlert()
+                } else {
+                    startActivity(Intent(this@ActivityMainModule, ActivityRecolection::class.java))
                 }
-        }else{
-            startActivity(Intent(this,ActivityRecolection::class.java))
+            }
         }
     }
 
-    private fun alertAddRecolcetor() {
+    private fun showNoFeedingAlert() {
+        alertMessage(
+            getString(R.string.notFeeding),
+            "${binding.tvAliment.text}",
+            getString(R.string.btCorrec),
+            getString(R.string.noCorrec),
+            getString(R.string.checkAliment)
+        ) {
+            if (it == "yes") {
+                alertAddRecolcetor(true)
+            } else {
+                startActivity(
+                    Intent(this@ActivityMainModule, ActivitySettings::class.java)
+                )
+            }
+        }.show(supportFragmentManager, "dialog")
+    }
+
+    private fun alertAddRecolcetor(resetNextTemporalCollectorId: Boolean) {
         alertAddRecolector(
-            false,
+            style = false,
             {
                 insertRecolector(it)
             },
             {
-                if(it){
-                    startActivity(Intent(this,ActivityRecolection::class.java))
-                }else{
-                    startActivity(Intent(this,ActivityMainModule::class.java))
+                if (it) {
+                    startActivity(Intent(this, ActivityRecolection::class.java))
+                } else {
+                    startActivity(Intent(this, ActivityMainModule::class.java))
                 }
-            }
-        ).show(supportFragmentManager, "dialog")
-    }
-
-    private fun alertAddWorkMen() {
-        alertAddRecolector(
-            true,
-            {
-                val newMen = RecolectoresEntity(
-                    id = null,
-                    name = it.name,
-                    state = "work-active"
-                )
-                insertRecolector(newMen)
-                preferencesWorkMen()
             },
-            {
-                if(it){
-                    startActivity(Intent(this,ActivityWork::class.java))
-                }else{
-                    startActivity(Intent(this,ActivityMainModule::class.java))
-                }
-            }
-        ).show(supportFragmentManager, "dialog")
-    }
-
-    private fun alertAddWork() {
-        alertAddPriceWork(
-            {
-                insertSettings(it)
-                preferencesWork()
-            },
-            {
-                if(it){
-                    checkWorkMen()
-                }else{
-                    startActivity(Intent(this,ActivityMainModule::class.java))
-                }
-            }
+            resetNextTemporalCollectorId = resetNextTemporalCollectorId
         ).show(supportFragmentManager, "dialog")
     }
 
@@ -394,16 +323,9 @@ class ActivityMainModule : AppCompatActivity() {
     }
 
     private fun preferencesCollecion() {
-        val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
+        val preferences = getSharedPreferences("register", Context.MODE_PRIVATE)
         val editor = preferences.edit()
-        editor.putString("collection","true")
-        editor.apply()
-    }
-
-    private fun preferencesWorkMen() {
-        val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
-        val editor = preferences.edit()
-        editor.putString("workMen","true")
+        editor.putString("collection", "true")
         editor.apply()
     }
 

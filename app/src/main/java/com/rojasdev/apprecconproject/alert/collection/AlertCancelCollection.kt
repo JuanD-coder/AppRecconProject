@@ -21,13 +21,14 @@ import com.rojasdev.apprecconproject.data.dataModel.collecionTotalCollector
 import com.rojasdev.apprecconproject.data.dataModel.collectorCollection
 import com.rojasdev.apprecconproject.databinding.AlertCancelCollectionBinding
 
-class alertCancelCollection (
+class alertCancelCollection(
     private var collectionTotal: List<collecionTotalCollector>,
     val collection: List<collectorCollection>,
     var onClickListener: (Int) -> Unit
-): DialogFragment() {
+) : DialogFragment() {
     private lateinit var adapter: adapterRvCancelCollection
     private lateinit var binding: AlertCancelCollectionBinding
+
     @SuppressLint("SetTextI18n")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertCancelCollectionBinding.inflate(LayoutInflater.from(context))
@@ -43,7 +44,7 @@ class alertCancelCollection (
 
 
         binding.tvKg.text = "${collectionTotal[0].kg_collection} Kg"
-        price.priceSplit(collectionTotal[0].price_total.toInt()){
+        price.priceSplit(collectionTotal[0].price_total.toInt()) {
             binding.tvTotalPrice.text = it
         }
 
@@ -53,8 +54,9 @@ class alertCancelCollection (
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return dialog
     }
+
     private fun dates() {
-        var color : Int? = null
+        var color: Int? = null
         controllerTheme.main(
             requireContext(),
             day = {
@@ -73,20 +75,20 @@ class alertCancelCollection (
         binding.rv.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun buttons (){
+    private fun buttons() {
 
-            binding.btnReady.setOnClickListener {
-                onClickListener(collectionTotal[0].PK_ID_Recolector)
-                dismiss()
-            }
+        binding.btnReady.setOnClickListener {
+            onClickListener(collectionTotal[0].PK_ID_Recolector)
+            dismiss()
+        }
 
-            binding.btnClose.setOnClickListener {
-                dismiss()
-            }
+        binding.btnClose.setOnClickListener {
+            dismiss()
+        }
 
-            binding.btnFinish.setOnClickListener {
-                dismiss()
-            }
+        binding.btnFinish.setOnClickListener {
+            dismiss()
+        }
 
     }
 }

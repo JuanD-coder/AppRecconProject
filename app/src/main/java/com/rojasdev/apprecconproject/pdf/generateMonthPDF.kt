@@ -1,37 +1,15 @@
 package com.rojasdev.apprecconproject.pdf
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
-import com.itextpdf.awt.geom.Rectangle
-import com.itextpdf.text.BaseColor
-import com.itextpdf.text.Document
-import com.itextpdf.text.DocumentException
-import com.itextpdf.text.Element
-import com.itextpdf.text.Font
-import com.itextpdf.text.FontFactory
-import com.itextpdf.text.Image
-import com.itextpdf.text.PageSize
-import com.itextpdf.text.Paragraph
-import com.itextpdf.text.Phrase
-import com.itextpdf.text.pdf.PdfContentByte
-import com.itextpdf.text.pdf.PdfPCell
-import com.itextpdf.text.pdf.PdfPTable
-import com.itextpdf.text.pdf.PdfWriter
 import com.rojasdev.apprecconproject.R
-import com.rojasdev.apprecconproject.controller.price
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
-import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
 class
@@ -40,23 +18,26 @@ generateMonthPDF(
     var resources: Resources,
     var location: () -> Unit
 ) {
-     // Get phone date
-     private val calendar = Calendar.getInstance().time
-     private val formatOriginal = SimpleDateFormat("yyyy-MM", Locale("es", "CO"))
+    // Get phone date
+    private val calendar = Calendar.getInstance().time
+    private val formatOriginal = SimpleDateFormat("yyyy-MM", Locale("es", "CO"))
 
     private val date = formatOriginal.format(calendar)
     val titlePdf = context.getString(R.string.titlePdfMonth)
 
-    fun generatePdfN(uri: Uri){
+    fun generatePdfN(uri: Uri) {
         CoroutineScope(Dispatchers.IO).launch {
-            val query1 = AppDataBase.getInstance(context).RecolectoresDao().getPdfInfo("${date}%", "yes")
-            val query2 = AppDataBase.getInstance(context).RecolectoresDao().getPdfInfo("${date}%", "no")
-            val yesAlimentTotal = AppDataBase.getInstance(context).RecolectoresDao().getTotalPdf("${date}%", "yes")
-            val noAlimentTotal = AppDataBase.getInstance(context).RecolectoresDao().getTotalPdf("${date}%", "no")
-            val queryWork = AppDataBase.getInstance(context).RecolectoresDao().getPdfInfoWork("${date}%")
-            val workTotal = AppDataBase.getInstance(context).RecolectoresDao().getTotalPdfWork("${date}%")
-            val active = AppDataBase.getInstance(context).SettingDao().getAlimentState("active")
-            val archive = AppDataBase.getInstance(context).SettingDao().getAlimentState("archived")
+            val recolectoresDao = AppDataBase.getInstance(context).RecolectoresDao()
+            val settingDao = AppDataBase.getInstance(context).SettingDao()
+            val datePattern = "${date}%"
+
+            val query1 = recolectoresDao.getPdfInfo(datePattern)
+            val query2 = recolectoresDao.getPdfInfo(datePattern)
+            val yesAlimentTotal = recolectoresDao.getTotalPdf(datePattern)
+            val noAlimentTotal = recolectoresDao.getTotalPdf(datePattern)
+            val active = settingDao.getAlimentState("active")
+            val archive = settingDao.getAlimentState("archived")
+
             launch(Dispatchers.Main) {
                 generatePDF(
                     titlePdf,
@@ -67,9 +48,7 @@ generateMonthPDF(
                     query1,
                     query2,
                     yesAlimentTotal,
-                    noAlimentTotal,
-                    queryWork,
-                    workTotal,
+                    noAlimentTotal
                 ) {
                     location()
                 }.generatePfd(uri)

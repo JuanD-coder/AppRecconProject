@@ -17,7 +17,7 @@ import com.rojasdev.apprecconproject.databinding.AlertSettinsBinding
 
 class alertSettings(
     var onClickListener: (SettingEntity) -> Unit
-): DialogFragment() {
+) : DialogFragment() {
     private lateinit var binding: AlertSettinsBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -33,48 +33,29 @@ class alertSettings(
         val dialog = builder.create()
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
-        animatedAlert.onBackAlert(dialog,requireContext(),getString(R.string.requireDates))
+        animatedAlert.onBackAlert(dialog, requireContext(), getString(R.string.requireDates))
         return dialog
     }
 
-    private fun buttons (){
-        val myListInput = listOf(
-            binding.etNameCollector,
-            binding.nowAliment
-        )
-
+    private fun buttons() {
         binding.btReady.setOnClickListener {
-                val require = requireInput.validate(myListInput,requireContext())
-                if (require){
-                    dates()
-                    dismiss()
-                }
+            val require = requireInput.validate(listOf(binding.nowAliment), requireContext())
+            if (require) {
+                saveSettings()
+                dismiss()
             }
-
+        }
     }
 
-    private fun dates() {
-        val yesAliment = binding.etNameCollector.text.toString()
+    private fun saveSettings() {
         val nowAliment = binding.nowAliment.text.toString()
-
-        val configAlimentYes = SettingEntity(
-            null,
-            "yes",
-            yesAliment.toInt(),
-            "active",
-            dateFormat.main()
-        )
-        val configAlimentNow = SettingEntity(
-            null,
-            "no",
-            nowAliment.toInt(),
-            "active",
-            dateFormat.main()
+        val setting = SettingEntity(
+            Id = null,
+            cost = nowAliment.toInt(),
+            status = "active",
+            date = dateFormat.main()
         )
 
-        onClickListener(configAlimentNow)
-        onClickListener(configAlimentYes)
+        onClickListener(setting)
     }
 }
-
-

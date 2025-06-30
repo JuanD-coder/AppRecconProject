@@ -22,6 +22,7 @@
             android:layout_width="40dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             android:importantForAccessibility="no"
             android:src="@drawable/ic_recolector"
             app:layout_constraintBottom_toBottomOf="@+id/tvNameCollector"
@@ -29,20 +30,34 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvNameCollector"
+            android:id="@+id/tvIdCollector"
             style="@style/itemRecolectionInfo"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
             app:autoSizeTextType="uniform"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image"
             app:layout_constraintTop_toTopOf="parent"
+            tools:text="ID: 123" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvNameCollector"
+            style="@style/itemRecolectionInfo"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image"
+            app:layout_constraintTop_toBottomOf="@+id/tvIdCollector"
             tools:text="Cristian fabian rojas" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/viewHeaderBackground"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="5dp"
             style="@style/infoItem"
             android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -64,6 +79,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/trasparent_background"
                 android:clickable="true"
+                android:contentDescription="TODO"
                 android:focusable="true"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintStart_toStartOf="parent"
@@ -95,6 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:clickable="true"
+            android:contentDescription="TODO"
             android:focusable="true"
             android:tint="@color/Thunderbird"
             app:backgroundTint="@color/white"
