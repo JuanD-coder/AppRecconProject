@@ -28,7 +28,7 @@
     <string name="tvId">ID</string>
     <string name="hintUser">Nombre del Trabajador</string>
     <string name="tvPriceTotal">Total a Pagar:</string>
-    <string name="priceCollection">Ganado</string>
+    <string name="priceCollection">Total a pagar:</string>
     <string name="collected">pesa</string>
     <string name="tvKg">216 Kg</string>
 
@@ -93,7 +93,7 @@
     <string name="previousPrice">Precios Anteriores</string>
     <string name="notAliment">Recolección sin alimentación</string>
     <string name="yesAliment">Recolección con alimentación</string>
-    <string name="aliment">Alimentación</string>
+    <string name="aliment">Precio:</string>
     <string name="txtNotFeding">Sin Alimentación</string>
     <string name="stateActive">Trabajando</string>
     <string name="stateArchive">Descansando</string>
@@ -125,7 +125,7 @@
     <string name="read">leer</string>
 
     <string name="cvKg">Informacion de Recoleccion</string>
-    <string name="collect">Recoleccion</string>
+    <string name="collect">Total Recolectado:</string>
     <string name="txtNotPermissions">No tienes permiso para abrir el PDF</string>
 
     <string name="kgRecolectados">Añadir una Recolección</string>

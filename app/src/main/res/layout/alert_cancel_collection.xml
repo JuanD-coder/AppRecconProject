@@ -23,8 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
+        android:layout_marginHorizontal="18dp"
         android:layout_marginBottom="10dp"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="12dp"
         app:cardElevation="8dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,143 +33,111 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center_horizontal">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <!-- Título -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Resumen de la Jornada"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:gravity="center" />
+
+            <!-- Datos -->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp">
 
                 <TextView
-                    android:id="@+id/tvNameCollector"
-                    style="@style/texViewAlert"
-                    android:layout_width="0dp"
+                    android:id="@+id/tvPriceKg"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="Precio por kilo: $800"
                     android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="cristian rojas" />
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black" />
 
                 <TextView
-                    android:id="@+id/tvAliment2"
-                    style="@style/tvItem"
-                    android:layout_width="0dp"
-                    android:layout_height="20dp"
-                    android:text="@string/aliment"
-                    android:gravity="center"
-                    app:autoSizeTextType="uniform"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline5"
-                    app:layout_constraintStart_toStartOf="@+id/guideline6"
-                    app:layout_constraintTop_toBottomOf="@+id/tvNameCollector" />
+                    android:id="@+id/tvTotalKg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total recolectado: 123 kg"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:textAlignment="center"
+                    android:layout_marginTop="8dp" />
 
                 <TextView
-                    android:id="@+id/tvAliment3"
-                    style="@style/tvItem"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="8dp"
-                    android:text="@string/priceCollection"
-                    android:gravity="center"
-                    app:autoSizeTextType="uniform"
-                    app:layout_constraintBottom_toTopOf="@+id/rv"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tvAliment2"
-                    app:layout_constraintTop_toBottomOf="@+id/tvNameCollector" />
+                    android:id="@+id/tvTotalToPay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total a pagar: $98.400"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:layout_marginTop="8dp" />
 
                 <TextView
-                    android:id="@+id/tvAliment4"
-                    style="@style/tvItem"
+                    android:id="@+id/tvNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nota: Este es el resumen de toda la jornada unificado"
+                    android:textSize="15sp"
+                    android:textStyle="italic|bold"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:layout_marginTop="15dp" />
+            </LinearLayout>
+
+            <!-- Botones -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCancel"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="Cancelar"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@color/Thunderbird"
                     android:layout_marginEnd="8dp"
-                    android:text="@string/collect"
-                    android:gravity="center"
-                    app:autoSizeTextType="uniform"
-                    app:layout_constraintBottom_toTopOf="@+id/rv"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline6"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvNameCollector" />
+                    app:cornerRadius="10dp"/>
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.666" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.333" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnConfirm"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvAliment2"
-                    tools:listitem="@layout/item_collection_cancel" />
-
-                <Button
-                    android:id="@+id/btnReady"
-                    style="@style/buttons"
-                    android:layout_width="155dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="@string/collectionCancel"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvTotalPrice"
-                    tools:ignore="TextSizeCheck" />
-
-                <Button
-                    android:id="@+id/btnFinish"
-                    style="@style/buttons"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:text="Confirmar"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@color/Cinnabar"
                     android:layout_marginStart="8dp"
-                    android:text="@string/btnFinish"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvKg" />
+                    app:cornerRadius="10dp"/>
 
-                <TextView
-                    android:id="@+id/tvKg"
-                    style="@style/tvItem"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    android:text="TextView"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv"
-                    tools:ignore="HardcodedText" />
-
-                <TextView
-                    android:id="@+id/tvTotalPrice"
-                    style="@style/tvItem"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="20dp"
-                    android:gravity="center"
-                    android:text="TextView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv"
-                    tools:ignore="HardcodedText" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </ScrollView>
+            </LinearLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

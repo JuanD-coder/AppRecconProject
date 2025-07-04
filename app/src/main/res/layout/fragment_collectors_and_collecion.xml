@@ -2,118 +2,114 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_Collectors"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_Collectors"
     tools:context=".fragments.collection.FragmentCollectors">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/lyTotal"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            style="@style/infoTitle"
+        <!-- CardView superior -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardPayAll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline12"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@color/Cinnabar_Ligth"
+                android:padding="16dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvCollection"
-                style="@style/texViewDescriptionInformed"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                android:textColor="@color/white"
-                android:gravity="center"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideline12"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/tvRecolection" />
+                <TextView
+                    android:id="@+id/tvPayAllTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Al pagar la recolección, se limpiará la lista de trabajadores para iniciar una nueva jornada."
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:textSize="15sp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTotal"
-                style="@style/texViewDescriptionInformed"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                android:gravity="center"
-                android:textColor="@color/white"
-                app:autoSizeTextType="uniform"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline12"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Total a pagar:
-                $21635454654234" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPayAll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/Cinnabar"
+                    android:padding="10dp"
+                    android:text="Pagar"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    app:cornerRadius="10dp" />
+            </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
+        <!-- SearchView -->
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchViewCollectors"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@drawable/searchview_border"
-            app:queryHint="Buscar recolector"
-            app:searchIcon="@drawable/outline_search"
             app:iconifiedByDefault="false"
-            app:layout_constraintTop_toBottomOf="@+id/lyTotal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/cardPayAll"
+            app:queryHint="Buscar recolector"
+            app:searchIcon="@drawable/outline_search" />
 
+        <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCollectors"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchViewCollectors"
-            tools:listitem="@layout/item_collecion" />
+            app:layout_constraintTop_toBottomOf="@id/searchViewCollectors"
+            tools:listitem="@layout/item_collector" />
 
+        <!-- Empty View -->
         <LinearLayout
             android:id="@+id/llEmptyView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@+id/searchViewCollectors"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="vertical"
             android:visibility="visible"
-            tools:visibility="visible">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchViewCollectors"
+            tools:visibility="gone"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:layout_width="200dp"
                 android:layout_height="200dp"
+                android:contentDescription="TODO"
                 android:src="@drawable/ic_vacio"
                 app:tint="@color/gray" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="No se encontraron recolectores"
-                android:textSize="30sp"
                 android:textAlignment="center"
-                android:layout_marginTop="16dp"/>
+                android:textSize="30sp" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

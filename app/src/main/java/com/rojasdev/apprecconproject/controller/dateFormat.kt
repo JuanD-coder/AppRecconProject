@@ -2,9 +2,11 @@
 
 package com.rojasdev.apprecconproject.controller
 
+import java.text.Normalizer
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.util.regex.Pattern
 
 object dateFormat {
     fun main():String{
@@ -28,4 +30,15 @@ object dateFormat {
         return Pair(dateFormat,timeFormat)
     }
 
+}
+
+fun String.normalizeString(): String {
+    val normalized = Normalizer.normalize(this, Normalizer.Form.NFD)
+    val noAccents = Pattern.compile("\\p{InCombiningDiacriticalMarks}+")
+        .matcher(normalized).replaceAll("")
+
+    return noAccents
+        .replace(Regex("[^\\p{L}\\p{Nd} ]"), "")
+        .lowercase()                              // Convierte a minúsculas
+        .trim()                                   // Elimina espacios al principio/final
 }

@@ -12,8 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class
-generateMonthPDF(
+class generateMonthPDF(
     var context: Context,
     var resources: Resources,
     var location: () -> Unit

@@ -9,10 +9,12 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.rojasdev.apprecconproject.ActivityInformes
 import com.rojasdev.apprecconproject.ActivityMainModule
 import com.rojasdev.apprecconproject.ActivityRecolectionDetail
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.adapters.adapterRvCollectors
+import com.rojasdev.apprecconproject.alert.collection.alertCancelCollection
 import com.rojasdev.apprecconproject.alert.collection.alertCollection
 import com.rojasdev.apprecconproject.alert.collection.alertDeleteCollector
 import com.rojasdev.apprecconproject.alert.messagin.alertMessage
@@ -29,7 +31,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class FragmentCollectors(
-    var scroll: (String) -> Unit,
     var preferences: () -> Unit
 ) : Fragment() {
 
@@ -44,8 +45,6 @@ class FragmentCollectors(
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCollectorsAndCollecionBinding.inflate(inflater, container, false)
-
-        binding.lyTotal.visibility = View.GONE
 
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
@@ -89,11 +88,45 @@ class FragmentCollectors(
         binding.rvCollectors.adapter = adapter
         binding.rvCollectors.layoutManager = LinearLayoutManager(requireContext())
 
-        com.rojasdev.apprecconproject.controller.scrolling.scrolling(binding.rvCollectors) {
-            scroll(it)
+        binding.btnPayAll.setOnClickListener {
+            initCancelAllCollection()
         }
 
         return binding.root
+    }
+
+    private fun initCancelAllCollection() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val collection = AppDataBase.getInstance((requireContext())).RecolectoresDao()
+                .getAllCollectorAndCollection("active")
+
+            launch(Dispatchers.Main) {
+                alertCancelCollection(collection) {
+                    updateViewCollection()
+                }.show(parentFragmentManager, "dialog")
+            }
+        }
+    }
+
+    private fun updateViewCollection() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val dataBase = AppDataBase.getInstance(requireContext())
+            var idCollectors = dataBase.RecolectoresDao().getIDCollectors()
+
+            idCollectors.forEach { id ->
+                dataBase.RecolectoresDao().updateCollectorState(id.toInt())
+                dataBase.RecollectionDao().updateCollectionState(id.toInt())
+            }
+
+            launch(Dispatchers.Main) {
+                customSnackBar.showCustomSnackBar(
+                    requireView(),
+                    getString(R.string.collectionCanceled)
+                )
+                dates()
+                preferencesUpdate()
+            }
+        }
     }
 
     private fun onQueryTextChangeDb(query: String) {
@@ -120,15 +153,15 @@ class FragmentCollectors(
         }
     }
 
-
     private suspend fun dates() {
         val db = AppDataBase.getInstance(requireContext())
         val idCollectors = db.RecollectionDao().getFkIdCollectors()
         val collectors = db.RecolectoresDao().getAllRecolector()
 
         withContext(Dispatchers.Main) {
+            initRv(idCollectors, collectors)
+
             if (collectors.isNotEmpty()) {
-                initRv(idCollectors, collectors)
                 binding.llEmptyView.visibility = View.GONE
             } else {
                 preferencesUpdate()
@@ -184,24 +217,26 @@ class FragmentCollectors(
         CoroutineScope(Dispatchers.IO).launch {
             val idCollectors =
                 AppDataBase.getInstance((requireContext())).RecollectionDao().getFkIdCollectors()
+
             launch(Dispatchers.Main) {
                 if (idCollectors.isEmpty()) {
                     binding.llEmptyView.visibility = View.VISIBLE
+
                     alertMessage(
-                        getString(R.string.txtMessageOne),
-                        getString(R.string.txtMessageTwo),
-                        getString(R.string.txtRecolectionStart),
-                        getString(R.string.btnFinish),
-                        getString(R.string.requireCollectors)
+                        getString(R.string.txtNewReport),
+                        getString(R.string.txtCalendar),
+                        getString(R.string.txtGoReport),
+                        getString(R.string.txtReturnMenu),
+                        getString(R.string.txtRecolectionFull)
                     ) {
                         if (it == "yes") {
                             preferences()
-                            startActivity(Intent(requireContext(), ActivityMainModule::class.java))
+                            startActivity(Intent(requireContext(), ActivityInformes::class.java))
                         } else {
                             preferences()
                             startActivity(Intent(requireContext(), ActivityMainModule::class.java))
                         }
-                    }.show(parentFragmentManager,"dialog")
+                    }.show(parentFragmentManager, "dialog")
                 } else {
                     binding.llEmptyView.visibility = View.GONE
                 }

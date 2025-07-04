@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import com.rojasdev.apprecconproject.alert.collection.alertAddRecolector
 import com.rojasdev.apprecconproject.controller.adsBanner
@@ -13,7 +14,6 @@ import com.rojasdev.apprecconproject.controller.controllerTheme
 import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconproject.databinding.ActivityRecolectionBinding
-import com.rojasdev.apprecconproject.fragments.collection.FragmentCollection
 import com.rojasdev.apprecconproject.fragments.collection.FragmentCollectors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,17 +36,17 @@ class ActivityRecolection : AppCompatActivity() {
             initAlertAddRecolcetor()
         }
 
-        binding.bottonNavigationViewCollectors.inflateMenu(R.menu.nav_menu_collectors)
+        // binding.bottonNavigationViewCollectors.inflateMenu(R.menu.nav_menu_collectors)
 
         controllerTheme.main(
             this,
             day = {
                 binding.floatingActionButton.backgroundTintList =
-                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.Thunderbird))
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.Cinnabar))
             },
             night = {
                 binding.floatingActionButton.backgroundTintList =
-                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.Dark_Tan))
+                    ColorStateList.valueOf(ContextCompat.getColor(this, R.color.Thunderbird))
             }
         )
 
@@ -60,21 +60,17 @@ class ActivityRecolection : AppCompatActivity() {
         transaction.commit()
     }
 
-    private fun hideNavBar() {
-        onClickFalse()
-        binding.bottomAppBarCollectors.visibility = View.GONE
-        binding.bottonNavigationViewCollectors.visibility = View.GONE
+    /*private fun hideNavBar() {
+        // onClickFalse()
         binding.floatingActionButton.visibility = View.GONE
-    }
+    }*/
 
     private fun appearNavBar() {
-        onClickTrue()
-        binding.bottomAppBarCollectors.visibility = View.VISIBLE
-        binding.bottonNavigationViewCollectors.visibility = View.VISIBLE
+        // onClickTrue()
         binding.floatingActionButton.visibility = View.VISIBLE
     }
 
-    private fun onClickFalse() {
+    /*private fun onClickFalse() {
         binding.bottonNavigationViewCollectors.setOnNavigationItemSelectedListener { meniItem ->
             when (meniItem.itemId) {
                 R.id.collectors -> {
@@ -106,25 +102,24 @@ class ActivityRecolection : AppCompatActivity() {
                 else -> false
             }
         }
-    }
+    }*/
 
     private fun initFragmentCollectors() {
         title = getString(R.string.collectors)
         openFragment(
-            FragmentCollectors(
-                {
-                    if (it == "down") {
-                        hideNavBar()
-                    } else if (it == "up") {
-                        appearNavBar()
-                    }
-                }, {
-                    preferencesCollecion()
-                }
-            ))
+            FragmentCollectors
+            /*{
+            if (it == "down") {
+                hideNavBar()
+            } else if (it == "up") {
+                appearNavBar()
+            }
+        },*/ {
+                preferencesCollecion()
+            })
     }
 
-    private fun initFragmentCollection() {
+    /*private fun initFragmentCollection() {
         title = getString(R.string.collection)
         openFragment(
             FragmentCollection(
@@ -141,11 +136,11 @@ class ActivityRecolection : AppCompatActivity() {
             )
         )
 
-    }
+    }*/
 
     private fun initAlertAddRecolcetor() {
         alertAddRecolector(
-            style =  false,
+            style = false,
             {
                 insertRecolector(it)
             },
@@ -164,9 +159,9 @@ class ActivityRecolection : AppCompatActivity() {
 
     private fun preferencesCollecion() {
         val preferences = getSharedPreferences("register", Context.MODE_PRIVATE)
-        val editor = preferences.edit()
-        editor.putString("collection", "false")
-        editor.apply()
+        preferences.edit {
+            putString("collection", "false")
+        }
     }
 
 

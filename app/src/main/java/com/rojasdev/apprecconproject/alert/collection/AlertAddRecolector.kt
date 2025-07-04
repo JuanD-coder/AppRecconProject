@@ -19,6 +19,7 @@ import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.controllerTheme
 import com.rojasdev.apprecconproject.controller.customSnackBar
 import com.rojasdev.apprecconproject.controller.keyLIstener
+import com.rojasdev.apprecconproject.controller.normalizeString
 import com.rojasdev.apprecconproject.controller.requireInput
 import com.rojasdev.apprecconproject.controller.textListener
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
@@ -103,7 +104,7 @@ class alertAddRecolector(
         val addUser = RecolectoresEntity(
             id = null,
             idTemporal = proximoIdTemporalRecolector,
-            name = recolector,
+            name = recolector.normalizeString(),
             state = "active"
         )
         customSnackBar.showCustomSnackBar(view, "Trabajador $recolector guardado")

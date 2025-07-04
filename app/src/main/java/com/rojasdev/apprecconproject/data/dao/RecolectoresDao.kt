@@ -3,8 +3,10 @@ package com.rojasdev.apprecconproject.data.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.rojasdev.apprecconproject.data.dataModel.RecolectorConRecoleccionRaw
 import com.rojasdev.apprecconproject.data.dataModel.allCollecionAndCollector
 import com.rojasdev.apprecconproject.data.dataModel.collecionTotalCollector
+import com.rojasdev.apprecconproject.data.dataModel.collectionTotal
 import com.rojasdev.apprecconproject.data.dataModel.collectorCollection
 import com.rojasdev.apprecconproject.data.dataModel.pdfModel
 import com.rojasdev.apprecconproject.data.dataModel.totalPdf
@@ -16,14 +18,16 @@ interface RecolectoresDao {
     @Insert
     suspend fun add(recolector: RecolectoresEntity)
 
-    @Query("""
+    @Query(
+        """
         SELECT DISTINCT * FROM recolectores
         WHERE estado_recolector == 'active'
         AND (
             name_recolector LIKE '%' || :searchQuery || '%' 
             OR id_temporal_en_recolector LIKE '%' || :searchQuery || '%'
         )
-        """)
+        """
+    )
     fun searchCollectorsByName(searchQuery: String): List<RecolectoresEntity>
 
     @Query("UPDATE Recolectores SET  estado_recolector = 'archive' WHERE PK_ID_Recolector = :id")
@@ -62,6 +66,17 @@ interface RecolectoresDao {
                 "WHERE re.Fk_recolector == :collector AND re.Estado == 'active'"
     )
     suspend fun getCollectorAndCollectionTotal(collector: Int): List<collecionTotalCollector>
+
+    @Query(
+        "SELECT  SUM(re.Cantidad) AS total_kg, " +
+                "con.Precio AS price, " +
+                "con.Precio * SUM(re.Cantidad) AS price_total " +
+                "FROM recolectores r " +
+                "INNER JOIN Recoleccion re ON r.PK_ID_Recolector = re.Fk_recolector " +
+                "INNER JOIN Configuracion con ON re.Fk_Configuracion = con.PK_ID_Configuracion " +
+                "WHERE re.Estado == :state "
+    )
+    suspend fun getAllCollectorAndCollection(state: String): collectionTotal
 
     @Query(
         "SELECT r.PK_ID_Recolector, r.name_recolector, r.id_temporal_en_recolector, re.PK_ID_Recoleccion, re.Cantidad, " +
@@ -134,15 +149,16 @@ interface RecolectoresDao {
 //  SEMANAL
 
     @Query(
-        "SELECT r.PK_ID_Recolector, r.name_recolector, " +
-                "sum(re.Cantidad) AS result, " +
-                "sum(con.Precio * re.Cantidad) AS total, " +
-                "re.Estado, re.Fecha, re.Fk_Configuracion " +
+        "SELECT r.id_temporal_en_recolector AS id, " +
+                "r.name_recolector AS name, " +
+                "re.Fecha AS date, " +
+                "re.Cantidad AS cantidad, " +
+                "con.Precio AS price " +
                 "FROM recolectores r " +
                 "INNER JOIN Recoleccion re ON r.PK_ID_Recolector = re.Fk_recolector " +
                 "INNER JOIN Configuracion con ON re.Fk_Configuracion = con.PK_ID_Configuracion " +
-                "WHERE re.Fecha >= :startDate AND re.Fecha <= :endDate " +
-                "GROUP BY re.Fk_recolector "
+                "WHERE DATE(re.Fecha) BETWEEN :startDate AND :endDate "
+        //"GROUP BY re.Fk_recolector "
     )
-    suspend fun getWeekPdf(startDate: String, endDate: String): List<pdfModel>
+    suspend fun getWeekExel(startDate: String, endDate: String): List<RecolectorConRecoleccionRaw>
 }

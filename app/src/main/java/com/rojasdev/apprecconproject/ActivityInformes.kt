@@ -1,11 +1,11 @@
 package com.rojasdev.apprecconproject
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.databinding.ActivityInformesBinding
-import com.rojasdev.apprecconproject.fragments.report.FragmentPdf
+import com.rojasdev.apprecconproject.fragments.report.FragmentExcelReport
 import com.rojasdev.apprecconproject.fragments.report.FragmentWorkReport
 
 class ActivityInformes : AppCompatActivity() {
@@ -32,7 +32,7 @@ class ActivityInformes : AppCompatActivity() {
                 }
                 R.id.pdf ->{
                     title = getString(R.string.informedTitlePdf)
-                    openFragment(FragmentPdf())
+                    openFragment(FragmentExcelReport())
                     true
                 }
                 else -> false

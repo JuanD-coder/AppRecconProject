@@ -35,28 +35,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottomAppBarCollectors"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            style="@style/bar"
-            app:fabCradleMargin="10dp"
-            app:fabCradleRoundedCornerRadius="10dp"
-            app:fabCradleVerticalOffset="10dp"
-            tools:ignore="BottomAppBar">
-
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottonNavigationViewCollectors"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/trasparent_background">
-
-            </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-        </com.google.android.material.bottomappbar.BottomAppBar>
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton"
             android:layout_width="wrap_content"
@@ -64,6 +42,8 @@
             android:contentDescription="@string/collectors"
             android:src="@drawable/ic_add"
             android:tint="@color/white"
-            app:layout_anchor="@id/bottomAppBarCollectors" />
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
