@@ -126,6 +126,7 @@
 
     <string name="cvKg">Informacion de Recoleccion</string>
     <string name="collect">Total Recolectado:</string>
+    <string name="tvMainCollect">Recoleccion</string>
     <string name="txtNotPermissions">No tienes permiso para abrir el PDF</string>
 
     <string name="kgRecolectados">Añadir una Recolección</string>

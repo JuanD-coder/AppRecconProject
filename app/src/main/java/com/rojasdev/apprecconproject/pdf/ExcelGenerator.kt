@@ -75,10 +75,16 @@ class ExcelGenerator(
 
             // Estilo normal
             val normalStyle = workbook.createCellStyle().apply {
+                alignment = HorizontalAlignment.CENTER
                 borderBottom = BorderStyle.THIN
                 borderTop = BorderStyle.THIN
                 borderLeft = BorderStyle.THIN
                 borderRight = BorderStyle.THIN
+            }
+
+            Log.d("ExcelGenerator", "Tamaño de data: ${data.size}")
+            data.forEachIndexed { index, item ->
+                Log.d("ExcelGenerator", "Fila $index -> ${item.name}")
             }
 
             data.forEachIndexed { index, item ->
@@ -130,7 +136,7 @@ class ExcelGenerator(
                 borderRight = BorderStyle.THIN
             }
 
-            val totalRow = sheet.createRow(data.size + 1)
+            val totalRow = sheet.createRow(data.size + 2)
             totalRow.createCell(1).apply {
                 setCellValue("TOTAL GENERAL")
                 cellStyle = totalStyle
