@@ -21,13 +21,11 @@ class ExcelGenerator(
 ) {
 
     fun generate(uri: Uri) {
-        Log.d("ExcelGenerator", "Iniciando generación del archivo")
 
         try {
             val workbook: Workbook = XSSFWorkbook()
             val sheet = workbook.createSheet("Informe Semanal")
 
-            // Crear estilo de encabezado
             val boldFont = workbook.createFont().apply { bold = true }
             val headerStyle = workbook.createCellStyle().apply {
                 setFont(boldFont)
@@ -50,20 +48,21 @@ class ExcelGenerator(
                 alignment = HorizontalAlignment.CENTER
                 fillForegroundColor = IndexedColors.LIGHT_CORNFLOWER_BLUE.index
                 fillPattern = FillPatternType.SOLID_FOREGROUND
+                wrapText = true
             }
 
-            sheet.createRow(0).apply {
-                createCell(0).apply {
-                    setCellValue("REPORTE SEMANAL de ${dateWeek.first} al ${dateWeek.second}")
-                    cellStyle = titleStyle
-                }
+            val titleRow = sheet.createRow(0)
+            titleRow.heightInPoints = 30f
+            titleRow.createCell(0).apply {
+                setCellValue("REPORTE SEMANAL de ${dateWeek.first} al ${dateWeek.second}")
+                cellStyle = titleStyle
             }
 
-            sheet.addMergedRegion(CellRangeAddress(0, 0, 0, 9))
+            sheet.addMergedRegion(CellRangeAddress(0, 0, 0, 10))
 
             val headers = listOf(
                 "No.", "Nombre", "Lunes", "Martes", "Miércoles",
-                "Jueves", "Viernes", "Sábado", "Total KG", "Precio por KG"
+                "Jueves", "Viernes", "Sábado", "Total KG", "Precio por KG", "Total a pagar"
             )
 
             val headerRow = sheet.createRow(1)
@@ -80,11 +79,6 @@ class ExcelGenerator(
                 borderTop = BorderStyle.THIN
                 borderLeft = BorderStyle.THIN
                 borderRight = BorderStyle.THIN
-            }
-
-            Log.d("ExcelGenerator", "Tamaño de data: ${data.size}")
-            data.forEachIndexed { index, item ->
-                Log.d("ExcelGenerator", "Fila $index -> ${item.name}")
             }
 
             data.forEachIndexed { index, item ->
@@ -122,6 +116,13 @@ class ExcelGenerator(
                     setCellValue(item.price.toDouble())
                     cellStyle = normalStyle
                 }
+
+                row.createCell(col++).apply {
+                    val totalPrice = item.totalKg * item.price
+
+                    setCellValue(totalPrice.toDouble())
+                    cellStyle = normalStyle
+                }
             }
 
             // Estilo de totales
@@ -149,8 +150,11 @@ class ExcelGenerator(
                 data.sumOf { it.jueves },
                 data.sumOf { it.viernes },
                 data.sumOf { it.sabado },
-                data.sumOf { it.totalKg }
+                data.sumOf { it.totalKg },
+                data.firstOrNull()?.price ?: 0.0,
+                data.sumOf { it.totalKg * it.price } // Total a pagar
             )
+
 
             totales.forEachIndexed { index, total ->
                 totalRow.createCell(index + 2).apply {
@@ -159,10 +163,11 @@ class ExcelGenerator(
                 }
             }
 
-            // ✅ Establecer manualmente los anchos de columnas (en caracteres * 256)
+            // Establecer manualmente los anchos de columnas (en caracteres * 256)
             val columnWidths = listOf(
-                10, 20, 12, 12, 12, 12, 12, 12, 15, 15
+                10, 20, 12, 12, 12, 12, 12, 12, 15, 15, 18
             )
+
             columnWidths.forEachIndexed { index, widthInChars ->
                 sheet.setColumnWidth(index, widthInChars * 256)
             }
@@ -171,11 +176,9 @@ class ExcelGenerator(
             context.contentResolver.openOutputStream(uri)?.use { out: OutputStream ->
                 workbook.write(out)
                 out.flush()
-                Log.d("ExcelGenerator", "Archivo escrito correctamente")
             }
 
             workbook.close()
-            Log.d("ExcelGenerator", "Workbook cerrado correctamente")
             onFileCreated()
 
         } catch (e: Exception) {

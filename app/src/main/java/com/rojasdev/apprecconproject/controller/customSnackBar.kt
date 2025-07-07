@@ -7,12 +7,9 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.databinding.SnackbarBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 object customSnackBar {
-    @SuppressLint("SuspiciousIndentation")
+    @SuppressLint("SuspiciousIndentation", "RestrictedApi")
     fun showCustomSnackBar(view: android.view.View, message: String) {
         val snackBar = Snackbar.make(view, "", Snackbar.LENGTH_SHORT)
 

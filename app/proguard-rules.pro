@@ -23,8 +23,6 @@
 -keep class com.rojasdev.apprecconproject.data.*
 -dontwarn org.slf4j.impl.StaticLoggerBinder
 
-# ---------
-
 -dontwarn aQute.bnd.annotation.baseline.BaselineIgnore
 -dontwarn aQute.bnd.annotation.spi.ServiceConsumer
 -dontwarn aQute.bnd.annotation.spi.ServiceProvider
@@ -76,3 +74,55 @@
 -dontwarn org.osgi.framework.FrameworkUtil
 -dontwarn org.osgi.framework.ServiceReference
 -dontwarn org.osgi.framework.wiring.BundleRevision
+
+-dontwarn java.awt.Shape
+-dontwarn net.sf.saxon.dom.DocumentWrapper
+-dontwarn net.sf.saxon.dom.NodeOverNodeInfo
+-dontwarn net.sf.saxon.lib.ConversionRules
+-dontwarn net.sf.saxon.ma.map.HashTrieMap
+-dontwarn net.sf.saxon.om.GroundedValue
+-dontwarn net.sf.saxon.om.StructuredQName
+-dontwarn net.sf.saxon.query.DynamicQueryContext
+-dontwarn net.sf.saxon.query.StaticQueryContext
+-dontwarn net.sf.saxon.query.XQueryExpression
+-dontwarn net.sf.saxon.str.StringView
+-dontwarn net.sf.saxon.str.UnicodeString
+-dontwarn net.sf.saxon.type.BuiltInAtomicType
+-dontwarn net.sf.saxon.type.ConversionResult
+-dontwarn net.sf.saxon.value.AnyURIValue
+-dontwarn net.sf.saxon.value.AtomicValue
+-dontwarn net.sf.saxon.value.BigDecimalValue
+-dontwarn net.sf.saxon.value.BigIntegerValue
+-dontwarn net.sf.saxon.value.BooleanValue
+-dontwarn net.sf.saxon.value.CalendarValue
+-dontwarn net.sf.saxon.value.DateValue
+-dontwarn net.sf.saxon.value.DoubleValue
+-dontwarn net.sf.saxon.value.DurationValue
+-dontwarn net.sf.saxon.value.FloatValue
+-dontwarn net.sf.saxon.value.GDayValue
+-dontwarn net.sf.saxon.value.GMonthDayValue
+-dontwarn net.sf.saxon.value.GMonthValue
+-dontwarn net.sf.saxon.value.GYearMonthValue
+-dontwarn net.sf.saxon.value.GYearValue
+-dontwarn net.sf.saxon.value.HexBinaryValue
+-dontwarn net.sf.saxon.value.Int64Value
+-dontwarn net.sf.saxon.value.ObjectValue
+-dontwarn net.sf.saxon.value.QNameValue
+-dontwarn net.sf.saxon.value.SaxonDuration
+-dontwarn net.sf.saxon.value.SaxonXMLGregorianCalendar
+-dontwarn net.sf.saxon.value.StringValue
+-dontwarn net.sf.saxon.value.TimeValue
+
+# Mantener modelos de datos
+-keep class com.rojasdev.apprecconproject.data.** { *; }
+
+# Mantener clase de generación de Excel
+-keep class com.rojasdev.apprecconproject.pdf.ExcelGenerator { *; }
+
+# Apache POI
+-keep class org.apache.poi.** { *; }
+-dontwarn org.apache.poi.**
+-keepclassmembers class com.rojasdev.apprecconproject.pdf.ExcelGenerator {
+    public void generate(android.net.Uri);
+}
+
