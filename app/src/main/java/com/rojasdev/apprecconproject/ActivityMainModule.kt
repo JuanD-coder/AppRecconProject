@@ -3,12 +3,16 @@ package com.rojasdev.apprecconproject
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
@@ -20,6 +24,8 @@ import com.rojasdev.apprecconproject.alert.messagin.alertHelp
 import com.rojasdev.apprecconproject.alert.messagin.alertMessage
 import com.rojasdev.apprecconproject.alert.messagin.alertWelcome
 import com.rojasdev.apprecconproject.alert.settings.alertSettings
+import com.rojasdev.apprecconproject.controller.AppAvailabilityChecker
+import com.rojasdev.apprecconproject.controller.NetworkReceiver
 import com.rojasdev.apprecconproject.controller.adsBanner
 import com.rojasdev.apprecconproject.controller.animatedAlert
 import com.rojasdev.apprecconproject.controller.customSnackBar
@@ -29,6 +35,7 @@ import com.rojasdev.apprecconproject.data.dataBase.AppDataBase
 import com.rojasdev.apprecconproject.data.entities.RecolectoresEntity
 import com.rojasdev.apprecconproject.data.entities.SettingEntity
 import com.rojasdev.apprecconproject.databinding.ActivityMainModuleBinding
+import com.rojasdev.apprecconproject.databinding.AlertDisableCustomBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,6 +43,8 @@ import kotlinx.coroutines.launch
 class ActivityMainModule : AppCompatActivity() {
 
     private lateinit var consentInformation: ConsentInformation
+    private var networkReceiver: NetworkReceiver? = null
+    private var internetAlertDialog: AlertDialog? = null
 
     lateinit var binding: ActivityMainModuleBinding
 
@@ -44,15 +53,38 @@ class ActivityMainModule : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        title = getString(R.string.priceTitle)
         adsBanner.initLoadAds(binding.banner)
 
-        title = getString(R.string.priceTitle)
-
-        this.onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+        onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 finishAffinity()
             }
         })
+
+        setupNetworkReceiver()
+        AppAvailabilityChecker.checkAppAvailability(
+            context = this,
+            onReady = { Log.i("AppAvailability", "App disponible.") },
+            onBlocked = {
+                Log.i("AppAvailability", "App bloqueada.")
+                showCustomDialog(
+                    R.drawable.ic_app_block,
+                    "Acceso bloqueado",
+                    "La aplicación ha sido desactivada por falta de pago.",
+                    "Salir"
+                )
+            },
+            onError = {
+                Log.i("AppAvailability", "Error con Firebase Remote Config.")
+                showCustomDialog(
+                    R.drawable.ic_wifi_off,
+                    "Sin acceso a internet",
+                    "No se pudo verificar la disponibilidad de la app.",
+                    "Salir"
+                )
+            }
+        )
 
         getRGPD()
         checkRegister()
@@ -76,6 +108,97 @@ class ActivityMainModule : AppCompatActivity() {
             startActivity(Intent(this, ActivitySettings::class.java))
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        networkReceiver?.let {
+            registerReceiver(it, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterNetworkReceiver()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterNetworkReceiver()
+    }
+
+    private fun setupNetworkReceiver() {
+        networkReceiver = NetworkReceiver(
+            onNoInternet = {
+                runOnUiThread {
+                    showCustomDialog(
+                        R.drawable.ic_wifi_off,
+                        "Sin conexión",
+                        "No tienes conexión a internet. Algunas funciones no estarán disponibles.",
+                        "Cerrar"
+                    )
+                }
+            },
+            onInternetAvailable = {
+                Log.i("NetworkReceiver", "Internet disponible")
+                runOnUiThread {
+                    internetAlertDialog?.dismiss()
+                    internetAlertDialog = null
+
+                    customSnackBar.showCustomSnackBar(binding.root, "¡Conexión a internet restaurada!")
+                }
+            }
+        )
+    }
+
+    private fun unregisterNetworkReceiver() {
+        try {
+            networkReceiver?.let {
+                unregisterReceiver(it)
+            }
+        } catch (e: IllegalArgumentException) {
+            Log.w("NetworkReceiver", "Receiver no registrado: ${e.message}")
+        } finally {
+            networkReceiver = null
+        }
+    }
+
+    private fun showCustomDialog(
+        iconRes: Int,
+        titleText: String,
+        messageText: String,
+        buttonText: String = "Aceptar",
+        onButtonClick: () -> Unit = { finish() }
+    ) {
+        val dialogBinding = AlertDisableCustomBinding.inflate(LayoutInflater.from(this))
+        animatedAlert.animatedInit(dialogBinding.cvRecolector)
+
+        dialogBinding.dialogIcon.setImageResource(iconRes)
+        dialogBinding.dialogTitle.text = titleText
+        dialogBinding.dialogMessage.text = messageText
+        dialogBinding.dialogButton.text = buttonText
+
+        val alertDialog = AlertDialog.Builder(this)
+            .setView(dialogBinding.root)
+            .setCancelable(false)
+            .create()
+
+        dialogBinding.dialogButton.setOnClickListener {
+            alertDialog.dismiss()
+            onButtonClick()
+        }
+
+        alertDialog.show()
+
+        alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        if (
+            titleText.contains("sin conexión", ignoreCase = true) ||
+            messageText.contains("no tienes conexión", ignoreCase = true) ||
+            messageText.contains("necesita acceso a internet", ignoreCase = true)
+        ) {
+            internetAlertDialog = alertDialog
+        }
     }
 
     private fun getRGPD() {

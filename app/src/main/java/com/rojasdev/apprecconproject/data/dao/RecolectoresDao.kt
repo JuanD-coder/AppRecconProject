@@ -158,7 +158,7 @@ interface RecolectoresDao {
                 "INNER JOIN Recoleccion re ON r.PK_ID_Recolector = re.Fk_recolector " +
                 "INNER JOIN Configuracion con ON re.Fk_Configuracion = con.PK_ID_Configuracion " +
                 "WHERE DATE(re.Fecha) BETWEEN :startDate AND :endDate "
-        //"GROUP BY re.Fk_recolector "
+        //"GROUP BY re.Fk_recolector " agrupar por estados a futur, tru, flase, pending
     )
     suspend fun getWeekExel(startDate: String, endDate: String): List<RecolectorConRecoleccionRaw>
 }
