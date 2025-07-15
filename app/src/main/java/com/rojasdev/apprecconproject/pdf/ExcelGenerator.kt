@@ -12,6 +12,9 @@ import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.util.CellRangeAddress
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class ExcelGenerator(
     private val context: Context,
@@ -51,6 +54,7 @@ class ExcelGenerator(
                 wrapText = true
             }
 
+            // --- TÍTULO PRINCIPAL ---
             val titleRow = sheet.createRow(0)
             titleRow.heightInPoints = 30f
             titleRow.createCell(0).apply {
@@ -60,6 +64,7 @@ class ExcelGenerator(
 
             sheet.addMergedRegion(CellRangeAddress(0, 0, 0, 10))
 
+            // --- ENCABEZADOS DE COLUMNA ---
             val headers = listOf(
                 "No.", "Nombre", "Lunes", "Martes", "Miércoles",
                 "Jueves", "Viernes", "Sábado", "Total KG", "Precio por KG", "Total a pagar"
@@ -72,7 +77,7 @@ class ExcelGenerator(
                 cell.cellStyle = headerStyle
             }
 
-            // Estilo normal
+            // --- ESTILO NORMAL PARA DATOS ---
             val normalStyle = workbook.createCellStyle().apply {
                 alignment = HorizontalAlignment.CENTER
                 borderBottom = BorderStyle.THIN
@@ -81,6 +86,7 @@ class ExcelGenerator(
                 borderRight = BorderStyle.THIN
             }
 
+            // --- DATOS ---
             data.forEachIndexed { index, item ->
                 val row = sheet.createRow(index + 2)
                 var col = 0
@@ -126,6 +132,7 @@ class ExcelGenerator(
             }
 
             // Estilo de totales
+            val totalRowIndex = data.size + 2
             val totalStyle = workbook.createCellStyle().apply {
                 setFont(boldFont)
                 alignment = HorizontalAlignment.CENTER
@@ -137,7 +144,7 @@ class ExcelGenerator(
                 borderRight = BorderStyle.THIN
             }
 
-            val totalRow = sheet.createRow(data.size + 2)
+            val totalRow = sheet.createRow(totalRowIndex)
             totalRow.createCell(1).apply {
                 setCellValue("TOTAL GENERAL")
                 cellStyle = totalStyle
@@ -155,7 +162,6 @@ class ExcelGenerator(
                 data.sumOf { it.totalKg * it.price } // Total a pagar
             )
 
-
             totales.forEachIndexed { index, total ->
                 totalRow.createCell(index + 2).apply {
                     setCellValue(total.toDouble())
@@ -163,7 +169,30 @@ class ExcelGenerator(
                 }
             }
 
-            // Establecer manualmente los anchos de columnas (en caracteres * 256)
+            // --- NUEVA FILA DE PROCESADO ---
+            val processedRowIndex = totalRowIndex + 1
+            val processedRow = sheet.createRow(processedRowIndex)
+
+            val processedStyle = workbook.createCellStyle().apply {
+                alignment = HorizontalAlignment.CENTER
+                borderTop = BorderStyle.THIN
+            }
+
+            // Obtener fecha y hora actual
+            val currentDateTime = SimpleDateFormat("dd MMMM yyyy HH:mm", Locale("es", "ES")).format(Date())
+            val processedText = "Procesado en: $currentDateTime"
+
+            // Combinar celdas para la fila de procesado (A hasta K)
+            val numColumnsForProcessedRow = headers.size
+            sheet.addMergedRegion(CellRangeAddress(processedRowIndex, processedRowIndex, 0, numColumnsForProcessedRow - 1))
+
+            processedRow.createCell(0).apply {
+                setCellValue(processedText)
+                cellStyle = processedStyle
+            }
+            processedRow.heightInPoints = 20f
+
+            // --- AJUSTE DE ANCHO DE COLUMNAS ---
             val columnWidths = listOf(
                 10, 20, 12, 12, 12, 12, 12, 12, 15, 15, 18
             )
@@ -172,7 +201,7 @@ class ExcelGenerator(
                 sheet.setColumnWidth(index, widthInChars * 256)
             }
 
-            // Guardar
+            // --- GUARDAR ---
             context.contentResolver.openOutputStream(uri)?.use { out: OutputStream ->
                 workbook.write(out)
                 out.flush()

@@ -20,10 +20,10 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_reccon"
+        android:icon="@mipmap/new_logo_icon_app"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_reccon_round"
+        android:roundIcon="@mipmap/new_logo_icon_app_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppRecconProject">
 
