@@ -1,0 +1,77 @@
+[versions]
+androidApplicationVersion = "8.5.1"
+androidLibraryVersion = "8.5.1"
+kotlin = "1.9.24"
+kspVersion = "2.3.4"
+googleServices = "4.4.2"
+firebaseCrashlyticsPlugin = "2.9.5"
+
+coreKtxVersion = "1.13.1"
+appcompatVersion = "1.7.0"
+constraintlayoutVersion = "2.1.4"
+activityKtxVersion = "1.9.0"
+
+
+materialVersion = "1.12.0"
+roomKtxVersion = "2.6.1"
+kotlinxCoroutinesAndroidVersion = "1.8.1"
+
+# Google Play Services & Ads
+playServicesAdsVersion = "23.2.0"
+userMessagingPlatformVersion = "2.2.0"
+
+
+firebaseBomVersion = "33.1.2"
+
+itextgVersion = "5.5.10"
+androidSdkVersion = "1.7.2"
+
+junitVersion = "4.13.2"
+junit = "1.1.5"
+espressoCoreVersion = "3.5.1"
+
+[libraries]
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayoutVersion" }
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtxVersion" }
+
+# UI Components
+material = { module = "com.google.android.material:material", version.ref = "materialVersion" }
+
+# Database
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtxVersion" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtxVersion" }
+
+# Async
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroidVersion" }
+
+# Ads & Consent
+play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAdsVersion" }
+user-messaging-platform = { module = "com.google.android.ump:user-messaging-platform", version.ref = "userMessagingPlatformVersion" }
+
+# Firebase
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBomVersion" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx" }
+
+# PDF Generation
+itextg = { module = "com.itextpdf:itextg", version.ref = "itextgVersion" }
+
+# Analytics/Monetization
+android-sdk = { module = "io.monedata:android-sdk", version.ref = "androidSdkVersion" }
+
+# Testing
+junit = { module = "junit:junit", version.ref = "junitVersion" }
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junit" }
+androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidApplicationVersion" }
+android-library = { id = "com.android.library", version.ref = "androidLibraryVersion" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
