@@ -1,8 +1,8 @@
 [versions]
-androidApplicationVersion = "8.5.1"
-androidLibraryVersion = "8.5.1"
-kotlin = "1.9.24"
-kspVersion = "2.3.4"
+androidApplicationVersion = "8.5.2"
+androidLibraryVersion = "8.5.2"
+kotlin = "2.0.21"
+kspVersion = "2.0.21-1.0.28"
 googleServices = "4.4.2"
 firebaseCrashlyticsPlugin = "2.9.5"
 

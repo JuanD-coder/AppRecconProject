@@ -15,9 +15,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import com.rojasdev.apprecconproject.controller.recconApp
-import com.rojasdev.apprecconproject.notification.AlarmNotifications
+import com.rojasdev.apprecconproject.legacy.controller.recconApp
+import com.rojasdev.apprecconproject.legacy.notification.AlarmNotifications
 import android.provider.Settings
+import com.rojasdev.apprecconproject.legacy.ActivityMainModule
 import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {

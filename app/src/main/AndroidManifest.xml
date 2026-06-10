@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
-        android:name=".controller.recconApp"
+        android:name=".legacy.controller.recconApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:enableOnBackInvokedCallback="true"
@@ -25,11 +25,11 @@
             android:resource="@xml/gma_ad_services_config"
             tools:replace="android:resource" />
 
-        <receiver android:name=".notification.AlarmNotifications"
+        <receiver android:name=".legacy.notification.AlarmNotifications"
             android:enabled="true" />
 
         <service
-            android:name=".notification.CloudMessagingService"
+            android:name=".legacy.notification.CloudMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -37,17 +37,17 @@
         </service>
 
         <activity
-            android:name=".ActivityDetalleWork"
+            android:name=".legacy.ActivityDetalleWork"
             android:exported="false"
-            android:parentActivityName=".ActivityWork"
+            android:parentActivityName=".legacy.ActivityWork"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppRecconProject.work"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".ActivityWork"
+            android:name=".legacy.ActivityWork"
             android:exported="false"
-            android:parentActivityName=".ActivityMainModule"
+            android:parentActivityName=".legacy.ActivityMainModule"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppRecconProject.work"
             tools:ignore="LockedOrientationActivity" />
@@ -63,32 +63,32 @@
         </provider>
 
         <activity
-            android:name=".ActivityRecolectionDetail"
+            android:name=".legacy.ActivityRecolectionDetail"
             android:exported="false"
-            android:parentActivityName=".ActivityRecolection"
+            android:parentActivityName=".legacy.ActivityRecolection"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ActivitySettings"
+            android:name=".legacy.ActivitySettings"
             android:exported="false"
-            android:parentActivityName=".ActivityMainModule"
+            android:parentActivityName=".legacy.ActivityMainModule"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ActivityMainModule"
+            android:name=".legacy.ActivityMainModule"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ActivityRecolection"
+            android:name=".legacy.ActivityRecolection"
             android:exported="false"
-            android:parentActivityName=".ActivityMainModule"
+            android:parentActivityName=".legacy.ActivityMainModule"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".ActivityInformes"
+            android:name=".legacy.ActivityInformes"
             android:exported="false"
-            android:parentActivityName=".ActivityMainModule"
+            android:parentActivityName=".legacy.ActivityMainModule"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppRecconProject.informes"
             tools:ignore="LockedOrientationActivity">
