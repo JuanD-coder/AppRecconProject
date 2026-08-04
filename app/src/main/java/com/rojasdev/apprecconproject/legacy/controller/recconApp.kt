@@ -9,8 +9,10 @@ import android.util.Log
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import dagger.hilt.android.HiltAndroidApp
 import kotlin.random.Random
 
+@HiltAndroidApp
 class recconApp : android.app.Application() {
     companion object {
         val NOTIFICATION_ID = Random

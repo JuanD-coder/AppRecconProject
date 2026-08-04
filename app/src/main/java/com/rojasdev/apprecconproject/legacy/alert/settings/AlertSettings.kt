@@ -16,18 +16,18 @@ class alertSettings(
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertSettinsBinding.inflate(LayoutInflater.from(context))
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvSettings)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvSettings)
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
         buttons()
 
         val dialog = builder.create()
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.onBackAlert(dialog,requireContext(),getString(R.string.requireDates))
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.onBackAlert(dialog,requireContext(),getString(R.string.requireDates))
         return dialog
     }
 
@@ -38,7 +38,7 @@ class alertSettings(
         )
 
         binding.btReady.setOnClickListener {
-                val require = _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
+                val require = com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
                 if (require){
                     dates()
                     dismiss()
@@ -52,20 +52,20 @@ class alertSettings(
         val nowAliment = binding.nowAliment.text.toString()
 
         val configAlimentYes =
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity(
+            com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity(
                 null,
                 "yes",
                 yesAliment.toInt(),
                 "active",
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.dateFormat.main()
+                com.rojasdev.apprecconproject.legacy.controller.dateFormat.main()
             )
         val configAlimentNow =
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity(
+            com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity(
                 null,
                 "no",
                 nowAliment.toInt(),
                 "active",
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.dateFormat.main()
+                com.rojasdev.apprecconproject.legacy.controller.dateFormat.main()
             )
 
         onClickListener(configAlimentNow)

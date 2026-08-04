@@ -23,25 +23,25 @@ class alertUpdateNameCollector (
     private lateinit var binding: AlertUpdateSettingBinding
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertUpdateSettingBinding.inflate(LayoutInflater.from(context))
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvSettings)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvSettings)
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
         val myListInput = listOf(
             binding.etNameCollector
         )
 
         binding.btReady.setOnClickListener {
-            if (_root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())) {
+            if (com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())) {
                 dates()
                 dismiss()
             }
         }
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.keyLIstener.start(binding.etNameCollector){
-            val require = _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
+        com.rojasdev.apprecconproject.legacy.controller.keyLIstener.start(binding.etNameCollector){
+            val require = com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
             if (require){
                 dates()
                 dismiss()
@@ -71,7 +71,7 @@ class alertUpdateNameCollector (
         val newName = binding.etNameCollector.text.toString()
 
         val editNameCollector =
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.entities.RecolectoresEntity(
+            com.rojasdev.apprecconproject.legacy.data.entities.RecolectoresEntity(
                 idCollector,
                 newName,
                 "active"
@@ -79,14 +79,14 @@ class alertUpdateNameCollector (
         onClickListener(editNameCollector)
 
         startActivity(Intent(
-            requireContext(), _root_ide_package_.com.rojasdev.apprecconproject.legacy.ActivityRecolectionDetail::class.java)
+            requireContext(), com.rojasdev.apprecconproject.legacy.ActivityRecolectionDetail::class.java)
             .putExtra("userId", idCollector).putExtra("userName", newName)
         )
     }
 
     private fun contextTheme() {
         var color: Int? = null
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(requireContext(),
+        com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(requireContext(),
             day = {
                 color = ContextCompat.getColor(requireContext(), R.color.Orange)
             },
@@ -104,7 +104,7 @@ class alertUpdateNameCollector (
             binding.tilNameCollector.boxStrokeColor = color!!
             binding.tilNameCollector.hintTextColor = ColorStateList.valueOf(color!!)
         }else{
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(
+            com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(
                 requireContext(),
                 day = {
                     color = ContextCompat.getColor(requireContext(), R.color.Thunderbird)

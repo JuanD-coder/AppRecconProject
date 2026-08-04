@@ -22,11 +22,11 @@ class alertApoyo(): androidx.fragment.app.DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertApoyoBinding.inflate(LayoutInflater.from(context))
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cv)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cv)
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
         initAds()
 
@@ -47,7 +47,7 @@ class alertApoyo(): androidx.fragment.app.DialogFragment() {
                 )
                 startActivity(intent)
             } catch (e: ActivityNotFoundException) {
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(requireView(),getString(R.string.noFacebook))
+                com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(requireView(),getString(R.string.noFacebook))
             }
         }
 

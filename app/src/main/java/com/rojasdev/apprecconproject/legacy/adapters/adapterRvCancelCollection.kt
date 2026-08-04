@@ -10,7 +10,7 @@ class adapterRvCancelCollection(
     ) : RecyclerView.Adapter<com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCancelCollection>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCancelCollection {
-        return _root_ide_package_.com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCancelCollection(
+        return com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCancelCollection(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_collection_cancel, parent, false)
         )

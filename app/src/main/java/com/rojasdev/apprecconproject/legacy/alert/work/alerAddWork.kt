@@ -21,11 +21,11 @@ class alerAddWork (
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertAddWorkBinding.inflate(LayoutInflater.from(context))
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvRecolector)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvRecolector)
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
         binding.tvDescription.text = collector.name
 
@@ -38,7 +38,7 @@ class alerAddWork (
         binding.btMinius.setOnClickListener { minius() }
 
         adapterSpiner =
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.adapters.adapterSwiper(
+            com.rojasdev.apprecconproject.legacy.adapters.adapterSwiper(
                 requireContext(),
                 prices
             )
@@ -61,7 +61,7 @@ class alerAddWork (
         )
 
         binding.btReady.setOnClickListener {
-            val require = _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
+            val require = com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
             if (require){
                 dates()
                 dismiss()
@@ -75,11 +75,11 @@ class alerAddWork (
         val price = binding.sPrice.selectedItemId
 
         val workRegister =
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.entities.WorkEntity(
+            com.rojasdev.apprecconproject.legacy.data.entities.WorkEntity(
                 null,
                 workDay,
                 work,
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.dateFormat.main(),
+                com.rojasdev.apprecconproject.legacy.controller.dateFormat.main(),
                 "active",
                 collector.id!!,
                 price.toInt()

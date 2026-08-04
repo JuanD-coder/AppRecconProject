@@ -25,9 +25,9 @@ class alertCollectionUpdate(
         val builder = AlertDialog.Builder(requireActivity())
             builder.setView(binding.root)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvRecolector)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvRecolector)
 
         binding.tvDescription.text = nameCollector
 
@@ -54,9 +54,9 @@ class alertCollectionUpdate(
         }
 
         binding.btReady.setOnClickListener {
-            val require = _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
+            val require = com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
             if (require){
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.controllerCheckBox.checkBoxFun(
+                com.rojasdev.apprecconproject.legacy.controller.controllerCheckBox.checkBoxFun(
                     binding.cbNo,
                     binding.cbYes,
                     binding.tvAliment,
@@ -82,10 +82,10 @@ class alertCollectionUpdate(
         val kg = binding.etKg.text.toString()
 
         val collection =
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.entities.RecollectionEntity(
+            com.rojasdev.apprecconproject.legacy.data.entities.RecollectionEntity(
                 PK_ID_Recollection,
                 kg.toDouble(),
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.dateFormat.main(),
+                com.rojasdev.apprecconproject.legacy.controller.dateFormat.main(),
                 "active",
                 PK_ID_Recolector,
                 settingsId!!

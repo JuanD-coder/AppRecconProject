@@ -13,22 +13,22 @@ class ActivityInformes : androidx.appcompat.app.AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        title = getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.calendarCollection)
-        openFragment(_root_ide_package_.com.rojasdev.apprecconproject.legacy.fragments.report.FragmentWorkReport())
+        title = getString(com.rojasdev.apprecconproject.R.string.calendarCollection)
+        openFragment(com.rojasdev.apprecconproject.legacy.fragments.report.FragmentWorkReport())
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
         //configuracion de la barra de navigation
         binding.bottonNavigationView.setOnNavigationItemSelectedListener {
             meniItem ->
             when(meniItem.itemId){
-                _root_ide_package_.com.rojasdev.apprecconproject.R.id.list ->{
-                    title = getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.calendarCollection)
-                    openFragment(_root_ide_package_.com.rojasdev.apprecconproject.legacy.fragments.report.FragmentWorkReport())
+                com.rojasdev.apprecconproject.R.id.list ->{
+                    title = getString(com.rojasdev.apprecconproject.R.string.calendarCollection)
+                    openFragment(com.rojasdev.apprecconproject.legacy.fragments.report.FragmentWorkReport())
                     true
                 }
-                _root_ide_package_.com.rojasdev.apprecconproject.R.id.pdf ->{
-                    title = getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.informedTitlePdf)
-                    openFragment(_root_ide_package_.com.rojasdev.apprecconproject.legacy.fragments.report.FragmentPdf())
+                com.rojasdev.apprecconproject.R.id.pdf ->{
+                    title = getString(com.rojasdev.apprecconproject.R.string.informedTitlePdf)
+                    openFragment(com.rojasdev.apprecconproject.legacy.fragments.report.FragmentPdf())
                     true
                 }
                 else -> false
@@ -38,7 +38,7 @@ class ActivityInformes : androidx.appcompat.app.AppCompatActivity() {
 
     private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(_root_ide_package_.com.rojasdev.apprecconproject.R.id.ViewPager, fragment)
+        transaction.replace(com.rojasdev.apprecconproject.R.id.ViewPager, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }

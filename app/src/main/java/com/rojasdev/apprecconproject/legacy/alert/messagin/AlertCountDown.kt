@@ -17,19 +17,19 @@ class alertCountDown(
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertCountBinding.inflate(LayoutInflater.from(context))
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cv)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cv)
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
         countDownTimer()
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
 
         val dialog = builder.create()
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.onBackAlert(dialog,requireContext(),getString(R.string.noDeleteDates))
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.onBackAlert(dialog,requireContext(),getString(R.string.noDeleteDates))
         return dialog
     }
 

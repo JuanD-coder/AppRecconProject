@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        startActivity(Intent(this, ActivityMainModule::class.java))
+        startActivity(Intent(this, com.rojasdev.apprecconproject.ui.ComposeMainActivity::class.java))
 
         val url = intent.getStringExtra("url")
         if (url != null) {

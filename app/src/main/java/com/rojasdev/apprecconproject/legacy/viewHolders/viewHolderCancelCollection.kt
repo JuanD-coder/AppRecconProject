@@ -20,7 +20,7 @@ class viewHolderCancelCollection( var view: View): RecyclerView.ViewHolder(view)
         }
 
         binding.tvKg.text = "${item.Cantidad}kg"
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.result.toInt()){
+        com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.result.toInt()){
             binding.tvPrice.text = it
         }
     }

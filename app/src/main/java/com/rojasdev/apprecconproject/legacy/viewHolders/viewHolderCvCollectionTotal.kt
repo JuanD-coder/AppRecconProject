@@ -27,7 +27,7 @@ class viewHolderCvCollectionTotal( var view: View): RecyclerView.ViewHolder(view
             binding.tvNameCollector.backgroundTintList = ColorStateList.valueOf(color)
         }
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.price_total.toInt()){
+        com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.price_total.toInt()){
             binding.tvTotalPrice.text = it
         }
 

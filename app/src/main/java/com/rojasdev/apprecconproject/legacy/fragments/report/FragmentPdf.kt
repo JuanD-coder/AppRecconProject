@@ -35,9 +35,9 @@ class FragmentPdf : androidx.fragment.app.Fragment() {
         val format = SimpleDateFormat("yyyy-MM-dd", Locale("es", "CO"))
         val date = format.format(calendar)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedCv(binding.cv)
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedCv(binding.cv1)
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedCv(binding.cv2)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedCv(binding.cv)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedCv(binding.cv1)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedCv(binding.cv2)
 
         binding.btIWeek.setOnClickListener {
             reportType = getString(R.string.week)
@@ -65,7 +65,7 @@ class FragmentPdf : androidx.fragment.app.Fragment() {
             data?.data?.also { uri ->
                 try {
                     if(reportType != null){
-                        _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.report.alert_create_pdf(
+                        com.rojasdev.apprecconproject.legacy.alert.report.alert_create_pdf(
                             reportType!!,
                             uri
                         ) {
@@ -105,7 +105,7 @@ class FragmentPdf : androidx.fragment.app.Fragment() {
         try{
             startActivity(intent)
         } catch (e: ActivityNotFoundException){
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.messagin.alertMessage(
+            com.rojasdev.apprecconproject.legacy.alert.messagin.alertMessage(
                 getString(R.string.txtMessageOneInstall),
                 getString(R.string.txtMessageTwoInstall),
                 getString(R.string.btnOpenShop),

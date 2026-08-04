@@ -21,7 +21,7 @@ class viewHolderRvPricesWork( var view: View): RecyclerView.ViewHolder(view) {
 
         binding.tvTitle.text = "${view.context.getString(R.string.priceWork)} por ${item.feeding}"
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.cost){
+        com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.cost){
             binding.tvPrice.text = it
         }
 

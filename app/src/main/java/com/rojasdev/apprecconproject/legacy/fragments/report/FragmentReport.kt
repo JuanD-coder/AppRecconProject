@@ -50,12 +50,12 @@ class FragmentReport : androidx.fragment.app.Fragment() {
 
     private fun initCalendar(it:Triple<Int,Int,String>) {
         CoroutineScope(Dispatchers.IO).launch {
-            val list = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecollectionDao().getDateCollection()
+            val list = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecollectionDao().getDateCollection()
             launch(Dispatchers.Main) {
                 val listModification = list.map { it.dropLast(9) }
                 val month = getDaysMonth(it.first,it.second)
                 adapterDates =
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.customCalendar.adapter(
+                    com.rojasdev.apprecconproject.legacy.customCalendar.adapter(
                         "24",
                         month,
                         listModification,
@@ -73,12 +73,12 @@ class FragmentReport : androidx.fragment.app.Fragment() {
     @SuppressLint("SetTextI18n")
     private fun showAllRecollection(selectedDate: String) {
         CoroutineScope(Dispatchers.IO).launch{
-            val getAllID = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecolectoresDao().getAll()
-            val getTotalKg = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecolectoresDao().getTotalKgDate("${selectedDate}%")
+            val getAllID = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecolectoresDao().getAll()
+            val getTotalKg = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecolectoresDao().getTotalKgDate("${selectedDate}%")
             launch(Dispatchers.Main) {
                 val showAll = mutableListOf<com.rojasdev.apprecconproject.legacy.data.dataModel.allCollecionAndCollector>()
                 for (item in getAllID){
-                    val query = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecolectoresDao().getAllCollectorAndCollectionId("${selectedDate}%",item.toInt())
+                    val query = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecolectoresDao().getAllCollectorAndCollectionId("${selectedDate}%",item.toInt())
                     if(query[0].name_recolector != null){
                         if(query.isNotEmpty()) showAll.add(query[0])
                     }
@@ -88,12 +88,12 @@ class FragmentReport : androidx.fragment.app.Fragment() {
                 binding.tvShowDates.visibility = View.VISIBLE
 
                 if (getTotalKg[0].Estado == "active"){
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(getTotalKg[0].result.toInt()){
+                    com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(getTotalKg[0].result.toInt()){
                         binding.tvShowPay.text = "${getString(R.string.tvPriceTotal)} \n $it"
                         binding.tvShowPay.visibility = View.VISIBLE
                     }
                 } else {
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(getTotalKg[0].result.toInt()){
+                    com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(getTotalKg[0].result.toInt()){
                         binding.tvShowPay.text = "${getString(R.string.totalPrince)}: \n $it"
                         binding.tvShowPay.visibility = View.VISIBLE
                     }
@@ -106,7 +106,7 @@ class FragmentReport : androidx.fragment.app.Fragment() {
                     binding.nestedScrollView.smoothScrollTo(0, 900) // Auto Scroll si hay datos
 
                     adapter =
-                        _root_ide_package_.com.rojasdev.apprecconproject.legacy.adapters.adapterItemDate(
+                        com.rojasdev.apprecconproject.legacy.adapters.adapterItemDate(
                             showAll
                         )
                     binding.recyclerView.adapter = adapter
@@ -135,7 +135,7 @@ class FragmentReport : androidx.fragment.app.Fragment() {
             val diaDeLaSemana = formatDayWeek.format(fechaActual)
 
             val day =
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.customCalendar.dataModelDay(
+                com.rojasdev.apprecconproject.legacy.customCalendar.dataModelDay(
                     dateFormat.format(fechaActual),
                     dia.toString(),
                     diaDeLaSemana

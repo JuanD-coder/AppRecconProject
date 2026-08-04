@@ -24,7 +24,7 @@ class ActivityRecolectionDetail : androidx.appcompat.app.AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
         // Recibir parametros
         idCollector = intent.getIntExtra("userId", 0)
@@ -39,24 +39,24 @@ class ActivityRecolectionDetail : androidx.appcompat.app.AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun getRecollection(idCollector: Int) {
         CoroutineScope(Dispatchers.IO).launch{
-            val collection= _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityRecolectionDetail).RecolectoresDao().getCollectorAndCollection("active",idCollector)
+            val collection= com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityRecolectionDetail).RecolectoresDao().getCollectorAndCollection("active",idCollector)
 
-            val totalRecolection = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityRecolectionDetail).RecolectoresDao().getCollectorAndCollectionTotal(idCollector)
+            val totalRecolection = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityRecolectionDetail).RecolectoresDao().getCollectorAndCollectionTotal(idCollector)
             launch(Dispatchers.Main) {
                 collectionUpdate = listOf(collection[0])
                 collectionTotal = listOf(totalRecolection[0])
                 adapter =
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.adapters.adapterRvRecolection(
+                    com.rojasdev.apprecconproject.legacy.adapters.adapterRvRecolection(
                         collection
                     ) {
                         // Update Collection
                         alertUpdateRecollection(it, idCollector)
                     }
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(totalRecolection[0].price_total.toInt()){
-                    binding.tvTotal.text = "${getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.totalPrinceCancel)}\n $it"
+                com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(totalRecolection[0].price_total.toInt()){
+                    binding.tvTotal.text = "${getString(com.rojasdev.apprecconproject.R.string.totalPrinceCancel)}\n $it"
                 }
 
-                binding.tvTitle.text = "${getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.recolection)}\n ${totalRecolection[0].kg_collection.toFloat()} Kg"
+                binding.tvTitle.text = "${getString(com.rojasdev.apprecconproject.R.string.recolection)}\n ${totalRecolection[0].kg_collection.toFloat()} Kg"
                 binding.rvRecolections.adapter = adapter
                 binding.rvRecolections.layoutManager = LinearLayoutManager(this@ActivityRecolectionDetail)
             }
@@ -64,7 +64,7 @@ class ActivityRecolectionDetail : androidx.appcompat.app.AppCompatActivity() {
     }
 
     private fun alertUpdateRecollection(it: com.rojasdev.apprecconproject.legacy.data.dataModel.collectorCollection, idCollector: Int){
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.collection.alertCollectionUpdate(
+        com.rojasdev.apprecconproject.legacy.alert.collection.alertCollectionUpdate(
             it.PK_ID_Recoleccion,
             idCollector,
             it.Alimentacion,
@@ -77,41 +77,41 @@ class ActivityRecolectionDetail : androidx.appcompat.app.AppCompatActivity() {
 
     private fun updateCollection(it: com.rojasdev.apprecconproject.legacy.data.entities.RecollectionEntity, idCollector: Int) {
         CoroutineScope(Dispatchers.IO).launch {
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityRecolectionDetail).RecollectionDao().updateCollection(it.ID!!,it.date,it.collector,it.total,it.setting)
+            com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityRecolectionDetail).RecollectionDao().updateCollection(it.ID!!,it.date,it.collector,it.total,it.setting)
             launch(Dispatchers.Main){
                 getRecollection(idCollector)
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(binding.rvRecolections,getString(
-                    _root_ide_package_.com.rojasdev.apprecconproject.R.string.updateFinish))
+                com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(binding.rvRecolections,getString(
+                    com.rojasdev.apprecconproject.R.string.updateFinish))
             }
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(_root_ide_package_.com.rojasdev.apprecconproject.R.menu.edit,menu)
+        menuInflater.inflate(com.rojasdev.apprecconproject.R.menu.edit,menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            _root_ide_package_.com.rojasdev.apprecconproject.R.id.editName -> showAlertEditName()
+            com.rojasdev.apprecconproject.R.id.editName -> showAlertEditName()
         }
         return super.onOptionsItemSelected(item)
     }
 
     private fun showAlertEditName() {
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.collection.alertUpdateNameCollector(
+        com.rojasdev.apprecconproject.legacy.alert.collection.alertUpdateNameCollector(
             idCollector!!,
             userName.toString(),
             false
         ) {
             CoroutineScope(Dispatchers.IO).launch {
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(
+                com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(
                     this@ActivityRecolectionDetail
                 ).RecolectoresDao().updateCollectorName(it.id!!, it.name)
                 launch(Dispatchers.Main) {
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(
+                    com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(
                         binding.rvRecolections,
-                        getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.editNameReady)
+                        getString(com.rojasdev.apprecconproject.R.string.editNameReady)
                     )
                 }
             }

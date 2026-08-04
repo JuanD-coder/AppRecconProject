@@ -25,7 +25,7 @@ class alert_create_pdf(
 
         binding = AlertCreatePdfBinding.inflate(LayoutInflater.from(context))
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvWelcome)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvWelcome)
         createFolderPermission()
 
         val builder = AlertDialog.Builder(requireActivity())
@@ -40,7 +40,7 @@ class alert_create_pdf(
         when (pdf) {
             getString(R.string.year) -> {binding.textView.text = getString(R.string.yearLoadingPdf)
                 starTimer {
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.pdf.generateYearPDF(
+                    com.rojasdev.apprecconproject.legacy.pdf.generateYearPDF(
                         requireContext(),
                         resources
                     ) {
@@ -54,7 +54,7 @@ class alert_create_pdf(
             getString(R.string.week) -> {
                 binding.textView.text = getString(R.string.weekLoadingPdf)
                 starTimer {
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.pdf.generatePdfSemanal(
+                    com.rojasdev.apprecconproject.legacy.pdf.generatePdfSemanal(
                         requireContext(),
                         resources
                     ) {
@@ -68,7 +68,7 @@ class alert_create_pdf(
             else -> {
                 binding.textView.text = getString(R.string.monthLoadingPdf)
                 starTimer {
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.pdf.generateMonthPDF(
+                    com.rojasdev.apprecconproject.legacy.pdf.generateMonthPDF(
                         requireContext(),
                         resources
                     ) {
@@ -83,7 +83,7 @@ class alert_create_pdf(
         val dialog = builder.create()
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.onBackAlert(dialog,requireContext(),"")
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.onBackAlert(dialog,requireContext(),"")
         dialog!!.window!!.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         return dialog

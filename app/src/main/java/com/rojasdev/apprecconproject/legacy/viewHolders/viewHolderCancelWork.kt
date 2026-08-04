@@ -15,13 +15,13 @@ class viewHolderCancelWork( var view: View): RecyclerView.ViewHolder(view) {
     ){
 
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.Precio.toInt()){
+        com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.Precio.toInt()){
             binding.tvAliment.text = it
         }
 
         binding.tvKg.text = item.cantidad.toString()
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.result.toInt()){
+        com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.result.toInt()){
             binding.tvPrice.text = it
         }
     }

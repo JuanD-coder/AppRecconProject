@@ -24,7 +24,7 @@ class alertSettingsUpdate(
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertUpdateSettingBinding.inflate(LayoutInflater.from(context))
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvSettings)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvSettings)
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
@@ -34,18 +34,18 @@ class alertSettingsUpdate(
             binding.etNameCollector,
         )
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
         binding.btReady.setOnClickListener {
-            val require = _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
+            val require = com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
             if (require){
                 dates()
                 dismiss()
             }
         }
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.keyLIstener.start(binding.etNameCollector){
-            val require = _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
+        com.rojasdev.apprecconproject.legacy.controller.keyLIstener.start(binding.etNameCollector){
+            val require = com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
             if (require){
                 dates()
                 dismiss()
@@ -81,12 +81,12 @@ class alertSettingsUpdate(
         val yesAliment = binding.etNameCollector.text.toString()
 
         val configAlimentYes =
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity(
+            com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity(
                 idSetting,
                 fending,
                 yesAliment.toInt(),
                 "active",
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.dateFormat.main()
+                com.rojasdev.apprecconproject.legacy.controller.dateFormat.main()
             )
 
         onClickListener(configAlimentYes)
@@ -94,7 +94,7 @@ class alertSettingsUpdate(
 
     private fun contextTheme() {
         var color: Int? = null
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(requireContext(),
+        com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(requireContext(),
             day = {
                 color = ContextCompat.getColor(requireContext(), R.color.Orange)
             },

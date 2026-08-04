@@ -13,7 +13,7 @@ class adapterRvCollectors(
     private val onClickListenerKg: (com.rojasdev.apprecconproject.legacy.data.entities.RecolectoresEntity) -> Unit) : RecyclerView.Adapter<com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCvCollectors>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCvCollectors {
-        return _root_ide_package_.com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCvCollectors(
+        return com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCvCollectors(
             LayoutInflater.from(parent.context).inflate(R.layout.item_collector, parent, false)
         )
     }

@@ -11,7 +11,7 @@ class adapterRvWork(
 ):RecyclerView.Adapter<com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCvWork>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCvWork {
-        return _root_ide_package_.com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCvWork(
+        return com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCvWork(
             LayoutInflater.from(parent.context).inflate(R.layout.item_rv_recolection, parent, false)
         )
     }

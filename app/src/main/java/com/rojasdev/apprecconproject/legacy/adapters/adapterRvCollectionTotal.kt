@@ -12,7 +12,7 @@ class adapterRvCollectionTotal(
 ) : RecyclerView.Adapter<com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCvCollectionTotal>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCvCollectionTotal {
-        return _root_ide_package_.com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCvCollectionTotal(
+        return com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCvCollectionTotal(
             LayoutInflater.from(parent.context).inflate(R.layout.item_collecion, parent, false)
         )
     }

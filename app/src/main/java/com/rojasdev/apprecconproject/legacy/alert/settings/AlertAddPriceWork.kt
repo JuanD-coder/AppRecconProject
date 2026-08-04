@@ -22,15 +22,15 @@ class alertAddPriceWork(
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertPricesWorkBinding.inflate(LayoutInflater.from(context))
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvSettings)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvSettings)
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
         buttons()
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.textListener.lister(
+        com.rojasdev.apprecconproject.legacy.controller.textListener.lister(
             binding.price,
             { add() },
             { finish() }
@@ -45,22 +45,22 @@ class alertAddPriceWork(
         val priceWork = binding.price.text.toString()
         val nameWork = binding.nameWork.text.toString()
         CoroutineScope(Dispatchers.IO).launch {
-            val count = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).SettingDao().getPriceWorkCount()
+            val count = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).SettingDao().getPriceWorkCount()
             val remainingAttempts = 5 - count
             launch(Dispatchers.Main) {
                 if (count >= 5) {
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(view, "Límite de precios alcanzado")
+                    com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(view, "Límite de precios alcanzado")
                     dismiss()
                 } else {
                     val addUser =
-                        _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity(
+                        com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity(
                             null,
                             nameWork,
                             priceWork.toInt(),
                             "active",
-                            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.dateFormat.main()
+                            com.rojasdev.apprecconproject.legacy.controller.dateFormat.main()
                         )
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(view, "Precio de  $nameWork guardado. Te quedan $remainingAttempts intentos. ")
+                    com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(view, "Precio de  $nameWork guardado. Te quedan $remainingAttempts intentos. ")
                     onClickListener(addUser)
                 }
             }
@@ -83,8 +83,8 @@ class alertAddPriceWork(
             binding.price
         )
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.keyLIstener.start(binding.price) {
-            val required = _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput, requireContext())
+        com.rojasdev.apprecconproject.legacy.controller.keyLIstener.start(binding.price) {
+            val required = com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput, requireContext())
             if (required) {
                 dates(binding.btReady)
                 binding.btReady.setText("")
@@ -92,7 +92,7 @@ class alertAddPriceWork(
         }
 
         binding.btReady.setOnClickListener {
-            val required = _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput, requireContext())
+            val required = com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput, requireContext())
             if (required) {
                 dates(it)
                 binding.price.setText("")

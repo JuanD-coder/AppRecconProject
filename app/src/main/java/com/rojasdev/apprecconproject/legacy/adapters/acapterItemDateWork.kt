@@ -10,7 +10,7 @@ class acapterItemDateWork(
 ) :RecyclerView.Adapter<com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderItemDatesWork>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderItemDatesWork {
-        return _root_ide_package_.com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderItemDatesWork(
+        return com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderItemDatesWork(
             LayoutInflater.from(parent.context).inflate(R.layout.item_dates, parent, false)
         )
     }

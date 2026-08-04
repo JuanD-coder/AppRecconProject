@@ -3,8 +3,8 @@
 Este documento detalla los pasos necesarios para transformar la aplicación de una arquitectura basada en Activities/XML a un stack moderno de Android (Jetpack Compose, Clean Architecture, Hilt).
 
 ## 0. Fase de Preparación (Limpieza y Cimientos)
-- [ ] **Configurar Version Catalog (`libs.versions.toml`):** Mover todas las dependencias de los archivos `build.gradle` a un catálogo centralizado para gestionar versiones de forma moderna.
-- [ ] **Habilitar Edge-to-Edge:** Configurar la app para que el contenido se dibuje debajo de las barras de estado y navegación desde el inicio (`enableEdgeToEdge()`).
+- [ x ] **Configurar Version Catalog (`libs.versions.toml`):** Mover todas las dependencias de los archivos `build.gradle` a un catálogo centralizado para gestionar versiones de forma moderna.
+- [  ] **Habilitar Edge-to-Edge:** Configurar la app para que el contenido se dibuje debajo de las barras de estado y navegación desde el inicio (`enableEdgeToEdge()`).
 - [ ] **Configurar Hilt (DI):** Instalar y configurar Hilt para la inyección de dependencias en toda la app.
 - [ ] **Migrar a Material 3:** Actualizar el sistema de diseño para usar componentes modernos y colores dinámicos.
 

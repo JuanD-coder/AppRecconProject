@@ -39,7 +39,7 @@ class FragmentCollection(
 
         totalCollectionCollector()
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.scrolling.scrolling(binding.rvCollectors) {
+        com.rojasdev.apprecconproject.legacy.controller.scrolling.scrolling(binding.rvCollectors) {
             scroll(it)
         }
 
@@ -50,11 +50,11 @@ class FragmentCollection(
 
     private fun totalCollectionCollector(){
         CoroutineScope(Dispatchers.IO).launch{
-            val idCollectors = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecolectoresDao().getIDCollectors()
+            val idCollectors = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecolectoresDao().getIDCollectors()
             launch(Dispatchers.Main) {
                 val collector = mutableListOf<com.rojasdev.apprecconproject.legacy.data.dataModel.collecionTotalCollector>()
                 for(item in idCollectors){
-                    val collectionTotal = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecolectoresDao().getCollectorAndCollectionTotal(item.toInt())
+                    val collectionTotal = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecolectoresDao().getCollectorAndCollectionTotal(item.toInt())
                     if(collectionTotal[0].name_recolector != null){
                         collector.add(collectionTotal[0])
                     }
@@ -66,7 +66,7 @@ class FragmentCollection(
 
     private fun dates(total:List<com.rojasdev.apprecconproject.legacy.data.dataModel.collecionTotalCollector>) {
     adapter =
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.adapters.adapterRvCollectionTotal(
+        com.rojasdev.apprecconproject.legacy.adapters.adapterRvCollectionTotal(
             total,
             null
         ) {
@@ -78,10 +78,10 @@ class FragmentCollection(
 
     private fun initCancelCollection(collectionTotal: com.rojasdev.apprecconproject.legacy.data.dataModel.collecionTotalCollector) {
         CoroutineScope(Dispatchers.IO).launch{
-            val collection = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecolectoresDao().getCollectorAndCollection("active",collectionTotal.PK_ID_Recolector)
+            val collection = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecolectoresDao().getCollectorAndCollection("active",collectionTotal.PK_ID_Recolector)
 
             launch(Dispatchers.Main) {
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.collection.alertCancelCollection(
+                com.rojasdev.apprecconproject.legacy.alert.collection.alertCancelCollection(
                     listOf(collectionTotal),
                     collection
                 ) {
@@ -93,13 +93,13 @@ class FragmentCollection(
 
     private fun updateCollection(idUpdate: Int) {
         CoroutineScope(Dispatchers.IO).launch{
-            val dataBase = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext())
+            val dataBase = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext())
 
             dataBase.RecolectoresDao().updateCollectorState(idUpdate)
             dataBase.RecollectionDao().updateCollectionState(idUpdate)
 
             launch(Dispatchers.Main) {
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(requireView(),getString(R.string.collectionCanceled))
+                com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(requireView(),getString(R.string.collectionCanceled))
                 getTotalCollection()
                 totalCollectionCollector()
                 preferencesUpdate()
@@ -109,10 +109,10 @@ class FragmentCollection(
 
     private fun preferencesUpdate(){
         CoroutineScope(Dispatchers.IO).launch{
-            val idCollectors = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecollectionDao().getFkIdCollectors()
+            val idCollectors = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecollectionDao().getFkIdCollectors()
             launch(Dispatchers.Main) {
                 if(idCollectors.isEmpty()){
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.messagin.alertMessage(
+                    com.rojasdev.apprecconproject.legacy.alert.messagin.alertMessage(
                         getString(R.string.txtNewReport),
                         getString(R.string.txtCalendar),
                         getString(R.string.txtGoReport),
@@ -124,7 +124,7 @@ class FragmentCollection(
                             startActivity(
                                 Intent(
                                     requireContext(),
-                                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.ActivityInformes::class.java
+                                    com.rojasdev.apprecconproject.legacy.ActivityInformes::class.java
                                 )
                             )
                         } else {
@@ -140,13 +140,13 @@ class FragmentCollection(
     @SuppressLint("SetTextI18n")
     private fun getTotalCollection(){
         CoroutineScope(Dispatchers.IO).launch{
-            val collectionTotal = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).SettingDao().getTotalCollectionActive()
+            val collectionTotal = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).SettingDao().getTotalCollectionActive()
             launch(Dispatchers.Main) {
                 if(collectionTotal.isNotEmpty()){
                     binding.lyTotal.visibility = View.VISIBLE
                     binding.tvCollection.text = "Total recolectado\n ${collectionTotal[0].cantidad.toFloat()}Kg"
 
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(collectionTotal[0].total.toInt()){
+                    com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(collectionTotal[0].total.toInt()){
                         binding.tvTotal.text = "Total a pagar\n $it"
                     }
                 }

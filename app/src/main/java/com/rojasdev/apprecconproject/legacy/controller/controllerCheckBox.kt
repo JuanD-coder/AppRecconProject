@@ -11,14 +11,14 @@ object controllerCheckBox {
     fun checkBoxFun(cbNo:CheckBox, cbYes:CheckBox, tvAliment:TextView, context: Context, ready:(Int) -> Unit) {
         if(cbNo.isChecked){
             CoroutineScope(Dispatchers.IO).launch{
-                val query = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getAliment("no")
+                val query = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getAliment("no")
                 launch(Dispatchers.Main) {
                     ready(query[0].Id!!)
                 }
             }
         }else if(cbYes.isChecked){
             CoroutineScope(Dispatchers.IO).launch{
-                val query = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getAliment("yes")
+                val query = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getAliment("yes")
                 launch(Dispatchers.Main) {
                     ready(query[0].Id!!)
                 }

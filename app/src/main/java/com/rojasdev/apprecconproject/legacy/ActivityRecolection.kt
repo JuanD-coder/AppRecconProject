@@ -18,7 +18,7 @@ class ActivityRecolection : androidx.appcompat.app.AppCompatActivity() {
         super.onCreate(savedInstanceState)
           setContentView(binding.root)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
         initFragmentCollectors()
         appearNavBar()
@@ -27,15 +27,15 @@ class ActivityRecolection : androidx.appcompat.app.AppCompatActivity() {
             initAlertAddRecolcetor()
         }
 
-        binding.bottonNavigationViewCollectors.inflateMenu(_root_ide_package_.com.rojasdev.apprecconproject.R.menu.nav_menu_collectors)
+        binding.bottonNavigationViewCollectors.inflateMenu(com.rojasdev.apprecconproject.R.menu.nav_menu_collectors)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(
+        com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(
             this,
             day = {
-                binding.floatingActionButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, _root_ide_package_.com.rojasdev.apprecconproject.R.color.Thunderbird))
+                binding.floatingActionButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, com.rojasdev.apprecconproject.R.color.Thunderbird))
             },
             night = {
-                binding.floatingActionButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, _root_ide_package_.com.rojasdev.apprecconproject.R.color.Dark_Tan))
+                binding.floatingActionButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, com.rojasdev.apprecconproject.R.color.Dark_Tan))
             }
         )
 
@@ -44,7 +44,7 @@ class ActivityRecolection : androidx.appcompat.app.AppCompatActivity() {
 
     private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(_root_ide_package_.com.rojasdev.apprecconproject.R.id.ViewPagerCollectors, fragment)
+        transaction.replace(com.rojasdev.apprecconproject.R.id.ViewPagerCollectors, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }
@@ -67,10 +67,10 @@ class ActivityRecolection : androidx.appcompat.app.AppCompatActivity() {
         binding.bottonNavigationViewCollectors.setOnNavigationItemSelectedListener {
                 meniItem ->
             when(meniItem.itemId){
-                _root_ide_package_.com.rojasdev.apprecconproject.R.id.collectors ->{
+                com.rojasdev.apprecconproject.R.id.collectors ->{
                     false
                 }
-                _root_ide_package_.com.rojasdev.apprecconproject.R.id.collection ->{
+                com.rojasdev.apprecconproject.R.id.collection ->{
                     false
                 }
                 else -> false
@@ -81,11 +81,11 @@ class ActivityRecolection : androidx.appcompat.app.AppCompatActivity() {
         binding.bottonNavigationViewCollectors.setOnNavigationItemSelectedListener {
                 meniItem ->
             when(meniItem.itemId){
-                _root_ide_package_.com.rojasdev.apprecconproject.R.id.collectors ->{
+                com.rojasdev.apprecconproject.R.id.collectors ->{
                     initFragmentCollectors()
                     true
                 }
-                _root_ide_package_.com.rojasdev.apprecconproject.R.id.collection ->{
+                com.rojasdev.apprecconproject.R.id.collection ->{
                  initFragmentCollection()
                     true
                 }
@@ -95,9 +95,9 @@ class ActivityRecolection : androidx.appcompat.app.AppCompatActivity() {
     }
 
     private fun initFragmentCollectors() {
-        title = getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.collectors)
+        title = getString(com.rojasdev.apprecconproject.R.string.collectors)
         openFragment(
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.fragments.collection.FragmentCollectors(
+            com.rojasdev.apprecconproject.legacy.fragments.collection.FragmentCollectors(
             {
                 if (it == "down") {
                     hideNavBar()
@@ -111,9 +111,9 @@ class ActivityRecolection : androidx.appcompat.app.AppCompatActivity() {
     }
 
     private fun initFragmentCollection() {
-         title = getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.collection)
+         title = getString(com.rojasdev.apprecconproject.R.string.collection)
         openFragment(
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.fragments.collection.FragmentCollection(
+            com.rojasdev.apprecconproject.legacy.fragments.collection.FragmentCollection(
                 {
                     if (it == "down") {
                         hideNavBar()
@@ -130,7 +130,7 @@ class ActivityRecolection : androidx.appcompat.app.AppCompatActivity() {
     }
 
     private fun initAlertAddRecolcetor() {
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.collection.alertAddRecolector(
+        com.rojasdev.apprecconproject.legacy.alert.collection.alertAddRecolector(
             false,
             {
                 insertRecolector(it)
@@ -143,7 +143,7 @@ class ActivityRecolection : androidx.appcompat.app.AppCompatActivity() {
 
     private fun insertRecolector(recolector: com.rojasdev.apprecconproject.legacy.data.entities.RecolectoresEntity) {
         CoroutineScope(Dispatchers.IO).launch {
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityRecolection).RecolectoresDao().add(recolector)
+            com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityRecolection).RecolectoresDao().add(recolector)
         }
     }
 

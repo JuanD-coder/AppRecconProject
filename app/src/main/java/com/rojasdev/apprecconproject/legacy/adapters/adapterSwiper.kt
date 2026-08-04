@@ -45,7 +45,7 @@ class adapterSwiper(val context: Context, val list: List<com.rojasdev.apprecconp
         if (selectedItemId == null){
             val description = " - " + list[position].feeding
 
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(list[position].cost){
+            com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(list[position].cost){
                 binding.tvName.text = it + description
             }
         } else {
@@ -54,13 +54,13 @@ class adapterSwiper(val context: Context, val list: List<com.rojasdev.apprecconp
 
             val description = " - " + list[selectedItemId!!].feeding
 
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(list[selectedItemId!!].cost){
+            com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(list[selectedItemId!!].cost){
                 binding.tvName.text = it + description
             }
 
             val descriptionNew = " - " + list[position].feeding
 
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(list[position].cost){
+            com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(list[position].cost){
                 binding.tvName.text = it + descriptionNew
             }
         }

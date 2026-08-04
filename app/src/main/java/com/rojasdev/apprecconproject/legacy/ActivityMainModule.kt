@@ -28,9 +28,9 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
-        title = getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.priceTitle)
+        title = getString(com.rojasdev.apprecconproject.R.string.priceTitle)
 
         this.onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
@@ -43,13 +43,13 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
 
         binding.cvWork.setOnClickListener {
             checkRegister()
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedClick(binding.cvWork)
+            com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedClick(binding.cvWork)
             checkWork()
         }
 
         binding.cvInformes.setOnClickListener {
             checkRegister()
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedClick(binding.cvInformes)
+            com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedClick(binding.cvInformes)
             val intent = Intent(this,ActivityInformes::class.java)
             intent.putExtra("fragment","")
             startActivity(intent)
@@ -57,7 +57,7 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
 
         binding.cvCollection.setOnClickListener {
             checkRegister()
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedClick(binding.cvCollection)
+            com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedClick(binding.cvCollection)
                 checkCollection()
         }
 
@@ -81,7 +81,7 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
             this,
             params,
             {
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.recconApp()
+                com.rojasdev.apprecconproject.legacy.controller.recconApp()
             },
             {
                 Log.i("eoo", it.message)
@@ -89,27 +89,27 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
         )
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(_root_ide_package_.com.rojasdev.apprecconproject.R.menu.menu,menu)
+        menuInflater.inflate(com.rojasdev.apprecconproject.R.menu.menu,menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            _root_ide_package_.com.rojasdev.apprecconproject.R.id.support -> help("¡Holaa amigos de RECCON!")
-            _root_ide_package_.com.rojasdev.apprecconproject.R.id.apoyo -> _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.messagin.alertApoyo()
+            com.rojasdev.apprecconproject.R.id.support -> help("¡Holaa amigos de RECCON!")
+            com.rojasdev.apprecconproject.R.id.apoyo -> com.rojasdev.apprecconproject.legacy.alert.messagin.alertApoyo()
                 .show(supportFragmentManager,"dialog")
-            _root_ide_package_.com.rojasdev.apprecconproject.R.id.delete -> alertDeleteTODO()
+            com.rojasdev.apprecconproject.R.id.delete -> alertDeleteTODO()
         }
         return super.onOptionsItemSelected(item)
     }
 
     private fun alertDeleteTODO() {
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.messagin.alertMessage(
-                    getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.deleteA),
-                    getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.deleteB),
-                    getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.deleteBtn),
-                    getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.txtStop),
-                    getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.cuidado)
+                com.rojasdev.apprecconproject.legacy.alert.messagin.alertMessage(
+                    getString(com.rojasdev.apprecconproject.R.string.deleteA),
+                    getString(com.rojasdev.apprecconproject.R.string.deleteB),
+                    getString(com.rojasdev.apprecconproject.R.string.deleteBtn),
+                    getString(com.rojasdev.apprecconproject.R.string.txtStop),
+                    getString(com.rojasdev.apprecconproject.R.string.cuidado)
                 ) {
                     if (it == "yes") {
                         deleteDB()
@@ -121,18 +121,18 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
 
     private fun deleteDB() {
         CoroutineScope(Dispatchers.IO).launch{
-            val query = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).RecollectionDao().getFkIdCollectors()
+            val query = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).RecollectionDao().getFkIdCollectors()
             launch(Dispatchers.Main) {
                 if (query.isEmpty()){
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.messagin.alertCountDown {
+                    com.rojasdev.apprecconproject.legacy.alert.messagin.alertCountDown {
                         CoroutineScope(Dispatchers.IO).launch {
-                            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(
+                            com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(
                                 this@ActivityMainModule
                             ).RecollectionDao().delete()
-                            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(
+                            com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(
                                 this@ActivityMainModule
                             ).RecolectoresDao().delete()
-                            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(
+                            com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(
                                 this@ActivityMainModule
                             ).SettingDao().delete()
                             launch(Dispatchers.Main) {
@@ -142,7 +142,7 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
                                         ActivityMainModule::class.java
                                     )
                                 )
-                                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(
+                                com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(
                                     binding.textView,
                                     ""
                                 )
@@ -151,15 +151,15 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
                         }
                     }.show(supportFragmentManager,"dialog")
                 }else{
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(binding.textView,getString(
-                        _root_ide_package_.com.rojasdev.apprecconproject.R.string.errorDeleteDates))
+                    com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(binding.textView,getString(
+                        com.rojasdev.apprecconproject.R.string.errorDeleteDates))
                 }
             }
         }
     }
 
     private fun help(message: String) {
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.messagin.alertHelp {
+        com.rojasdev.apprecconproject.legacy.alert.messagin.alertHelp {
             try {
                 val phone = "573170157414"
                 val sendIntent = Intent()
@@ -168,12 +168,12 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
                 sendIntent.data = Uri.parse(uri)
                 startActivity(sendIntent)
             } catch (e: ActivityNotFoundException) {
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.messagin.alertMessage(
-                    getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.install),
-                    getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.message),
-                    getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.playSore),
-                    getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.ready),
-                    getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.noWhatsApp)
+                com.rojasdev.apprecconproject.legacy.alert.messagin.alertMessage(
+                    getString(com.rojasdev.apprecconproject.R.string.install),
+                    getString(com.rojasdev.apprecconproject.R.string.message),
+                    getString(com.rojasdev.apprecconproject.R.string.playSore),
+                    getString(com.rojasdev.apprecconproject.R.string.ready),
+                    getString(com.rojasdev.apprecconproject.R.string.noWhatsApp)
                 ) {
                     if (it == "yes") {
                         val intent = Intent(
@@ -190,8 +190,8 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
     }
 
     private fun alerts(){
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.messagin.alertWelcome {
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.settings.alertSettings {
+        com.rojasdev.apprecconproject.legacy.alert.messagin.alertWelcome {
+            com.rojasdev.apprecconproject.legacy.alert.settings.alertSettings {
                 insertSettings(it)
             }.show(supportFragmentManager, "dialog")
         }.show(supportFragmentManager,"dialog")
@@ -201,7 +201,7 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
     private fun insertSettings(settings: com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity){
         preferences()
         CoroutineScope(Dispatchers.IO).launch{
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).SettingDao().insertConfig(settings)
+            com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).SettingDao().insertConfig(settings)
             launch {
                 checkRegister()
             }
@@ -226,7 +226,7 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
 
     private fun checkRegister(){
         CoroutineScope(Dispatchers.IO).launch{
-            val query = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).SettingDao().getAliment("yes")
+            val query = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).SettingDao().getAliment("yes")
             launch(Dispatchers.Main) {
                 if(query.isNotEmpty()){
                     val preferences = getSharedPreferences( "register", Context.MODE_PRIVATE)
@@ -235,7 +235,7 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
                         alerts()
                     }else{
                         CoroutineScope(Dispatchers.IO).launch{
-                            val query1 = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).SettingDao().getAliment("yes")
+                            val query1 = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).SettingDao().getAliment("yes")
                             launch(Dispatchers.Main) {
                                 if(query1.isNotEmpty()){
                                     getYesAliment()
@@ -261,9 +261,9 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
 
     private fun getNoAliment(){
         CoroutineScope(Dispatchers.IO).launch{
-            val query = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).SettingDao().getAliment("no")
+            val query = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).SettingDao().getAliment("no")
             launch(Dispatchers.Main) {
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].cost){
+                com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].cost){
                     binding.tvNoAliment.text = it
                 }
             }
@@ -272,10 +272,10 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
 
     private fun getYesAliment(){
         CoroutineScope(Dispatchers.IO).launch{
-            val query = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).SettingDao().getAliment("yes")
+            val query = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).SettingDao().getAliment("yes")
             launch(Dispatchers.Main) {
                 if(query.isNotEmpty()){
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].cost){
+                    com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].cost){
                         binding.tvYesAliment.text = it
                     }
                 }
@@ -308,15 +308,15 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
         val collection = preferences.getString("collection","")
         if(collection != "true"){
                 CoroutineScope(Dispatchers.IO).launch{
-                    val query = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).RecollectionDao().getFkIdCollectors()
+                    val query = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).RecollectionDao().getFkIdCollectors()
                     launch(Dispatchers.Main) {
                         if(query.isEmpty()){
-                            _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.messagin.alertMessage(
-                                "${binding.tvNoAliment.text}\n ${getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.notAliment)}",
-                                "${binding.tvYesAliment.text}\n ${getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.yesAliment)}",
-                                getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.btCorrec),
-                                getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.noCorrec),
-                                getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.checkAliment)
+                            com.rojasdev.apprecconproject.legacy.alert.messagin.alertMessage(
+                                "${binding.tvNoAliment.text}\n ${getString(com.rojasdev.apprecconproject.R.string.notAliment)}",
+                                "${binding.tvYesAliment.text}\n ${getString(com.rojasdev.apprecconproject.R.string.yesAliment)}",
+                                getString(com.rojasdev.apprecconproject.R.string.btCorrec),
+                                getString(com.rojasdev.apprecconproject.R.string.noCorrec),
+                                getString(com.rojasdev.apprecconproject.R.string.checkAliment)
                             ) {
                                 if (it == "yes") {
                                     alertAddRecolcetor()
@@ -340,7 +340,7 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
     }
 
     private fun alertAddRecolcetor() {
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.collection.alertAddRecolector(
+        com.rojasdev.apprecconproject.legacy.alert.collection.alertAddRecolector(
             false,
             {
                 insertRecolector(it)
@@ -356,11 +356,11 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
     }
 
     private fun alertAddWorkMen() {
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.collection.alertAddRecolector(
+        com.rojasdev.apprecconproject.legacy.alert.collection.alertAddRecolector(
             true,
             {
                 val newMen =
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.entities.RecolectoresEntity(
+                    com.rojasdev.apprecconproject.legacy.data.entities.RecolectoresEntity(
                         id = null,
                         name = it.name,
                         state = "work-active"
@@ -379,7 +379,7 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
     }
 
     private fun alertAddWork() {
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.settings.alertAddPriceWork(
+        com.rojasdev.apprecconproject.legacy.alert.settings.alertAddPriceWork(
             {
                 insertSettings(it)
                 preferencesWork()
@@ -396,7 +396,7 @@ class ActivityMainModule : androidx.appcompat.app.AppCompatActivity() {
 
     private fun insertRecolector(recolector: com.rojasdev.apprecconproject.legacy.data.entities.RecolectoresEntity) {
         CoroutineScope(Dispatchers.IO).launch {
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).RecolectoresDao().add(recolector)
+            com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivityMainModule).RecolectoresDao().add(recolector)
         }
         preferencesCollecion()
     }

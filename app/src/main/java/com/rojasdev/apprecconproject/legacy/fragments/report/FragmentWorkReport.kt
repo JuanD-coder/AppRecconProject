@@ -52,8 +52,8 @@ class FragmentWorkReport : androidx.fragment.app.Fragment() {
 
     private fun initCalendar(it:Pair<Int,Int>) {
         CoroutineScope(Dispatchers.IO).launch {
-            val collection = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecollectionDao().getDateCollection()
-            val work = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).WorkDao().getDateWork()
+            val collection = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecollectionDao().getDateCollection()
+            val work = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).WorkDao().getDateWork()
             launch(Dispatchers.Main) {
                 val listModificationCollection = collection.map { it.dropLast(9) }
                 val listModificationWork = work.map { it.dropLast(9) }
@@ -65,7 +65,7 @@ class FragmentWorkReport : androidx.fragment.app.Fragment() {
 
     private fun calendarView(dayMonthActual: String, month: List<List<com.rojasdev.apprecconproject.legacy.customCalendar.dataModelDay>>, collection: List<String>, work: List<String>) {
         adapterDates =
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.customCalendar.adapter(
+            com.rojasdev.apprecconproject.legacy.customCalendar.adapter(
                 dayMonthActual,
                 month,
                 collection,
@@ -106,7 +106,7 @@ class FragmentWorkReport : androidx.fragment.app.Fragment() {
             val diaDeLaSemana = formatDayWeek.format(fechaActual)
 
             val day =
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.customCalendar.dataModelDay(
+                com.rojasdev.apprecconproject.legacy.customCalendar.dataModelDay(
                     dateFormat.format(fechaActual),
                     dia.toString(),
                     diaDeLaSemana
@@ -126,7 +126,7 @@ class FragmentWorkReport : androidx.fragment.app.Fragment() {
     }
 
     fun initSpinner(){
-        val adaptador = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, _root_ide_package_.com.rojasdev.apprecconproject.legacy.customCalendar.montAndYear.month)
+        val adaptador = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, com.rojasdev.apprecconproject.legacy.customCalendar.montAndYear.month)
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         binding.spinnerMonth.adapter = adaptador
@@ -141,7 +141,7 @@ class FragmentWorkReport : androidx.fragment.app.Fragment() {
                 id: Long
             ) {
                 val mesSeleccionadoNumero = position + 1// Los meses en el arreglo empiezan en 0
-                val mesSeleccionadoLetras = _root_ide_package_.com.rojasdev.apprecconproject.legacy.customCalendar.montAndYear.month[position]
+                val mesSeleccionadoLetras = com.rojasdev.apprecconproject.legacy.customCalendar.montAndYear.month[position]
 
 
                 dayCalendar = Pair(dayCalendar.first,mesSeleccionadoNumero)
@@ -156,12 +156,12 @@ class FragmentWorkReport : androidx.fragment.app.Fragment() {
     }
 
     fun initSpinnerYear(){
-        val adaptador = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, _root_ide_package_.com.rojasdev.apprecconproject.legacy.customCalendar.montAndYear.listYear())
+        val adaptador = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, com.rojasdev.apprecconproject.legacy.customCalendar.montAndYear.listYear())
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         binding.spinnerYear.adapter = adaptador
 
-        binding.spinnerYear.setSelection(_root_ide_package_.com.rojasdev.apprecconproject.legacy.customCalendar.montAndYear.listYear().size-1)
+        binding.spinnerYear.setSelection(com.rojasdev.apprecconproject.legacy.customCalendar.montAndYear.listYear().size-1)
 
         binding.spinnerYear.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
@@ -170,7 +170,7 @@ class FragmentWorkReport : androidx.fragment.app.Fragment() {
                 position: Int,
                 id: Long
             ) {
-                val yearSelected = _root_ide_package_.com.rojasdev.apprecconproject.legacy.customCalendar.montAndYear.listYear()
+                val yearSelected = com.rojasdev.apprecconproject.legacy.customCalendar.montAndYear.listYear()
 
                 dayCalendar = Pair(yearSelected[position],dayCalendar.second)
                 initCalendar(dayCalendar)
@@ -215,15 +215,15 @@ class FragmentWorkReport : androidx.fragment.app.Fragment() {
     @SuppressLint("SetTextI18n")
     private fun showAllRecollection(selectedDate: String) {
         CoroutineScope(Dispatchers.IO).launch{
-            val getAllID = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecolectoresDao().getAll()
-            val getTotalKg = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecollectionDao().getTotalKgDate("${selectedDate}%")
-            val getTotalWork = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).WorkDao().getTotalWorkDate("${selectedDate}%")
+            val getAllID = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecolectoresDao().getAll()
+            val getTotalKg = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecollectionDao().getTotalKgDate("${selectedDate}%")
+            val getTotalWork = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).WorkDao().getTotalWorkDate("${selectedDate}%")
             launch(Dispatchers.Main) {
                 val collectionAll = mutableListOf<com.rojasdev.apprecconproject.legacy.data.dataModel.allCollecionAndCollector>()
                 val workAll = mutableListOf<com.rojasdev.apprecconproject.legacy.data.dataModel.allWorkAndCollector>()
                 for (item in getAllID){
-                    val collection = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecolectoresDao().getAllCollectorAndCollectionId("${selectedDate}%",item.toInt())
-                    val work = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecolectoresDao().getAllCollectorAndWorkId("${selectedDate}%",item.toInt())
+                    val collection = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecolectoresDao().getAllCollectorAndCollectionId("${selectedDate}%",item.toInt())
+                    val work = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecolectoresDao().getAllCollectorAndWorkId("${selectedDate}%",item.toInt())
 
                     if(collection.isNotEmpty()){
                         if (collection[0].name_recolector != null) collectionAll.add(collection[0])
@@ -248,7 +248,7 @@ class FragmentWorkReport : androidx.fragment.app.Fragment() {
                         showTotalCollection(getTotalKg)
                         showViewCollection(true)
                         adapter =
-                            _root_ide_package_.com.rojasdev.apprecconproject.legacy.adapters.adapterItemDate(
+                            com.rojasdev.apprecconproject.legacy.adapters.adapterItemDate(
                                 collectionAll
                             )
                         binding.rvDates.adapter = adapter
@@ -261,7 +261,7 @@ class FragmentWorkReport : androidx.fragment.app.Fragment() {
                         showViewWork(true)
                         showTotalWork(getTotalWork)
                         adapterWork =
-                            _root_ide_package_.com.rojasdev.apprecconproject.legacy.adapters.acapterItemDateWork(
+                            com.rojasdev.apprecconproject.legacy.adapters.acapterItemDateWork(
                                 workAll
                             )
                         binding.rvDatesWork.adapter = adapterWork
@@ -274,14 +274,14 @@ class FragmentWorkReport : androidx.fragment.app.Fragment() {
 
     private fun showTotalCollection(totalKg: com.rojasdev.apprecconproject.legacy.data.dataModel.totalCollection) {
         binding.tvKgTotal.text = "Total recolectado \n ${totalKg.Cantidad}Kg"
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(totalKg.result.toInt()){
+        com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(totalKg.result.toInt()){
             binding.tvPriceTotal.text = "Total pagado \n ${it}"
         }
     }
 
     private fun showTotalWork(totalKg: com.rojasdev.apprecconproject.legacy.data.dataModel.totalCollection) {
         binding.tvWorkTotal.text = "Jornales trabajados \n ${totalKg.Cantidad.toInt()}"
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(totalKg.result.toInt()){
+        com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(totalKg.result.toInt()){
             binding.tvPriceWorkTotal.text = "Total pagado \n ${it}"
         }
     }

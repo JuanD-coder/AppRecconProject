@@ -24,9 +24,9 @@ class alertDeleteCollector(
         val builder = AlertDialog.Builder(requireActivity())
             builder.setView(binding.root)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvRecolector)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvRecolector)
 
         binding.tvDetailDelete.text = nameCollector
 
@@ -52,7 +52,7 @@ class alertDeleteCollector(
 
     private fun contextTheme() {
         var color: Int? = null
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(requireContext(),
+        com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(requireContext(),
             day = {
                 color = ContextCompat.getColor(requireContext(), R.color.Orange)
             },

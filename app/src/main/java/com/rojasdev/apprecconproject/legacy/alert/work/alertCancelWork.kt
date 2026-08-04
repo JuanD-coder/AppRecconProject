@@ -23,11 +23,11 @@ class alertCancelWork(
     @SuppressLint("SetTextI18n")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertCancelCollectionBinding.inflate(LayoutInflater.from(context))
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvRecolector)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvRecolector)
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
         buttons()
 
@@ -35,7 +35,7 @@ class alertCancelWork(
 
 
         binding.tvKg.text = collectionTotal[0].days_work.toString()
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(collectionTotal[0].total.toInt()){
+        com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(collectionTotal[0].total.toInt()){
             binding.tvTotalPrice.text = it
         }
 
@@ -49,7 +49,7 @@ class alertCancelWork(
     }
     private fun dates() {
         adapter =
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.adapters.adapterRvCancelWork(
+            com.rojasdev.apprecconproject.legacy.adapters.adapterRvCancelWork(
                 collection
             )
         binding.rv.adapter = adapter
@@ -82,7 +82,7 @@ class alertCancelWork(
 
     private fun initColor(){
         var color : Int? = null
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(
+        com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(
             requireContext(),
             day = {
                 color = ContextCompat.getColor(requireContext(), R.color.Orange)

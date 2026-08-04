@@ -22,12 +22,12 @@ class alertMessage(
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertInfoBinding.inflate(LayoutInflater.from(context))
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvWelcome)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvWelcome)
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
         binding.tvMessage.text = message
         binding.btYes.text = btnYes
@@ -40,7 +40,7 @@ class alertMessage(
         val dialog = builder.create()
             dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.setCanceledOnTouchOutside(false)
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.onBackAlert(dialog,requireContext(),getString(R.string.requireDates))
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.onBackAlert(dialog,requireContext(),getString(R.string.requireDates))
         return dialog
     }
 

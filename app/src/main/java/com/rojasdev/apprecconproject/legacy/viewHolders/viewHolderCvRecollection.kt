@@ -18,7 +18,7 @@ class viewHolderCvRecollection(var view: View ): RecyclerView.ViewHolder(view) {
     ) {
         binding.cvCollectionDetail.animation = AnimationUtils.loadAnimation(view.context, R.anim.recycler_transition)
 
-        val date = _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.dateFormat.format(itemDetail.Fecha)
+        val date = com.rojasdev.apprecconproject.legacy.controller.dateFormat.format(itemDetail.Fecha)
 
         binding.tvDate.text = date.first
         binding.tvTime.text = date.second
@@ -28,7 +28,7 @@ class viewHolderCvRecollection(var view: View ): RecyclerView.ViewHolder(view) {
             onClickListenerUpdate(itemDetail)
         }
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(itemDetail.Precio.toInt()){
+        com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(itemDetail.Precio.toInt()){
             binding.tvPrice.text = "Precio: $it"
         }
 

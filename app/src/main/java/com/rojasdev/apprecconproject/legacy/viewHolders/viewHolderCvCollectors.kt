@@ -25,7 +25,7 @@ class viewHolderCvCollectors( var view: View): RecyclerView.ViewHolder(view) {
         binding.tvNameCollector.text = item.name
 
         if (item.state == "work-active"){
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(
+            com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(
                 view.context,
                 day = {
                     binding.layout.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(view.context, R.color.Orange))
@@ -80,6 +80,6 @@ class viewHolderCvCollectors( var view: View): RecyclerView.ViewHolder(view) {
     }
 
      // Animation
-    private fun animationOnCLick() { _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedClick(binding.cvCollector) }
+    private fun animationOnCLick() { com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedClick(binding.cvCollector) }
 
 }

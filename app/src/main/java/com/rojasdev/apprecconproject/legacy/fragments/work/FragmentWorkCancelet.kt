@@ -45,7 +45,7 @@ class FragmentWorkCancelet(
 
         totalCollectionCollector()
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.scrolling.scrolling(binding.rvCollectors) {
+        com.rojasdev.apprecconproject.legacy.controller.scrolling.scrolling(binding.rvCollectors) {
             scroll(it)
         }
 
@@ -55,11 +55,11 @@ class FragmentWorkCancelet(
 
     private fun totalCollectionCollector(){
         CoroutineScope(Dispatchers.IO).launch{
-            val idCollectors = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecolectoresDao().getIDManWork()
+            val idCollectors = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecolectoresDao().getIDManWork()
             launch(Dispatchers.Main) {
                 val collector = mutableListOf<com.rojasdev.apprecconproject.legacy.data.dataModel.workTotalCollector>()
                 for(item in idCollectors){
-                    val collectionTotal = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecolectoresDao().getManAndWorkTotal(item.toInt())
+                    val collectionTotal = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecolectoresDao().getManAndWorkTotal(item.toInt())
                     if(collectionTotal[0].name_recolector != null){
                         collector.add(collectionTotal[0])
                     }
@@ -71,7 +71,7 @@ class FragmentWorkCancelet(
 
     private fun dates(total:List<com.rojasdev.apprecconproject.legacy.data.dataModel.workTotalCollector>) {
         adapter =
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.adapters.adapterRvWorkTotal(
+            com.rojasdev.apprecconproject.legacy.adapters.adapterRvWorkTotal(
                 total,
                 getColor()
             ) {
@@ -83,10 +83,10 @@ class FragmentWorkCancelet(
 
     private fun initCancelCollection(collectionTotal: com.rojasdev.apprecconproject.legacy.data.dataModel.workTotalCollector) {
         CoroutineScope(Dispatchers.IO).launch{
-            val collection = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecolectoresDao().getMenAndWork("active",collectionTotal.PK_ID_Recolector)
+            val collection = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecolectoresDao().getMenAndWork("active",collectionTotal.PK_ID_Recolector)
 
             launch(Dispatchers.Main) {
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.work.alertCancelWork(
+                com.rojasdev.apprecconproject.legacy.alert.work.alertCancelWork(
                     listOf(collectionTotal),
                     collection
                 ) {
@@ -98,13 +98,13 @@ class FragmentWorkCancelet(
 
     private fun updateCollection(idUpdate: Int) {
         CoroutineScope(Dispatchers.IO).launch{
-            val dataBase = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext())
+            val dataBase = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext())
 
             dataBase.RecolectoresDao().updateCollectorState(idUpdate)
             dataBase.WorkDao().updateWorkState(idUpdate)
 
             launch(Dispatchers.Main) {
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(requireView(),getString(R.string.collectionCanceled))
+                com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(requireView(),getString(R.string.collectionCanceled))
                 getTotalCollection()
                 totalCollectionCollector()
                 preferencesUpdate()
@@ -114,10 +114,10 @@ class FragmentWorkCancelet(
 
     private fun preferencesUpdate(){
         CoroutineScope(Dispatchers.IO).launch{
-            val idCollectors = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).WorkDao().getFkIdCollectors()
+            val idCollectors = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).WorkDao().getFkIdCollectors()
             launch(Dispatchers.Main) {
                 if(idCollectors.isEmpty()){
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.messagin.alertMessage(
+                    com.rojasdev.apprecconproject.legacy.alert.messagin.alertMessage(
                         getString(R.string.txtNewReport),
                         getString(R.string.txtCalendar),
                         getString(R.string.txtGoReport),
@@ -129,7 +129,7 @@ class FragmentWorkCancelet(
                             startActivity(
                                 Intent(
                                     requireContext(),
-                                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.ActivityInformes::class.java
+                                    com.rojasdev.apprecconproject.legacy.ActivityInformes::class.java
                                 )
                             )
                         } else {
@@ -145,13 +145,13 @@ class FragmentWorkCancelet(
     @SuppressLint("SetTextI18n")
     private fun getTotalCollection(){
         CoroutineScope(Dispatchers.IO).launch{
-            val collectionTotal = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).SettingDao().getTotalWorkActive()
+            val collectionTotal = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).SettingDao().getTotalWorkActive()
             launch(Dispatchers.Main) {
                 if(collectionTotal.isNotEmpty()){
                     binding.lyTotal.visibility = View.VISIBLE
                     binding.tvCollection.text = "Jornales trabajados\n ${collectionTotal[0].cantidad.toInt()}"
 
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(collectionTotal[0].total.toInt()){
+                    com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(collectionTotal[0].total.toInt()){
                         binding.tvTotal.text = "Total a pagar\n $it"
                     }
                 }
@@ -164,7 +164,7 @@ class FragmentWorkCancelet(
 
     private fun getColor():Int{
         var color: Int? = null
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(requireContext(),
+        com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(requireContext(),
             day = {
                 color = ContextCompat.getColor(requireContext(), R.color.Orange)
             },

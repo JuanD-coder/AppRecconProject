@@ -28,7 +28,7 @@ class CloudMessagingService : com.google.firebase.messaging.FirebaseMessagingSer
         val pendingIntent = createPendingIntent(message.data["url"])
         val bitmap = downloadImage(message.data["imageUrl"])
         val notificationBuilder =
-            NotificationCompat.Builder(this, _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.recconApp.Companion.NOTIFICATION_CHANNEL_ID)
+            NotificationCompat.Builder(this, com.rojasdev.apprecconproject.legacy.controller.recconApp.Companion.NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_logo_notification)
                 .setContentTitle(message.notification?.title)
                 .setContentText(message.notification?.body)
@@ -45,7 +45,7 @@ class CloudMessagingService : com.google.firebase.messaging.FirebaseMessagingSer
         val notification = notificationBuilder.build()
 
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(_root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.recconApp.Companion.NOTIFICATION_ID.nextInt(), notification)
+        manager.notify(com.rojasdev.apprecconproject.legacy.controller.recconApp.Companion.NOTIFICATION_ID.nextInt(), notification)
     }
 
     private fun createPendingIntent(url: String?): PendingIntent {

@@ -26,14 +26,14 @@ generateMonthPDF(
 
     fun generatePdfN(uri: Uri){
         CoroutineScope(Dispatchers.IO).launch {
-            val query1 = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getPdfInfo("${date}%", "yes")
-            val query2 = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getPdfInfo("${date}%", "no")
-            val yesAlimentTotal = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getTotalPdf("${date}%", "yes")
-            val noAlimentTotal = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getTotalPdf("${date}%", "no")
-            val queryWork = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getPdfInfoWork("${date}%")
-            val workTotal = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getTotalPdfWork("${date}%")
-            val active = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getAlimentState("active")
-            val archive = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getAlimentState("archived")
+            val query1 = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.getInstance(context).RecolectoresDao().getPdfInfo("${date}%", "yes")
+            val query2 = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getPdfInfo("${date}%", "no")
+            val yesAlimentTotal = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getTotalPdf("${date}%", "yes")
+            val noAlimentTotal = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getTotalPdf("${date}%", "no")
+            val queryWork = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getPdfInfoWork("${date}%")
+            val workTotal = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getTotalPdfWork("${date}%")
+            val active = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getAlimentState("active")
+            val archive = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getAlimentState("archived")
             launch(Dispatchers.Main) {
                 generatePDF(
                     titlePdf,

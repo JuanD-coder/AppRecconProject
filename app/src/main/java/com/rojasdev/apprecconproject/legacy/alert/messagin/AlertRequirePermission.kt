@@ -16,7 +16,7 @@ class alertRequirePermission(
     private lateinit var binding: AlertRequirePermissionBinding
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertRequirePermissionBinding.inflate(LayoutInflater.from(context))
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvWelcome)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvWelcome)
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
@@ -29,7 +29,7 @@ class alertRequirePermission(
         val dialog = builder.create()
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.onBackAlert(dialog,requireContext(),getString(R.string.go))
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.onBackAlert(dialog,requireContext(),getString(R.string.go))
         return dialog
     }
 

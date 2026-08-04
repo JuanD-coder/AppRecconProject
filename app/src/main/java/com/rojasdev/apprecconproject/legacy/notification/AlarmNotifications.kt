@@ -15,7 +15,7 @@ class AlarmNotifications : android.content.BroadcastReceiver() {
     }
 
     private fun createSimpleNotification(context: Context) {
-        val intent = Intent(context, _root_ide_package_.com.rojasdev.apprecconproject.legacy.ActivityInformes::class.java).apply {
+        val intent = Intent(context, com.rojasdev.apprecconproject.legacy.ActivityInformes::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
@@ -23,7 +23,7 @@ class AlarmNotifications : android.content.BroadcastReceiver() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, flag)
 
-        val notification = NotificationCompat.Builder(context, _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.recconApp.Companion.NOTIFICATION_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(context, com.rojasdev.apprecconproject.legacy.controller.recconApp.Companion.NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_reccon_round)
             .setContentTitle("Recuerda generear tu infome de recolecion")
             .setContentText("NO pierdad tus datos y genera un hisorial de recoleciones")
@@ -37,7 +37,7 @@ class AlarmNotifications : android.content.BroadcastReceiver() {
             .build()
 
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.notify(_root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.recconApp.Companion.NOTIFICATION_ID.nextInt(), notification)
+        manager.notify(com.rojasdev.apprecconproject.legacy.controller.recconApp.Companion.NOTIFICATION_ID.nextInt(), notification)
 
     }
 

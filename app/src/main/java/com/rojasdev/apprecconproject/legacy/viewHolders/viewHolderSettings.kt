@@ -22,17 +22,17 @@ class viewHolderSettings( var view: View): RecyclerView.ViewHolder(view) {
 
         if(item.feeding == "yes"){
             binding.tvAliment.text = "Precio por kilogramo con alimentacion"
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.cost){
+            com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.cost){
                 binding.tvAlimentPrice.text = it
             }
         }else  if(item.feeding == "no"){
             binding.tvAliment.text = "Precio por kilogramo sin alimentacion"
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.cost){
+            com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.cost){
                 binding.tvAlimentPrice.text = it
             }
         } else {
             binding.tvAliment.text = "${view.context.getString(R.string.workPrice)} por ${item.feeding}"
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.cost){
+            com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.cost){
                 binding.tvAlimentPrice.text = it
             }
         }

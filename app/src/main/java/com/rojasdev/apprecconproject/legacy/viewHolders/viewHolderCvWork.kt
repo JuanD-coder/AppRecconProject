@@ -22,7 +22,7 @@ class viewHolderCvWork(var view: View ): RecyclerView.ViewHolder(view) {
 
         binding.image.setImageResource(R.drawable.construction)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(
+        com.rojasdev.apprecconproject.legacy.controller.controllerTheme.main(
             view.context,
             day = {
                 binding.layout.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(view.context, R.color.Orange))
@@ -36,7 +36,7 @@ class viewHolderCvWork(var view: View ): RecyclerView.ViewHolder(view) {
 
         binding.tvKgTxt.text = view.context.getString(R.string.workDescription)
 
-        val date = _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.dateFormat.format(itemDetail.Fecha)
+        val date = com.rojasdev.apprecconproject.legacy.controller.dateFormat.format(itemDetail.Fecha)
 
         binding.tvDate.text = date.first
         binding.tvTime.text = date.second
@@ -51,7 +51,7 @@ class viewHolderCvWork(var view: View ): RecyclerView.ViewHolder(view) {
             onClickListenerUpdate(itemDetail)
         }
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(itemDetail.Precio){
+        com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(itemDetail.Precio){
             binding.tvPrice.text = "Precio: $it"
         }
 

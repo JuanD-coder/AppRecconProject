@@ -15,7 +15,7 @@ class alertErrorOpenPdf : androidx.fragment.app.DialogFragment(){
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertOpenPdfAppBinding.inflate(LayoutInflater.from(context))
-                  _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvOpenPdf)
+                  com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvOpenPdf)
         val builder = AlertDialog.Builder(requireActivity())
             builder.setView(binding.root)
 

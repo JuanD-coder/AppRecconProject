@@ -72,18 +72,18 @@ class generatePdfSemanal(
         fun generatePdfN(uri: Uri){
             CoroutineScope(Dispatchers.IO).launch {
                 val query1 =
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getWeekPdf(dateWeek.first,dateWeek.second, "yes")
+                    com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getWeekPdf(dateWeek.first,dateWeek.second, "yes")
                 val query2 =
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getWeekPdf(dateWeek.first,dateWeek.second, "no")
-                val yesAlimentTotal = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getTotalPdfWeek(dateWeek.first,dateWeek.second, "yes")
+                    com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getWeekPdf(dateWeek.first,dateWeek.second, "no")
+                val yesAlimentTotal = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getTotalPdfWeek(dateWeek.first,dateWeek.second, "yes")
                 val noAlimentTotal =
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getTotalPdfWeek(dateWeek.first,dateWeek.second, "no")
+                    com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getTotalPdfWeek(dateWeek.first,dateWeek.second, "no")
                 val queryWork =
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getWeekPdfWork(dateWeek.first,dateWeek.second)
+                    com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).RecolectoresDao().getWeekPdfWork(dateWeek.first,dateWeek.second)
                 val workTotal =
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getTotalPdfWeekWork(dateWeek.first,dateWeek.second)
-                val active = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getAlimentState("active")
-                val archive = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getAlimentState("archived")
+                    com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getTotalPdfWeekWork(dateWeek.first,dateWeek.second)
+                val active = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getAlimentState("active")
+                val archive = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(context).SettingDao().getAlimentState("archived")
                 launch(Dispatchers.Main) {
                     generatePDF(
                         titlePdf,

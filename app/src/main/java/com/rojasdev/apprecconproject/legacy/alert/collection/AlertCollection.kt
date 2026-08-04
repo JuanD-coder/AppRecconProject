@@ -20,11 +20,11 @@ class alertCollection (
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertCollectionBinding.inflate(LayoutInflater.from(context))
         tts = TextToSpeech(context){}
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvRecolector)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cvRecolector)
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
         binding.tvDescription.text = collector.name
 
@@ -56,10 +56,10 @@ class alertCollection (
                 binding.etKg
             )
 
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.keyLIstener.start(binding.etKg){
-                val require = _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
+            com.rojasdev.apprecconproject.legacy.controller.keyLIstener.start(binding.etKg){
+                val require = com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
                 if (require){
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.controllerCheckBox.checkBoxFun(
+                    com.rojasdev.apprecconproject.legacy.controller.controllerCheckBox.checkBoxFun(
                         binding.cbNo,
                         binding.cbYes,
                         binding.tvAliment,
@@ -73,9 +73,9 @@ class alertCollection (
             }
 
             binding.btReady.setOnClickListener {
-                val require = _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
+                val require = com.rojasdev.apprecconproject.legacy.controller.requireInput.validate(myListInput,requireContext())
                 if (require){
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.controllerCheckBox.checkBoxFun(
+                    com.rojasdev.apprecconproject.legacy.controller.controllerCheckBox.checkBoxFun(
                         binding.cbNo,
                         binding.cbYes,
                         binding.tvAliment,
@@ -94,10 +94,10 @@ class alertCollection (
         val kg = binding.etKg.text.toString()
 
         val collection =
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.entities.RecollectionEntity(
+            com.rojasdev.apprecconproject.legacy.data.entities.RecollectionEntity(
                 null,
                 kg.toDouble(),
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.dateFormat.main(),
+                com.rojasdev.apprecconproject.legacy.controller.dateFormat.main(),
                 "active",
                 collector.id!!,
                 settingsId!!

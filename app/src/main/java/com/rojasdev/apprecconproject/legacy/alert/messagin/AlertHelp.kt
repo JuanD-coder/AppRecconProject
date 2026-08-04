@@ -16,12 +16,12 @@ class alertHelp(
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = AlertHelpBinding.inflate(LayoutInflater.from(context))
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cv)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedInit(binding.cv)
         val builder = AlertDialog.Builder(requireActivity())
             builder.setView(binding.root)
 
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
         binding.lyChat.setOnClickListener {
             onClickListener()

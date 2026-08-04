@@ -36,7 +36,7 @@ class viewHolder( var view: View): RecyclerView.ViewHolder(view) {
                 if(week[0].dayMonth == "1"){
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     adapter =
-                        _root_ide_package_.com.rojasdev.apprecconproject.legacy.customCalendar.days.adapterDays(
+                        com.rojasdev.apprecconproject.legacy.customCalendar.days.adapterDays(
                             hoy,
                             addListWeek(week, week.size),
                             list,
@@ -47,7 +47,7 @@ class viewHolder( var view: View): RecyclerView.ViewHolder(view) {
                 }else{
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     adapter =
-                        _root_ide_package_.com.rojasdev.apprecconproject.legacy.customCalendar.days.adapterDays(
+                        com.rojasdev.apprecconproject.legacy.customCalendar.days.adapterDays(
                             hoy,
                             week,
                             list,
@@ -59,7 +59,7 @@ class viewHolder( var view: View): RecyclerView.ViewHolder(view) {
             } else {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 adapter =
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.customCalendar.days.adapterDays(
+                    com.rojasdev.apprecconproject.legacy.customCalendar.days.adapterDays(
                         hoy,
                         week,
                         list,

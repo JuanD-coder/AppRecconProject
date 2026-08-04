@@ -10,7 +10,7 @@ class adapterRvSettings (
     private val onClickListenerNext: (com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity) -> Unit ) : RecyclerView.Adapter<com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderSettings>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderSettings {
-        return _root_ide_package_.com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderSettings(
+        return com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderSettings(
             LayoutInflater.from(parent.context).inflate(R.layout.item_settings, parent, false)
         )
     }

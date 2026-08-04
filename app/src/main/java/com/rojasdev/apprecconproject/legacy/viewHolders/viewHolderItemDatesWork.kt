@@ -35,11 +35,11 @@ class viewHolderItemDatesWork(var view: View): RecyclerView.ViewHolder(view) {
 
         binding.image.setImageResource(R.drawable.construction)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(itemDetail.Precio.toInt()){
+        com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(itemDetail.Precio.toInt()){
             binding.tvPrice.text = it
         }
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(itemDetail.result.toInt()){
+        com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(itemDetail.result.toInt()){
             binding.tvTotal.text = it
         }
     }

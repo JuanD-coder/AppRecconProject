@@ -10,7 +10,7 @@ class adapterRvCancelWork(
 ) : RecyclerView.Adapter<com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCancelWork>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCancelWork {
-        return _root_ide_package_.com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCancelWork(
+        return com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderCancelWork(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_collection_cancel, parent, false)
         )

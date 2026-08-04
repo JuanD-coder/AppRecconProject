@@ -22,16 +22,16 @@ class ActivitySettings : androidx.appcompat.app.AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        title = getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.previousPrice)
+        title = getString(com.rojasdev.apprecconproject.R.string.previousPrice)
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
+        com.rojasdev.apprecconproject.legacy.controller.adsBanner.initLoadAds(binding.banner)
 
         getNoAliment()
         getYesAliment()
         getPricesWork()
 
         CoroutineScope(Dispatchers.IO).launch {
-            val count = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().getPriceWorkCount()
+            val count = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().getPriceWorkCount()
             launch(Dispatchers.Main) {
                 if (count > 6) {
                     binding.btnAddWork.visibility = View.GONE
@@ -48,9 +48,9 @@ class ActivitySettings : androidx.appcompat.app.AppCompatActivity() {
         }
 
         binding.btUpdateNoAliment.setOnClickListener {
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedClick(binding.cvNoAliment)
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.settings.alertSettingsUpdate(
-                getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.notFeeding),
+            com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedClick(binding.cvNoAliment)
+            com.rojasdev.apprecconproject.legacy.alert.settings.alertSettingsUpdate(
+                getString(com.rojasdev.apprecconproject.R.string.notFeeding),
                 "no",
                 idNoAliment!!,
                 priceNoAliment!!,
@@ -64,9 +64,9 @@ class ActivitySettings : androidx.appcompat.app.AppCompatActivity() {
         }
 
         binding.btUpdateYesAliment.setOnClickListener {
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedClick(binding.cvYesAliment)
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.settings.alertSettingsUpdate(
-                getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.yesFeeding),
+            com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedClick(binding.cvYesAliment)
+            com.rojasdev.apprecconproject.legacy.alert.settings.alertSettingsUpdate(
+                getString(com.rojasdev.apprecconproject.R.string.yesFeeding),
                 "yes",
                 idYesAliment!!,
                 priceYesAliment!!,
@@ -94,7 +94,7 @@ class ActivitySettings : androidx.appcompat.app.AppCompatActivity() {
 
     private fun alertAddPriceWork() {
         val dialog =
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.settings.alertAddPriceWork(
+            com.rojasdev.apprecconproject.legacy.alert.settings.alertAddPriceWork(
                 { insertSettings(it) }, { getPricesWork() }
             )
 
@@ -110,7 +110,7 @@ class ActivitySettings : androidx.appcompat.app.AppCompatActivity() {
 
     private fun insertSettings(settings: com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity){
         CoroutineScope(Dispatchers.IO).launch{
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().insertConfig(settings)
+            com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().insertConfig(settings)
             launch {
                 setupRecyclerView()
                 getPricesWork()
@@ -120,15 +120,15 @@ class ActivitySettings : androidx.appcompat.app.AppCompatActivity() {
 
     private fun getPricesWork() {
         CoroutineScope(Dispatchers.IO).launch {
-            val query = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().getPriceWork()
+            val query = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().getPriceWork()
             launch(Dispatchers.Main) {
                 if (query.isNotEmpty()) {
                     Toast.makeText(this@ActivitySettings, query[0].feeding, Toast.LENGTH_SHORT).show()
                     adapterRvPricesWork =
-                        _root_ide_package_.com.rojasdev.apprecconproject.legacy.adapters.adapterRvPricesWork(
+                        com.rojasdev.apprecconproject.legacy.adapters.adapterRvPricesWork(
                             query
                         ) {
-                            _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.settings.alertSettingsUpdate(
+                            com.rojasdev.apprecconproject.legacy.alert.settings.alertSettingsUpdate(
                                 it.feeding,
                                 it.feeding,
                                 it.Id!!,
@@ -149,12 +149,12 @@ class ActivitySettings : androidx.appcompat.app.AppCompatActivity() {
     }
 
     private fun getNoAliment() {
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedCv(binding.cvNoAliment)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedCv(binding.cvNoAliment)
         CoroutineScope(Dispatchers.IO).launch {
-            val query = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().getAliment("no")
+            val query = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().getAliment("no")
             launch(Dispatchers.Main) {
                 idNoAliment = query[0].Id
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].cost) {
+                com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].cost) {
                     priceNoAliment = query[0].cost
                     binding.tvNoAliment.text = it
                 }
@@ -163,13 +163,13 @@ class ActivitySettings : androidx.appcompat.app.AppCompatActivity() {
     }
 
     private fun getYesAliment() {
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedCv(binding.cvYesAliment)
+        com.rojasdev.apprecconproject.legacy.controller.animatedAlert.animatedCv(binding.cvYesAliment)
         CoroutineScope(Dispatchers.IO).launch {
             val query =
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().getAliment("yes")
+                com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().getAliment("yes")
             launch(Dispatchers.Main) {
                 idYesAliment = query[0].Id
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].cost) {
+                com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].cost) {
                     priceYesAliment = query[0].cost
                     binding.tvYesAliment.text = it
                 }
@@ -180,22 +180,22 @@ class ActivitySettings : androidx.appcompat.app.AppCompatActivity() {
 
     private fun insertNewSetting(setting: com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity, ready: () -> Unit) {
         val newSetting =
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity(
+            com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity(
                 null,
                 setting.feeding,
                 setting.cost,
                 "active",
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.dateFormat.main()
+                com.rojasdev.apprecconproject.legacy.controller.dateFormat.main()
             )
         CoroutineScope(Dispatchers.IO).launch {
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().insertConfig(newSetting)
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao()
+            com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().insertConfig(newSetting)
+            com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao()
                 .updateConfig(setting.Id, "archived")
             launch(Dispatchers.Main) {
                 ready()
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(
+                com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(
                     binding.textView,
-                    getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.settingsUpdate)
+                    getString(com.rojasdev.apprecconproject.R.string.settingsUpdate)
                 )
             }
         }
@@ -204,7 +204,7 @@ class ActivitySettings : androidx.appcompat.app.AppCompatActivity() {
     private fun setupRecyclerView() {
         binding.rvSetTingHistory.setPadding(0, 0, 0, 0)
         CoroutineScope(Dispatchers.IO).launch {
-            val query = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().getAlimentArchived()
+            val query = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().getAlimentArchived()
             launch(Dispatchers.Main) {
                 binding.rvSetTingHistory.apply {
                     if (query.isEmpty()) {
@@ -213,7 +213,7 @@ class ActivitySettings : androidx.appcompat.app.AppCompatActivity() {
                         visibilityButton(query.size)
                         layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                         adapter =
-                            _root_ide_package_.com.rojasdev.apprecconproject.legacy.adapters.adapterRvSettings(
+                            com.rojasdev.apprecconproject.legacy.adapters.adapterRvSettings(
                                 query
                             ) {}
                     }
@@ -223,13 +223,13 @@ class ActivitySettings : androidx.appcompat.app.AppCompatActivity() {
     }
 
     private fun noHistory() {
-        title = getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.settingsAliment)
+        title = getString(com.rojasdev.apprecconproject.R.string.settingsAliment)
         binding.btViewAlimentArchived.visibility = View.GONE
         binding.btExit.visibility = View.GONE
     }
 
     private fun visibilityButton(size: Int) {
-        title = getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.previousPrice)
+        title = getString(com.rojasdev.apprecconproject.R.string.previousPrice)
         binding.btExit.visibility = View.GONE
         if (size > 4)
             binding.btViewAlimentArchived.visibility = View.VISIBLE
@@ -242,15 +242,15 @@ class ActivitySettings : androidx.appcompat.app.AppCompatActivity() {
         val setPadding = height.div(3.9)
         binding.rvSetTingHistory.setPadding(0, 0, 0, setPadding.toInt())
         CoroutineScope(Dispatchers.IO).launch {
-            val query = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().getAlimentArchived()
+            val query = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(this@ActivitySettings).SettingDao().getAlimentArchived()
             launch(Dispatchers.Main) {
                 binding.rvSetTingHistory.apply {
-                    title = getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.todo)
+                    title = getString(com.rojasdev.apprecconproject.R.string.todo)
                     binding.btViewAlimentArchived.visibility = View.GONE
                     binding.btExit.visibility = View.VISIBLE
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                     adapter =
-                        _root_ide_package_.com.rojasdev.apprecconproject.legacy.adapters.adapterRvSettings(
+                        com.rojasdev.apprecconproject.legacy.adapters.adapterRvSettings(
                             query
                         ) {
                             message(it)
@@ -262,11 +262,11 @@ class ActivitySettings : androidx.appcompat.app.AppCompatActivity() {
 
     private fun message(it: com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity) {
         val message: String = if (it.feeding == "yes")
-            getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.yesFeeding)
+            getString(com.rojasdev.apprecconproject.R.string.yesFeeding)
         else
-            getString(_root_ide_package_.com.rojasdev.apprecconproject.R.string.notFeeding)
-        val date = _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.dateFormat.format(it.date)
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(
+            getString(com.rojasdev.apprecconproject.R.string.notFeeding)
+        val date = com.rojasdev.apprecconproject.legacy.controller.dateFormat.format(it.date)
+        com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(
             binding.rvSetTingHistory,
             "$message\n ${it.cost}\n ${date.first}"
         )

@@ -219,7 +219,7 @@ class generatePDF(
                     tablePrice.addCell(header)
                 }
 
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.cost) {
+                com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.cost) {
                     header.phrase = Phrase(it)
                     tablePrice.addCell(header)
                 }
@@ -254,7 +254,7 @@ class generatePDF(
                 columns.addCell(header)
                 header.phrase = Phrase("${item.result} Kg")
                 columns.addCell(header)
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.total.toInt()) {
+                com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.total.toInt()) {
                     header.phrase = Phrase(it)
                     columns.addCell(header)
                 }
@@ -319,7 +319,7 @@ class generatePDF(
                 header.phrase = Phrase(item.actividad)
                 columns.addCell(header)
 
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.total.toInt()) {
+                com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(item.total.toInt()) {
                     header.phrase = Phrase(it)
                     columns.addCell(header)
                 }
@@ -387,7 +387,7 @@ class generatePDF(
             }
 
             header.backgroundColor = BaseColor.WHITE
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].Precio) {
+            com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].Precio) {
                 header.phrase = Phrase(it)
                 columns.addCell(header)
             }
@@ -395,7 +395,7 @@ class generatePDF(
             header.phrase = Phrase("${query[0].result} Kg")
             columns.addCell(header)
 
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].total.toInt()) {
+            com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].total.toInt()) {
                 header.phrase = Phrase(it)
                 columns.addCell(header)
             }
@@ -438,7 +438,7 @@ class generatePDF(
             }
 
             header.backgroundColor = BaseColor.WHITE
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].Precio) {
+            com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].Precio) {
                 header.phrase = Phrase(it)
                 columns.addCell(header)
             }
@@ -446,7 +446,7 @@ class generatePDF(
             header.phrase = Phrase(query[0].result.toInt().toString())
             columns.addCell(header)
 
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].total.toInt()) {
+            com.rojasdev.apprecconproject.legacy.controller.price.priceSplit(query[0].total.toInt()) {
                 header.phrase = Phrase(it)
                 columns.addCell(header)
             }

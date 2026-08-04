@@ -10,7 +10,7 @@ class adapterRvPricesWork (
     private val onClickListener: (com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity) -> Unit ) : RecyclerView.Adapter<com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderRvPricesWork>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderRvPricesWork {
-        return _root_ide_package_.com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderRvPricesWork(
+        return com.rojasdev.apprecconproject.legacy.viewHolders.viewHolderRvPricesWork(
             LayoutInflater.from(parent.context).inflate(R.layout.item_price_work, parent, false)
         )
     }

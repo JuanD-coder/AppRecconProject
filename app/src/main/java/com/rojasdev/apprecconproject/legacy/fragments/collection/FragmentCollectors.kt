@@ -42,7 +42,7 @@ class FragmentCollectors(
             dates()
         }
 
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.scrolling.scrolling(binding.rvCollectors){
+        com.rojasdev.apprecconproject.legacy.controller.scrolling.scrolling(binding.rvCollectors){
             scroll(it)
         }
 
@@ -51,8 +51,8 @@ class FragmentCollectors(
 
     private suspend fun dates(){
         CoroutineScope(Dispatchers.IO).launch{
-            val idCollectors = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecollectionDao().getFkIdCollectors()
-            val collectors = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecolectoresDao().getAllRecolector()
+            val idCollectors = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecollectionDao().getFkIdCollectors()
+            val collectors = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecolectoresDao().getAllRecolector()
 
             launch(Dispatchers.Main) {
                 if (collectors.isNotEmpty()){
@@ -66,7 +66,7 @@ class FragmentCollectors(
 
     private fun initRv(idCollectors: List<Long>, collectors: List<com.rojasdev.apprecconproject.legacy.data.entities.RecolectoresEntity>) {
         adapter =
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.adapters.adapterRvCollectors(
+            com.rojasdev.apprecconproject.legacy.adapters.adapterRvCollectors(
                 collectors,
                 idCollectors,
                 { item ->
@@ -86,22 +86,22 @@ class FragmentCollectors(
 
     private fun initDetailCollector(item: com.rojasdev.apprecconproject.legacy.data.entities.RecolectoresEntity) {
         startActivity(Intent(
-            requireContext(), _root_ide_package_.com.rojasdev.apprecconproject.legacy.ActivityRecolectionDetail::class.java
+            requireContext(), com.rojasdev.apprecconproject.legacy.ActivityRecolectionDetail::class.java
         ).putExtra("userId", item.id).putExtra("userName", item.name))
     }
 
     private fun initAlertDelete(it: com.rojasdev.apprecconproject.legacy.data.entities.RecolectoresEntity) {
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.collection.alertDeleteCollector(
+        com.rojasdev.apprecconproject.legacy.alert.collection.alertDeleteCollector(
             it.name,
             false
         ) {
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(
+            com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(
                 requireView(),
                 getString(R.string.deleteCollector)
             )
 
             CoroutineScope(Dispatchers.IO).launch {
-                _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(
+                com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(
                     requireContext()
                 ).RecolectoresDao().deleteCollectorId(it.id!!)
                 launch { dates() }
@@ -111,26 +111,26 @@ class FragmentCollectors(
     }
 
     private fun initAlertAddCollection(it: com.rojasdev.apprecconproject.legacy.data.entities.RecolectoresEntity) {
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.collection.alertCollection(it) {
+        com.rojasdev.apprecconproject.legacy.alert.collection.alertCollection(it) {
             insertCollection(it)
         }.show(parentFragmentManager,"dialog")
     }
 
     private fun insertCollection(recollection: com.rojasdev.apprecconproject.legacy.data.entities.RecollectionEntity) {
-        _root_ide_package_.com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(binding.fragmentCollectors,getString(R.string.addCollectionFinish))
+        com.rojasdev.apprecconproject.legacy.controller.customSnackBar.showCustomSnackBar(binding.fragmentCollectors,getString(R.string.addCollectionFinish))
 
         CoroutineScope(Dispatchers.IO).launch {
-            _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecollectionDao().addRecollection(recollection)
+            com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance(requireContext()).RecollectionDao().addRecollection(recollection)
             launch { dates() }
         }
     }
 
     private fun preferencesUpdate(){
         CoroutineScope(Dispatchers.IO).launch{
-            val idCollectors = _root_ide_package_.com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecollectionDao().getFkIdCollectors()
+            val idCollectors = com.rojasdev.apprecconproject.legacy.data.dataBase.AppDataBase.Companion.getInstance((requireContext())).RecollectionDao().getFkIdCollectors()
             launch(Dispatchers.Main) {
                 if(idCollectors.isEmpty()){
-                    _root_ide_package_.com.rojasdev.apprecconproject.legacy.alert.messagin.alertMessage(
+                    com.rojasdev.apprecconproject.legacy.alert.messagin.alertMessage(
                         getString(R.string.txtMessageOne),
                         getString(R.string.txtMessageTwo),
                         getString(R.string.txtRecolectionStart),
