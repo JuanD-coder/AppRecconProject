@@ -5,18 +5,20 @@
     android:id="@+id/cv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
     app:cardUseCompatPadding="true"
     app:cardCornerRadius="10dp"
     app:cardElevation="8dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    app:layout_constraintTop_toTopOf="parent"
+    style="@style/item">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        style="@style/item">
 
         <TextView
             android:id="@+id/textView10"
@@ -26,27 +28,34 @@
             android:fontFamily="@font/comfortaa"
             android:text="@string/total"
             android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/tvTotalPrice"
             app:layout_constraintStart_toStartOf="@+id/tvTotalPrice"
             app:layout_constraintTop_toBottomOf="@+id/tvNameCollector" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvKg"
             style="@style/tvItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
+            android:gravity="center"
+            app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toTopOf="@+id/btReady"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
             tools:text="328kg" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvNameCollector"
             style="@style/texViewAlert"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center"
+            app:autoSizeTextType="uniform"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -63,12 +72,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTotalPrice"
             style="@style/tvItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
+            android:gravity="center"
+            app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toTopOf="@+id/btReady"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
@@ -82,6 +95,7 @@
             android:fontFamily="@font/comfortaa"
             android:text="@string/collect"
             android:textColor="@color/black"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/tvKg"
             app:layout_constraintStart_toStartOf="@+id/tvKg"
             app:layout_constraintTop_toBottomOf="@+id/tvNameCollector" />
@@ -92,7 +106,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

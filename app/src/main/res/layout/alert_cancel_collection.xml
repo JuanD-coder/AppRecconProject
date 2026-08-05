@@ -4,7 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context=".ActivityRecolection">
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/banner"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-6507674390958957/7559762911"
+        app:layout_constraintEnd_toEndOf="@+id/cvRecolector"
+        app:layout_constraintStart_toStartOf="@+id/cvRecolector"
+        app:layout_constraintTop_toBottomOf="@+id/cvRecolector" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvRecolector"
@@ -33,28 +45,20 @@
                     style="@style/texViewAlert"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="cristian rojas" />
 
-
-                <TextView
-                    android:id="@+id/tvAliment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/aliment"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline6"
-                    app:layout_constraintStart_toStartOf="@+id/guideline5"
-                    app:layout_constraintTop_toBottomOf="@+id/tvNameCollector" />
-
                 <TextView
                     android:id="@+id/tvAliment2"
                     style="@style/tvItem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
                     android:text="@string/aliment"
-                    android:textSize="15sp"
+                    android:gravity="center"
+                    app:autoSizeTextType="uniform"
                     app:layout_constraintEnd_toStartOf="@+id/guideline5"
                     app:layout_constraintStart_toStartOf="@+id/guideline6"
                     app:layout_constraintTop_toBottomOf="@+id/tvNameCollector" />
@@ -62,11 +66,12 @@
                 <TextView
                     android:id="@+id/tvAliment3"
                     style="@style/tvItem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_marginStart="8dp"
                     android:text="@string/priceCollection"
-                    android:textSize="15sp"
+                    android:gravity="center"
+                    app:autoSizeTextType="uniform"
                     app:layout_constraintBottom_toTopOf="@+id/rv"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tvAliment2"
@@ -75,11 +80,12 @@
                 <TextView
                     android:id="@+id/tvAliment4"
                     style="@style/tvItem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_marginEnd="8dp"
                     android:text="@string/collect"
-                    android:textSize="15sp"
+                    android:gravity="center"
+                    app:autoSizeTextType="uniform"
                     app:layout_constraintBottom_toTopOf="@+id/rv"
                     app:layout_constraintEnd_toStartOf="@+id/guideline6"
                     app:layout_constraintStart_toStartOf="parent"
@@ -112,22 +118,23 @@
                 <Button
                     android:id="@+id/btnReady"
                     style="@style/buttons"
-                    android:layout_width="wrap_content"
+                    android:layout_width="155dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginBottom="16dp"
                     android:text="@string/collectionCancel"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvKg" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvTotalPrice"
+                    tools:ignore="TextSizeCheck" />
 
                 <Button
                     android:id="@+id/btnFinish"
                     style="@style/buttons"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
                     android:text="@string/btnFinish"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -138,12 +145,13 @@
                     style="@style/tvItem"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
                     android:text="TextView"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv" />
+                    app:layout_constraintTop_toBottomOf="@+id/rv"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/tvTotalPrice"
@@ -151,11 +159,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="20dp"
                     android:gravity="center"
                     android:text="TextView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv" />
+                    app:layout_constraintTop_toBottomOf="@+id/rv"
+                    tools:ignore="HardcodedText" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -165,16 +174,15 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnClose"
-        style="@style/foadingButtons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        app:backgroundTint="@color/Dark_Tan"
         app:layout_constraintBottom_toTopOf="@+id/cvRecolector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_close" />
+        app:srcCompat="@drawable/ic_close"
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,8 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ActivityRecolection">
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-6507674390958957/6388499084"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/cvRecolector" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvRecolector"
@@ -12,17 +24,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="15dp"
         app:cardElevation="8dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -33,12 +41,11 @@
                     style="@style/texViewAlert"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/addCollection"
-                    android:textSize="17sp"
+                    android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="cristian fabian rojas rojas" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilKg"
@@ -46,7 +53,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="18dp"
                     android:layout_marginEnd="16dp"
                     android:hint="@string/kgRecolectados"
                     app:boxCornerRadiusBottomEnd="10dp"
@@ -55,7 +62,7 @@
                     app:boxCornerRadiusTopStart="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvNameCollector"
+                    app:layout_constraintTop_toBottomOf="@+id/tvDescription"
                     app:startIconDrawable="@drawable/ic_kilogramo">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -84,7 +91,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="16dp"
-                    app:cardBackgroundColor="@color/white"
                     app:layout_constraintBottom_toTopOf="@+id/btReady"
                     app:layout_constraintEnd_toEndOf="@+id/tvAliment"
                     app:layout_constraintStart_toStartOf="@+id/tvAliment"
@@ -96,8 +102,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_margin="3dp"
+                        android:paddingEnd="8dp"
                         android:text="@string/no"
-                        android:paddingEnd="8dp"/>
+                        tools:ignore="RtlSymmetry" />
 
                     <CheckBox
                         android:id="@+id/cbYes"
@@ -105,8 +112,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_margin="3dp"
+                        android:paddingEnd="8dp"
                         android:text="@string/yes"
-                        android:paddingEnd="8dp"/>
+                        tools:ignore="RtlSymmetry" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -115,36 +123,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="@string/aliment"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:paddingEnd="20dp"
                     android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:text="@string/aliment"
+                    android:textSize="18sp"
+                    style="@style/text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tilKg" />
 
-                <TextView
-                    android:id="@+id/tvNameCollector"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:textColor="@color/black"
-                    android:textSize="22sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvDescription"
-                    tools:text="cristian fabian rojas rojas " />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </ScrollView>
 
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnClose"
-        style="@style/foadingButtons"
+        style="@style/buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -153,7 +148,8 @@
         app:layout_constraintBottom_toTopOf="@+id/cvRecolector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_close" />
+        app:srcCompat="@drawable/ic_close"
+        tools:ignore="ContentDescription" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

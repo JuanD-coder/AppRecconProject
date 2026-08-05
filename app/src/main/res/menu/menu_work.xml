@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/collectors"
+        android:title="@string/workMen"
+        android:icon="@drawable/ic_recolector"
+        android:visible="true"/>
+    <item
+        android:id="@+id/collection"
+        android:title="@string/workCancel"
+        android:icon="@drawable/ic_price"
+        android:visible="true"/>
+
+</menu>

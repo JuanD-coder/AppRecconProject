@@ -2,48 +2,132 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
+        android:name=".legacy.controller.recconApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_reccon"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_reccon_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppRecconProject"
-        tools:targetApi="31">
+        android:theme="@style/Theme.AppRecconProject">
+
+
+
         <activity
-            android:name=".ActivityRecolectionDetail"
+            android:name=".ui.ComposeMainActivity"
             android:exported="false"
-            android:parentActivityName=".ActivityRecolection" />
+            android:label="Recolectores Compose"
+            android:theme="@style/Theme.AppRecconProject" />
+
+        <receiver android:name=".legacy.notification.AlarmNotifications"
+            android:enabled="true" />
+
+        <service
+            android:name=".legacy.notification.CloudMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
-            android:name=".ActivitySettings"
+            android:name=".legacy.ActivityDetalleWork"
             android:exported="false"
-            android:parentActivityName=".ActivityMainModule" />
+            android:parentActivityName=".legacy.ActivityWork"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppRecconProject.work"
+            tools:ignore="LockedOrientationActivity" />
+
         <activity
-            android:name=".ActivityMainModule"
-            android:exported="false" />
-        <activity
-            android:name=".ActivityRecolection"
+            android:name=".legacy.ActivityWork"
             android:exported="false"
-            android:parentActivityName=".ActivityMainModule" />
-        <activity
-            android:name=".ActivityInformes"
+            android:parentActivityName=".legacy.ActivityMainModule"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppRecconProject.work"
+            tools:ignore="LockedOrientationActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.rojasdev.apprecconproject.fileprovider"
             android:exported="false"
-            android:parentActivityName=".ActivityMainModule"
-            android:theme="@style/Theme.AppRecconProject.informes" />
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity
+            android:name=".legacy.ActivityRecolectionDetail"
+            android:exported="false"
+            android:parentActivityName=".legacy.ActivityRecolection"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".legacy.ActivitySettings"
+            android:exported="false"
+            android:parentActivityName=".legacy.ActivityMainModule"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".legacy.ActivityMainModule"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".legacy.ActivityRecolection"
+            android:exported="false"
+            android:parentActivityName=".legacy.ActivityMainModule"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".legacy.ActivityInformes"
+            android:exported="false"
+            android:parentActivityName=".legacy.ActivityMainModule"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppRecconProject.informes"
+            tools:ignore="LockedOrientationActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppRecconProject.splash">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppRecconProject.splash"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_logo_notification" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/Hippie_Green" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-6507674390958957~6404104744" />
     </application>
 
 </manifest>
