@@ -1,25 +1,30 @@
 package com.rojasdev.apprecconproject.ui.labor
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.legacy.data.dataModel.workTotalCollector
 import com.rojasdev.apprecconproject.legacy.data.entities.RecolectoresEntity
+import com.rojasdev.apprecconproject.ui.components.EmptyState
 import com.rojasdev.apprecconproject.ui.theme.*
 
 @Composable
@@ -38,58 +43,102 @@ fun LaborContent(
     onBack: () -> Unit
 ) {
     var selectedTab by remember { mutableStateOf(0) }
+    val accentColor = OrangeLegacy
 
     Scaffold(
         bottomBar = {
             BottomAppBar(
-                containerColor = CoffeeSecondary, // Naranja para Trabajos
+                containerColor = accentColor,
                 contentColor = Color.White,
                 actions = {
                     NavigationBarItem(
                         selected = selectedTab == 0,
                         onClick = { selectedTab = 0 },
                         icon = { Icon(Icons.Default.Engineering, null) },
-                        label = { Text("Jornales", color = Color.White) },
-                        colors = NavigationBarItemDefaults.colors(indicatorColor = Color.White.copy(alpha = 0.2f))
+                        label = { Text("Jornales", fontFamily = Comfortaa, color = Color.White) },
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = accentColor,
+                            selectedTextColor = Color.White,
+                            unselectedIconColor = Color.White.copy(alpha = 0.6f),
+                            unselectedTextColor = Color.White.copy(alpha = 0.6f),
+                            indicatorColor = Color.White
+                        )
                     )
                     NavigationBarItem(
                         selected = selectedTab == 1,
                         onClick = { selectedTab = 1 },
                         icon = { Icon(Icons.Default.Group, null) },
-                        label = { Text("Personal", color = Color.White) },
-                        colors = NavigationBarItemDefaults.colors(indicatorColor = Color.White.copy(alpha = 0.2f))
+                        label = { Text("Personal", fontFamily = Comfortaa, color = Color.White) },
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = accentColor,
+                            selectedTextColor = Color.White,
+                            unselectedIconColor = Color.White.copy(alpha = 0.6f),
+                            unselectedTextColor = Color.White.copy(alpha = 0.6f),
+                            indicatorColor = Color.White
+                        )
                     )
                 },
                 floatingActionButton = {
-                    FloatingActionButton(onClick = {}, containerColor = Color.White, contentColor = CoffeeSecondary) {
+                    FloatingActionButton(onClick = {}, containerColor = Color.White, contentColor = accentColor) {
                         Icon(Icons.Default.Add, null)
                     }
                 }
             )
         }
     ) { padding ->
-        Column(modifier = Modifier.fillMaxSize().padding(padding).background(CoffeeBackground)) {
-            // Header
-            Row(modifier = Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = onBack) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = CoffeeSecondary)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .background(Color(0xFFE7E7E7)) // gray_light from legacy
+        ) {
+            // Header Area (Legacy style)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(accentColor)
+                    .padding(bottom = 16.dp)
+            ) {
+                Column {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IconButton(onClick = onBack) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = Color.White)
+                        }
+                        Text(
+                            if (selectedTab == 0) "RESUMEN DE JORNALES" else "PERSONAL DE TRABAJO",
+                            style = MaterialTheme.typography.titleLarge,
+                            fontFamily = Comfortaa,
+                            fontWeight = FontWeight.Black,
+                            color = Color.White
+                        )
+                    }
+
+                    if (selectedTab == 0) {
+                        LaborSummaryHeader(uiState.totalDays, uiState.totalAmount)
+                    }
                 }
-                Text(
-                    if (selectedTab == 0) "RESUMEN DE JORNALES" else "PERSONAL DE TRABAJO",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Black,
-                    color = CoffeeSecondary
-                )
             }
 
             if (selectedTab == 0) {
-                LaborSummaryHeader(uiState.totalDays, uiState.totalAmount)
-                LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    items(uiState.laborTotals) { item -> LaborCard(item) }
+                if (uiState.laborTotals.isEmpty()) {
+                    EmptyState("No hay jornales registrados")
+                } else {
+                    LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                        items(uiState.laborTotals) { item -> LaborCard(item) }
+                    }
                 }
             } else {
-                LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(uiState.workers) { worker -> WorkerItem(worker) }
+                if (uiState.workers.isEmpty()) {
+                    EmptyState("No hay personal registrado")
+                } else {
+                    LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        items(uiState.workers) { worker -> WorkerItem(worker) }
+                    }
                 }
             }
         }
@@ -98,39 +147,91 @@ fun LaborContent(
 
 @Composable
 fun LaborSummaryHeader(days: Double, amount: Double) {
-    Surface(
-        modifier = Modifier.fillMaxWidth().padding(16.dp),
-        color = CoffeeSecondary,
-        shape = MaterialTheme.shapes.large,
-        shadowElevation = 4.dp
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-            Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Días Totales", color = Color.White.copy(alpha = 0.7f), style = MaterialTheme.typography.labelSmall)
-                Text("${days.toInt()}", color = Color.White, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-            }
-            VerticalDivider(modifier = Modifier.height(40.dp), color = Color.White.copy(alpha = 0.2f))
-            Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Total a Pagar", color = Color.White.copy(alpha = 0.7f), style = MaterialTheme.typography.labelSmall)
-                Text("$${amount.toInt()}", color = Color.White, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Black)
-            }
+        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.weight(1f)) {
+            Text(
+                text = "${days.toInt()}",
+                style = MaterialTheme.typography.headlineLarge,
+                fontFamily = Comfortaa,
+                fontWeight = FontWeight.Black,
+                color = Color.White
+            )
+            Text(
+                text = "Días Totales",
+                style = MaterialTheme.typography.labelMedium,
+                fontFamily = Comfortaa,
+                color = Color.White.copy(alpha = 0.8f)
+            )
+        }
+        
+        VerticalDivider(modifier = Modifier.height(60.dp), color = Color.White.copy(alpha = 0.3f))
+
+        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.weight(1f)) {
+            Text(
+                text = "$${amount.toInt()}",
+                style = MaterialTheme.typography.headlineLarge,
+                fontFamily = Comfortaa,
+                fontWeight = FontWeight.Black,
+                color = Color.White
+            )
+            Text(
+                text = "Total a Pagar",
+                style = MaterialTheme.typography.labelMedium,
+                fontFamily = Comfortaa,
+                color = Color.White.copy(alpha = 0.8f)
+            )
         }
     }
 }
 
 @Composable
 fun LaborCard(item: workTotalCollector) {
-    ElevatedCard(modifier = Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.large) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-            Surface(Modifier.size(48.dp), shape = MaterialTheme.shapes.medium, color = PastelOrange) {
-                Icon(Icons.Default.Work, null, modifier = Modifier.padding(8.dp), tint = OnPastelOrange)
+            Surface(
+                modifier = Modifier.size(48.dp),
+                shape = CircleShape,
+                color = OrangeLegacy.copy(alpha = 0.1f)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_recolector),
+                    null,
+                    modifier = Modifier.padding(8.dp),
+                    tint = OrangeLegacy
+                )
             }
             Spacer(Modifier.width(16.dp))
             Column(Modifier.weight(1f)) {
-                Text(item.name_recolector ?: "N/A", fontWeight = FontWeight.Bold)
-                Text("${item.days_work.toInt()} días registrados", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+                Text(
+                    item.name_recolector ?: "N/A",
+                    fontFamily = Comfortaa,
+                    fontWeight = FontWeight.Black,
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    "${item.days_work.toInt()} días registrados",
+                    style = MaterialTheme.typography.bodySmall,
+                    fontFamily = Comfortaa,
+                    color = Color.Gray
+                )
             }
-            Text("$${item.total.toInt()}", fontWeight = FontWeight.Black, color = OnPastelOrange, style = MaterialTheme.typography.titleMedium)
+            Text(
+                "$${item.total.toInt()}",
+                fontFamily = Comfortaa,
+                fontWeight = FontWeight.Black,
+                color = OrangeLegacy,
+                style = MaterialTheme.typography.titleLarge
+            )
         }
     }
 }
@@ -138,14 +239,26 @@ fun LaborCard(item: workTotalCollector) {
 @Composable
 fun WorkerItem(worker: RecolectoresEntity) {
     ListItem(
-        headlineContent = { Text(worker.name, fontWeight = FontWeight.Bold) },
-        supportingContent = { Text("Estado: ${worker.state.uppercase()}") },
+        headlineContent = { Text(worker.name, fontFamily = Comfortaa, fontWeight = FontWeight.Black) },
+        supportingContent = { Text("Estado: ${worker.state.uppercase()}", fontFamily = Comfortaa) },
         leadingContent = {
-            Surface(Modifier.size(40.dp), shape = MaterialTheme.shapes.small, color = PastelOrange) {
-                Icon(Icons.Default.Person, null, modifier = Modifier.padding(8.dp), tint = OnPastelOrange)
+            Surface(
+                modifier = Modifier.size(40.dp),
+                shape = CircleShape,
+                color = OrangeLegacy.copy(alpha = 0.1f)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_recolector),
+                    null,
+                    modifier = Modifier.padding(8.dp),
+                    tint = OrangeLegacy
+                )
             }
         },
-        modifier = Modifier.background(Color.White, MaterialTheme.shapes.medium)
+        colors = ListItemDefaults.colors(containerColor = Color.White),
+        modifier = Modifier
+            .background(Color.White, RoundedCornerShape(8.dp))
+            .padding(4.dp)
     )
 }
 

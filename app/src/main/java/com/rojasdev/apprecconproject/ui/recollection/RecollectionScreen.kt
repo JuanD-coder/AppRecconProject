@@ -5,25 +5,29 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Payments
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.rojasdev.apprecconproject.legacy.data.entities.RecolectoresEntity
+import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.legacy.data.dataModel.collecionTotalCollector
+import com.rojasdev.apprecconproject.legacy.data.entities.RecolectoresEntity
+import com.rojasdev.apprecconproject.ui.components.EmptyState
 import com.rojasdev.apprecconproject.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,20 +66,21 @@ fun RecollectionContent(
     onArchiveCollector: (Int) -> Unit
 ) {
     var selectedTab by remember { mutableStateOf(0) }
+    val accentColor = ThunderbirdLegacy
 
     Scaffold(
         bottomBar = {
             BottomAppBar(
-                containerColor = CoffeePrimary,
+                containerColor = accentColor,
                 contentColor = Color.White,
                 actions = {
                     NavigationBarItem(
                         selected = selectedTab == 0,
                         onClick = { selectedTab = 0 },
                         icon = { Icon(Icons.Default.Payments, contentDescription = null) },
-                        label = { Text("Pagos", color = Color.White) },
+                        label = { Text("Pagos", fontFamily = Comfortaa, color = Color.White) },
                         colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = CoffeePrimary,
+                            selectedIconColor = accentColor,
                             selectedTextColor = Color.White,
                             unselectedIconColor = Color.White.copy(alpha = 0.6f),
                             unselectedTextColor = Color.White.copy(alpha = 0.6f),
@@ -86,9 +91,9 @@ fun RecollectionContent(
                         selected = selectedTab == 1,
                         onClick = { selectedTab = 1 },
                         icon = { Icon(Icons.Default.List, contentDescription = null) },
-                        label = { Text("Personal", color = Color.White) },
+                        label = { Text("Personal", fontFamily = Comfortaa, color = Color.White) },
                         colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = CoffeePrimary,
+                            selectedIconColor = accentColor,
                             selectedTextColor = Color.White,
                             unselectedIconColor = Color.White.copy(alpha = 0.6f),
                             unselectedTextColor = Color.White.copy(alpha = 0.6f),
@@ -100,7 +105,7 @@ fun RecollectionContent(
                     FloatingActionButton(
                         onClick = onAddClick,
                         containerColor = Color.White,
-                        contentColor = CoffeePrimary,
+                        contentColor = accentColor,
                         elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
                     ) {
                         Icon(Icons.Default.Add, contentDescription = "Añadir")
@@ -113,83 +118,97 @@ fun RecollectionContent(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(CoffeeBackground)
+                .background(Color(0xFFE7E7E7)) // gray_light from legacy
         ) {
-            // Ad Placeholder (Legacy had a banner here)
-            AdBannerPlaceholder()
-
-            // Header con título y botón de atrás
-            Row(
+            // Header Area (Legacy style)
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .background(accentColor)
+                    .padding(bottom = 16.dp)
             ) {
-                IconButton(onClick = onBack) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Atrás", tint = CoffeePrimary)
+                Column {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IconButton(onClick = onBack) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Atrás", tint = Color.White)
+                        }
+                        Text(
+                            text = if (selectedTab == 0) "RESUMEN DE PAGOS" else "GESTIÓN DE PERSONAL",
+                            style = MaterialTheme.typography.titleLarge,
+                            fontFamily = Comfortaa,
+                            fontWeight = FontWeight.Black,
+                            color = Color.White
+                        )
+                    }
+
+                    if (selectedTab == 0) {
+                        TotalSummaryHeader(uiState.totalKg, uiState.totalAmount)
+                    }
                 }
-                Text(
-                    text = if (selectedTab == 0) "RESUMEN DE PAGOS" else "GESTIÓN DE PERSONAL",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Black,
-                    color = CoffeePrimary
-                )
             }
 
             if (selectedTab == 0) {
-                // El banner de totales que estaba en el fragment legacy
-                TotalSummaryHeader(uiState.totalKg, uiState.totalAmount)
-                CollectionList(uiState.collectionTotals)
+                if (uiState.collectionTotals.isEmpty()) {
+                    EmptyState("No hay pagos registrados todavía")
+                } else {
+                    CollectionList(uiState.collectionTotals)
+                }
             } else {
-                CollectorsList(uiState.collectors, onArchiveCollector)
+                if (uiState.collectors.isEmpty()) {
+                    EmptyState("No hay personal registrado")
+                } else {
+                    CollectorsList(uiState.collectors, onArchiveCollector)
+                }
             }
         }
     }
 }
 
 @Composable
-fun AdBannerPlaceholder() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp)
-            .background(Color.Black),
-        contentAlignment = Alignment.Center
-    ) {
-        Text("PUBLICIDAD", color = Color.Gray, fontSize = 10.sp)
-    }
-}
-
-@Composable
 fun TotalSummaryHeader(kg: Double, amount: Double) {
-    Surface(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(80.dp)
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        color = CoffeePrimary,
-        shape = MaterialTheme.shapes.large,
-        shadowElevation = 4.dp
+            .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text("Total Recolectado", color = Color.White.copy(alpha = 0.8f), style = MaterialTheme.typography.labelSmall)
-                Text("${kg} Kg", color = Color.White, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-            }
-            VerticalDivider(color = Color.White.copy(alpha = 0.3f), modifier = Modifier.height(40.dp))
-            Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text("Total a Pagar", color = Color.White.copy(alpha = 0.8f), style = MaterialTheme.typography.labelSmall)
-                Text("$${amount.toInt()}", color = Color.White, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Black)
-            }
+        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.weight(1f)) {
+            Text(
+                text = "${kg} Kg",
+                style = MaterialTheme.typography.headlineLarge,
+                fontFamily = Comfortaa,
+                fontWeight = FontWeight.Black,
+                color = Color.White
+            )
+            Text(
+                text = "Recolectado",
+                style = MaterialTheme.typography.labelMedium,
+                fontFamily = Comfortaa,
+                color = Color.White.copy(alpha = 0.8f)
+            )
+        }
+        
+        VerticalDivider(modifier = Modifier.height(60.dp), color = Color.White.copy(alpha = 0.3f))
+
+        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.weight(1f)) {
+            Text(
+                text = "$${amount.toInt()}",
+                style = MaterialTheme.typography.headlineLarge,
+                fontFamily = Comfortaa,
+                fontWeight = FontWeight.Black,
+                color = Color.White
+            )
+            Text(
+                text = "Total a Pagar",
+                style = MaterialTheme.typography.labelMedium,
+                fontFamily = Comfortaa,
+                color = Color.White.copy(alpha = 0.8f)
+            )
         }
     }
 }
@@ -202,31 +221,31 @@ fun AddCollectorDialog(
     var name by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Nuevo Recolector", fontWeight = FontWeight.Bold) },
+        title = { Text("Nuevo Recolector", fontFamily = Comfortaa, fontWeight = FontWeight.Black) },
         text = {
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                label = { Text("Nombre Completo") },
+                label = { Text("Nombre Completo", fontFamily = Comfortaa) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = CoffeePrimary,
-                    focusedLabelColor = CoffeePrimary
+                    focusedBorderColor = ThunderbirdLegacy,
+                    focusedLabelColor = ThunderbirdLegacy
                 )
             )
         },
         confirmButton = {
             Button(
                 onClick = { if (name.isNotBlank()) onConfirm(name) },
-                colors = ButtonDefaults.buttonColors(containerColor = CoffeePrimary)
+                colors = ButtonDefaults.buttonColors(containerColor = ThunderbirdLegacy)
             ) {
-                Text("GUARDAR")
+                Text("GUARDAR", fontFamily = Comfortaa, fontWeight = FontWeight.Black)
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("CANCELAR", color = Color.Gray)
+                Text("CANCELAR", fontFamily = Comfortaa, color = Color.Gray)
             }
         }
     )
@@ -272,10 +291,11 @@ fun CollectionList(totals: List<collecionTotalCollector>) {
 
 @Composable
 fun CollectionCard(item: collecionTotalCollector) {
-    ElevatedCard(
+    Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.large,
-        colors = CardDefaults.elevatedCardColors(containerColor = Color.White)
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
@@ -283,14 +303,14 @@ fun CollectionCard(item: collecionTotalCollector) {
         ) {
             Surface(
                 modifier = Modifier.size(48.dp),
-                shape = MaterialTheme.shapes.medium,
-                color = PastelRed
+                shape = CircleShape,
+                color = ThunderbirdLegacy.copy(alpha = 0.1f)
             ) {
                 Icon(
-                    Icons.Default.Person,
+                    painter = painterResource(id = R.drawable.ic_recolector),
                     contentDescription = null,
                     modifier = Modifier.padding(8.dp),
-                    tint = OnPastelRed
+                    tint = ThunderbirdLegacy
                 )
             }
             Spacer(modifier = Modifier.width(16.dp))
@@ -298,19 +318,22 @@ fun CollectionCard(item: collecionTotalCollector) {
                 Text(
                     text = item.name_recolector ?: "Desconocido",
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
+                    fontFamily = Comfortaa,
+                    fontWeight = FontWeight.Black
                 )
                 Text(
                     text = "${item.kg_collection} Kg recolectados",
                     style = MaterialTheme.typography.bodySmall,
+                    fontFamily = Comfortaa,
                     color = Color.Gray
                 )
             }
             Text(
                 text = "$${item.price_total.toInt()}",
                 style = MaterialTheme.typography.titleLarge,
+                fontFamily = Comfortaa,
                 fontWeight = FontWeight.Black,
-                color = OnPastelRed
+                color = ThunderbirdLegacy
             )
         }
     }
@@ -328,27 +351,30 @@ fun CollectorsList(
     ) {
         items(collectors) { collector ->
             ListItem(
-                headlineContent = { Text(collector.name, fontWeight = FontWeight.Bold) },
-                supportingContent = { Text("Estado: ${collector.state.uppercase()}") },
+                headlineContent = { Text(collector.name, fontFamily = Comfortaa, fontWeight = FontWeight.Black) },
+                supportingContent = { Text("Estado: ${collector.state.uppercase()}", fontFamily = Comfortaa) },
                 leadingContent = {
                     Surface(
-                        shape = MaterialTheme.shapes.small,
-                        color = PastelRed.copy(alpha = 0.5f)
+                        shape = CircleShape,
+                        color = ThunderbirdLegacy.copy(alpha = 0.1f)
                     ) {
                         Icon(
-                            Icons.Default.Person,
+                            painter = painterResource(id = R.drawable.ic_recolector),
                             contentDescription = null,
-                            modifier = Modifier.padding(4.dp),
-                            tint = OnPastelRed
+                            modifier = Modifier.padding(8.dp),
+                            tint = ThunderbirdLegacy
                         )
                     }
                 },
                 trailingContent = {
                     TextButton(onClick = { collector.id?.let { onArchive(it) } }) {
-                        Text("ARCHIVAR", color = Color.Gray, fontSize = 10.sp)
+                        Text("ARCHIVAR", fontFamily = Comfortaa, color = Color.Gray, fontSize = 10.sp)
                     }
                 },
-                modifier = Modifier.background(Color.White, MaterialTheme.shapes.medium)
+                colors = ListItemDefaults.colors(containerColor = Color.White),
+                modifier = Modifier
+                    .background(Color.White, RoundedCornerShape(8.dp))
+                    .padding(4.dp)
             )
         }
     }

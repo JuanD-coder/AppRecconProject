@@ -1,11 +1,13 @@
 package com.rojasdev.apprecconproject.di
 
+import com.rojasdev.apprecconproject.data.repository.AnalyticsRepositoryImpl
 import com.rojasdev.apprecconproject.data.repository.CollectorRepository
 import com.rojasdev.apprecconproject.data.repository.CollectorRepositoryImpl
 import com.rojasdev.apprecconproject.data.repository.RecollectionRepository
 import com.rojasdev.apprecconproject.data.repository.RecollectionRepositoryImpl
 import com.rojasdev.apprecconproject.data.repository.SettingsRepository
 import com.rojasdev.apprecconproject.data.repository.SettingsRepositoryImpl
+import com.rojasdev.apprecconproject.domain.repository.AnalyticsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -33,4 +35,10 @@ abstract class RepositoryModule {
     abstract fun bindRecollectionRepository(
         recollectionRepositoryImpl: RecollectionRepositoryImpl
     ): RecollectionRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAnalyticsRepository(
+        analyticsRepositoryImpl: AnalyticsRepositoryImpl
+    ): AnalyticsRepository
 }

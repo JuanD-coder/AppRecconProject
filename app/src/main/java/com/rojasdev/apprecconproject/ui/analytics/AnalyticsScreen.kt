@@ -1,14 +1,13 @@
 package com.rojasdev.apprecconproject.ui.analytics
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -19,14 +18,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.legacy.data.dataModel.allCollecionAndCollector
 import com.rojasdev.apprecconproject.legacy.data.dataModel.allWorkAndCollector
+import com.rojasdev.apprecconproject.ui.components.EmptyState
+import com.rojasdev.apprecconproject.ui.components.RecconTopBar
+import com.rojasdev.apprecconproject.ui.components.SectionTitle
 import com.rojasdev.apprecconproject.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,24 +60,15 @@ fun AnalyticsContent(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("CONTABILIDAD", fontWeight = FontWeight.Black) },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
-                    }
-                },
+            RecconTopBar(
+                title = "CONTABILIDAD",
+                accent = HippieGreenLegacy,
+                onBack = onBack,
                 actions = {
                     IconButton(onClick = { /* Export PDF */ }) {
                         Icon(Icons.Default.PictureAsPdf, "Exportar")
                     }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = OnPastelGreen,
-                    titleContentColor = Color.White,
-                    navigationIconContentColor = Color.White,
-                    actionIconContentColor = Color.White
-                )
+                }
             )
         }
     ) { padding ->
@@ -81,11 +76,11 @@ fun AnalyticsContent(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(CoffeeBackground)
+                .background(Color(0xFFE7E7E7)) // gray_light from legacy
         ) {
-            // Calendar Section (Esencia Legacy)
+            // Hero Section (Esencia Legacy)
             item {
-                CalendarSection(
+                LegacyAnalyticsHeader(
                     uiState = uiState,
                     onNextMonth = onNextMonth,
                     onPreviousMonth = onPreviousMonth,
@@ -93,11 +88,7 @@ fun AnalyticsContent(
                 )
             }
 
-            item {
-                HorizontalDivider(Modifier.padding(vertical = 8.dp), thickness = 0.5.dp, color = Color.LightGray)
-            }
-
-            // Summary for Selected Day
+            // Summary for Selected Day (Legacy Evolution)
             item {
                 DaySummaryHeader(uiState)
             }
@@ -105,7 +96,7 @@ fun AnalyticsContent(
             // Recolección Section
             if (uiState.dailyCollectionRecords.isNotEmpty()) {
                 item {
-                    SectionHeader("RECOLECCIÓN", OnPastelRed)
+                    SectionTitle("RECOLECCIÓN", ThunderbirdLegacy)
                 }
                 items(uiState.dailyCollectionRecords) { record ->
                     CollectionRecordItem(record)
@@ -115,7 +106,7 @@ fun AnalyticsContent(
             // Trabajos Section
             if (uiState.dailyWorkRecords.isNotEmpty()) {
                 item {
-                    SectionHeader("TRABAJOS / JORNALES", OnPastelOrange)
+                    SectionTitle("TRABAJOS / JORNALES", OrangeLegacy)
                 }
                 items(uiState.dailyWorkRecords) { record ->
                     WorkRecordItem(record)
@@ -124,13 +115,77 @@ fun AnalyticsContent(
 
             if (uiState.dailyCollectionRecords.isEmpty() && uiState.dailyWorkRecords.isEmpty()) {
                 item {
-                    Box(Modifier.fillMaxWidth().padding(48.dp), contentAlignment = Alignment.Center) {
-                        Text("No hay registros para este día", color = Color.Gray)
-                    }
+                    EmptyState("No hay registros para este día")
                 }
             }
-            
+
             item { Spacer(Modifier.height(32.dp)) }
+        }
+    }
+}
+
+@Composable
+fun LegacyAnalyticsHeader(
+    uiState: AnalyticsUiState,
+    onNextMonth: () -> Unit,
+    onPreviousMonth: () -> Unit,
+    onDateSelected: (String) -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                color = HippieGreenLegacy,
+                shape = RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp)
+            )
+            .padding(bottom = 24.dp)
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(horizontal = 16.dp)
+        ) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                shape = RoundedCornerShape(10.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White)
+            ) {
+                CalendarSection(
+                    uiState = uiState,
+                    onNextMonth = onNextMonth,
+                    onPreviousMonth = onPreviousMonth,
+                    onDateSelected = onDateSelected
+                )
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            // Totals (Large like tvShowDates/tvShowPay)
+            Text(
+                text = "Recolección: \n ${uiState.totalKg} Kg",
+                style = MaterialTheme.typography.displaySmall.copy(
+                    fontSize = 35.sp,
+                    lineHeight = 40.sp,
+                    textAlign = TextAlign.Center
+                ),
+                fontWeight = FontWeight.Black,
+                color = Color.White
+            )
+
+            Spacer(Modifier.height(8.dp))
+
+            Text(
+                text = "Pago: \n $${uiState.totalCollectionMoney.toInt()}",
+                style = MaterialTheme.typography.displaySmall.copy(
+                    fontSize = 35.sp,
+                    lineHeight = 40.sp,
+                    textAlign = TextAlign.Center
+                ),
+                fontWeight = FontWeight.Black,
+                color = Color.White
+            )
         }
     }
 }
@@ -142,55 +197,70 @@ fun CalendarSection(
     onPreviousMonth: () -> Unit,
     onDateSelected: (String) -> Unit
 ) {
-    Column(modifier = Modifier.padding(16.dp)) {
-        // Month Navigation
-        Row(
+    Column(modifier = Modifier.padding(8.dp)) {
+        // Title (Calendar Collection)
+        Text(
+            text = "CALENDARIO DE RECOLECCIÓN",
             modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.Black,
+            color = Color.Black
+        )
+
+        Spacer(Modifier.height(8.dp))
+
+        // Month Navigation (Style Bar from legacy)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0xFFE7E7E7)) // bar style
+                .padding(vertical = 4.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = onPreviousMonth) {
-                Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, null, tint = OnPastelGreen)
+                Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, null, tint = Color.Black)
             }
             Text(
                 text = "${uiState.monthName} ${uiState.currentYear}",
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = OnPastelGreen
+                fontWeight = FontWeight.Black,
+                color = Color.Black
             )
             IconButton(onClick = onNextMonth) {
-                Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = OnPastelGreen)
+                Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = Color.Black)
             }
         }
 
         Spacer(Modifier.height(8.dp))
 
-        // Days of week header
+        // Days of week header (with domingo in Cinnabar)
         Row(Modifier.fillMaxWidth()) {
             val days = listOf("L", "M", "M", "J", "V", "S", "D")
-            days.forEach { day ->
+            days.forEachIndexed { index, day ->
                 Text(
                     text = day,
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = Color.Gray
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Black,
+                    color = if (index == 6) CinnabarLegacy else Color.Black
                 )
             }
         }
 
-        Spacer(Modifier.height(8.dp))
+        Divider(modifier = Modifier.padding(vertical = 4.dp), color = Color.Black, thickness = 1.dp)
 
         // Days Grid
-        // Note: Simple grid for now, ignoring week start offset for simplicity in preview
-        // but it will follow the days generated by ViewModel.
         val chunks = uiState.calendarDays.chunked(7)
         chunks.forEach { week ->
             Row(Modifier.fillMaxWidth()) {
-                week.forEach { day ->
+                week.forEachIndexed { index, day ->
                     CalendarDayItem(
                         day = day,
                         onDateSelected = onDateSelected,
+                        isSunday = index == 6,
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -209,15 +279,16 @@ fun CalendarSection(
 fun CalendarDayItem(
     day: CalendarDay,
     onDateSelected: (String) -> Unit,
+    isSunday: Boolean,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
             .aspectRatio(1f)
-            .padding(2.dp)
+            .padding(1.dp)
             .background(
-                color = if (day.isSelected) OnPastelGreen else Color.Transparent,
-                shape = MaterialTheme.shapes.small
+                color = if (day.isSelected) HippieGreenLegacy else Color.Transparent,
+                shape = RoundedCornerShape(4.dp)
             )
             .clickable { onDateSelected(day.date) },
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -225,17 +296,21 @@ fun CalendarDayItem(
     ) {
         Text(
             text = day.dayOfMonth,
-            color = if (day.isSelected) Color.White else Color.Black,
+            color = when {
+                day.isSelected -> Color.White
+                isSunday -> CinnabarLegacy
+                else -> Color.Black
+            },
             style = MaterialTheme.typography.bodyMedium,
-            fontWeight = if (day.isSelected) FontWeight.Bold else FontWeight.Normal
+            fontWeight = FontWeight.Black
         )
         Row {
             if (day.hasCollection) {
-                Box(Modifier.size(4.dp).background(OnPastelRed, CircleShape))
+                Box(Modifier.size(4.dp).background(ThunderbirdLegacy, CircleShape))
             }
             if (day.hasWork) {
                 Spacer(Modifier.width(2.dp))
-                Box(Modifier.size(4.dp).background(OnPastelOrange, CircleShape))
+                Box(Modifier.size(4.dp).background(OrangeLegacy, CircleShape))
             }
         }
     }
@@ -243,93 +318,87 @@ fun CalendarDayItem(
 
 @Composable
 fun DaySummaryHeader(uiState: AnalyticsUiState) {
-    Row(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+            .padding(16.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        SummaryCard(
-            label = "Recolección",
-            value = "${uiState.totalKg} Kg",
-            money = uiState.totalCollectionMoney.toInt(),
-            color = OnPastelRed,
-            modifier = Modifier.weight(1f)
-        )
-        SummaryCard(
-            label = "Jornales",
-            value = "${uiState.totalWorkDays.toInt()} Días",
-            money = uiState.totalWorkMoney.toInt(),
-            color = OnPastelOrange,
-            modifier = Modifier.weight(1f)
-        )
-    }
-}
-
-@Composable
-fun SummaryCard(label: String, value: String, money: Int, color: Color, modifier: Modifier) {
-    Card(
-        modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = color.copy(alpha = 0.1f)),
-        border = androidx.compose.foundation.BorderStroke(1.dp, color.copy(alpha = 0.2f))
-    ) {
-        Column(Modifier.padding(12.dp)) {
-            Text(label, style = MaterialTheme.typography.labelSmall, color = color)
-            Text(value, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-            Text("$${money}", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Black, color = color)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_recolector),
+                contentDescription = null,
+                modifier = Modifier.size(60.dp)
+            )
+            Spacer(Modifier.width(16.dp))
+            Text(
+                text = "RESUMEN DIARIO",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Black,
+                color = HippieGreenLegacy
+            )
         }
     }
 }
 
 @Composable
-fun SectionHeader(title: String, color: Color) {
-    Text(
-        text = title,
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-        style = MaterialTheme.typography.labelMedium,
-        fontWeight = FontWeight.Bold,
-        color = color
-    )
-}
-
-@Composable
 fun CollectionRecordItem(record: allCollecionAndCollector) {
     ListItem(
-        headlineContent = { Text(record.name_recolector ?: "N/A", fontWeight = FontWeight.Bold) },
-        supportingContent = { Text("${record.Cantidad} Kg recolectados") },
-        trailingContent = { Text("$${record.result.toInt()}", fontWeight = FontWeight.Black, color = OnPastelRed) },
+        headlineContent = { Text(record.name_recolector ?: "N/A", fontFamily = Comfortaa, fontWeight = FontWeight.Black) },
+        supportingContent = { Text("${record.Cantidad} Kg recolectados", fontFamily = Comfortaa) },
+        trailingContent = { Text("$${record.result.toInt()}", fontFamily = Comfortaa, fontWeight = FontWeight.Black, color = ThunderbirdLegacy) },
         leadingContent = {
-            val icon = if (record.Alimentacion == "yes") Icons.Default.Restaurant else Icons.Default.NoFood
             Surface(
                 shape = CircleShape,
-                color = OnPastelRed.copy(alpha = 0.1f),
+                color = ThunderbirdLegacy.copy(alpha = 0.1f),
                 modifier = Modifier.size(40.dp)
             ) {
-                Icon(icon, null, modifier = Modifier.padding(10.dp), tint = OnPastelRed)
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_kilogramo),
+                    null,
+                    modifier = Modifier.padding(10.dp),
+                    tint = ThunderbirdLegacy
+                )
             }
         },
         colors = ListItemDefaults.colors(containerColor = Color.White),
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp).background(Color.White, MaterialTheme.shapes.small)
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .background(Color.White, RoundedCornerShape(8.dp))
     )
 }
 
 @Composable
 fun WorkRecordItem(record: allWorkAndCollector) {
     ListItem(
-        headlineContent = { Text(record.name_recolector ?: "N/A", fontWeight = FontWeight.Bold) },
-        supportingContent = { Text(record.actividad ?: "Trabajo") },
-        trailingContent = { Text("$${record.result.toInt()}", fontWeight = FontWeight.Black, color = OnPastelOrange) },
+        headlineContent = { Text(record.name_recolector ?: "N/A", fontFamily = Comfortaa, fontWeight = FontWeight.Black) },
+        supportingContent = { Text(record.actividad ?: "Trabajo", fontFamily = Comfortaa) },
+        trailingContent = { Text("$${record.result.toInt()}", fontFamily = Comfortaa, fontWeight = FontWeight.Black, color = OrangeLegacy) },
         leadingContent = {
             Surface(
                 shape = CircleShape,
-                color = OnPastelOrange.copy(alpha = 0.1f),
+                color = OrangeLegacy.copy(alpha = 0.1f),
                 modifier = Modifier.size(40.dp)
             ) {
-                Icon(Icons.Default.Engineering, null, modifier = Modifier.padding(10.dp), tint = OnPastelOrange)
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_recolector),
+                    null,
+                    modifier = Modifier.padding(10.dp),
+                    tint = OrangeLegacy
+                )
             }
         },
         colors = ListItemDefaults.colors(containerColor = Color.White),
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp).background(Color.White, MaterialTheme.shapes.small)
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .background(Color.White, RoundedCornerShape(8.dp))
     )
 }
 

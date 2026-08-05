@@ -2,9 +2,7 @@ package com.rojasdev.apprecconproject.ui.analytics
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rojasdev.apprecconproject.legacy.data.dao.RecolectoresDao
-import com.rojasdev.apprecconproject.legacy.data.dao.RecollectionDao
-import com.rojasdev.apprecconproject.legacy.data.dao.WorkDao
+import com.rojasdev.apprecconproject.domain.usecase.GetAnalyticsDataUseCase
 import com.rojasdev.apprecconproject.legacy.data.dataModel.allCollecionAndCollector
 import com.rojasdev.apprecconproject.legacy.data.dataModel.allWorkAndCollector
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,9 +39,7 @@ data class AnalyticsUiState(
 
 @HiltViewModel
 class AnalyticsViewModel @Inject constructor(
-    private val recolectoresDao: RecolectoresDao,
-    private val recollectionDao: RecollectionDao,
-    private val workDao: WorkDao
+    private val getAnalyticsDataUseCase: GetAnalyticsDataUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AnalyticsUiState())
@@ -96,9 +92,8 @@ class AnalyticsViewModel @Inject constructor(
             cal.set(year, month - 1, 1)
             val monthName = sdf.format(cal.time).uppercase()
 
-            // Fetch days with data from DB
-            val collectionDates = recollectionDao.getDateCollection().map { it.substring(0, 10) }
-            val workDates = workDao.getDateWork().map { it.substring(0, 10) }
+            // Fetch days with data from UseCase
+            val (collectionDates, workDates) = getAnalyticsDataUseCase.getDatesWithActivity()
 
             val days = mutableListOf<CalendarDay>()
             
@@ -134,32 +129,15 @@ class AnalyticsViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
             
-            val collectionRecords = mutableListOf<allCollecionAndCollector>()
-            val workRecords = mutableListOf<allWorkAndCollector>()
-            
-            val allIds = recolectoresDao.getAll()
-            for (id in allIds) {
-                val coll = recolectoresDao.getAllCollectorAndCollectionId("$date%", id.toInt())
-                if (coll.isNotEmpty() && coll[0].name_recolector != null) {
-                    collectionRecords.add(coll[0])
-                }
-                
-                val work = recolectoresDao.getAllCollectorAndWorkId("$date%", id.toInt())
-                if (work.isNotEmpty() && work[0].name_recolector != null) {
-                    workRecords.add(work[0])
-                }
-            }
-
-            val totalColl = recollectionDao.getTotalKgDate("$date%")
-            val totalWor = workDao.getTotalWorkDate("$date%")
+            val data = getAnalyticsDataUseCase.executeDailyData(date)
 
             _uiState.value = _uiState.value.copy(
-                dailyCollectionRecords = collectionRecords,
-                dailyWorkRecords = workRecords,
-                totalKg = totalColl.Cantidad,
-                totalCollectionMoney = totalColl.result,
-                totalWorkDays = totalWor.Cantidad,
-                totalWorkMoney = totalWor.result,
+                dailyCollectionRecords = data.collectionRecords,
+                dailyWorkRecords = data.workRecords,
+                totalKg = data.totalKg,
+                totalCollectionMoney = data.totalCollectionMoney,
+                totalWorkDays = data.totalWorkDays,
+                totalWorkMoney = data.totalWorkMoney,
                 isLoading = false
             )
         }

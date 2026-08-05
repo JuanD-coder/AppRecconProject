@@ -2,12 +2,12 @@ package com.rojasdev.apprecconproject.ui.configuration
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -18,13 +18,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.rojasdev.apprecconproject.R
 import com.rojasdev.apprecconproject.legacy.data.entities.SettingEntity
+import com.rojasdev.apprecconproject.ui.components.EmptyState
+import com.rojasdev.apprecconproject.ui.components.RecconTopBar
+import com.rojasdev.apprecconproject.ui.components.SectionTitle
 import com.rojasdev.apprecconproject.ui.theme.*
 
 @Composable
@@ -75,13 +81,10 @@ fun ConfigurationContent(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("CONFIGURACIÓN", fontWeight = FontWeight.Black) },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
-                    }
-                }
+            RecconTopBar(
+                title = "CONFIGURACIÓN",
+                accent = Color(0xFF434342), // Dark gray from legacy
+                onBack = onBack
             )
         }
     ) { padding ->
@@ -89,21 +92,21 @@ fun ConfigurationContent(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(CoffeeBackground)
+                .background(Color(0xFFE7E7E7)) // gray_light
                 .verticalScroll(rememberScrollState())
         ) {
             // 1. Recolección Section (Rojo)
-            SettingsSectionHeader("PRECIOS DE RECOLECCIÓN", OnPastelRed)
-            
+            SectionTitle("PRECIOS DE RECOLECCIÓN", ThunderbirdLegacy)
+
             Row(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 uiState.priceYesAliment?.let {
-                    ActivePriceCard(it, "Con Alim.", Icons.Default.Restaurant, OnPastelRed, Modifier.weight(1f)) { onUpdatePrice(it) }
+                    ActivePriceCard(it, "Con Alim.", painterResource(id = R.drawable.ic_kilogramo), ThunderbirdLegacy, Modifier.weight(1f)) { onUpdatePrice(it) }
                 }
                 uiState.priceNoAliment?.let {
-                    ActivePriceCard(it, "Sin Alim.", Icons.Default.NoFood, OnPastelRed, Modifier.weight(1f)) { onUpdatePrice(it) }
+                    ActivePriceCard(it, "Sin Alim.", painterResource(id = R.drawable.ic_bolsa_de_cafe), ThunderbirdLegacy, Modifier.weight(1f)) { onUpdatePrice(it) }
                 }
             }
 
@@ -111,33 +114,37 @@ fun ConfigurationContent(
 
             // 2. Trabajos Section (Naranja)
             Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                SettingsSectionHeader("PRECIOS DE JORNALES", OnPastelOrange, paddingHorizontal = 0.dp)
+                SectionTitle("PRECIOS DE JORNALES", OrangeLegacy)
                 if (uiState.canAddWorkPrice) {
-                    TextButton(onClick = onAddWork) {
-                        Icon(Icons.Default.Add, null, modifier = Modifier.size(16.dp), tint = OnPastelOrange)
+                    TextButton(onClick = onAddWork, modifier = Modifier.padding(end = Spacing.md)) {
+                        Icon(Icons.Default.Add, null, modifier = Modifier.size(16.dp), tint = OrangeLegacy)
                         Spacer(Modifier.width(4.dp))
-                        Text("AÑADIR", color = OnPastelOrange, fontWeight = FontWeight.Bold)
+                        Text("AÑADIR", color = OrangeLegacy, fontFamily = Comfortaa, fontWeight = FontWeight.Black)
                     }
                 }
             }
 
-            Column(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                uiState.workPrices.forEach { price ->
-                    WorkPriceItem(price) { onUpdatePrice(price) }
+            if (uiState.workPrices.isEmpty()) {
+                EmptyState("No hay precios de jornales registrados")
+            } else {
+                Column(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    uiState.workPrices.forEach { price ->
+                        WorkPriceItem(price) { onUpdatePrice(price) }
+                    }
                 }
             }
 
             Spacer(Modifier.height(24.dp))
 
             // 3. Historial Section (Gris)
-            SettingsSectionHeader("HISTORIAL DE PRECIOS", Color.Gray)
+            SectionTitle("HISTORIAL DE PRECIOS", MaterialTheme.colorScheme.onSurfaceVariant)
             
             LazyRow(
                 contentPadding = PaddingValues(horizontal = 16.dp),
@@ -155,53 +162,36 @@ fun ConfigurationContent(
 }
 
 @Composable
-fun SettingsSectionHeader(title: String, color: Color, paddingHorizontal: androidx.compose.ui.unit.Dp = 16.dp) {
-    Text(
-        text = title,
-        modifier = Modifier.padding(horizontal = paddingHorizontal, vertical = 8.dp),
-        style = MaterialTheme.typography.labelMedium,
-        fontWeight = FontWeight.Black,
-        color = color
-    )
-}
-
-@Composable
 fun ActivePriceCard(
     setting: SettingEntity,
     label: String,
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    color: Color,
+    icon: androidx.compose.ui.graphics.painter.Painter,
+    accent: Color,
     modifier: Modifier,
     onUpdate: () -> Unit
 ) {
-    ElevatedCard(
+    Card(
         modifier = modifier,
-        shape = MaterialTheme.shapes.large,
-        colors = CardDefaults.elevatedCardColors(containerColor = Color.White)
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Surface(
-                shape = CircleShape,
-                color = color.copy(alpha = 0.1f),
-                modifier = Modifier.size(40.dp)
-            ) {
-                Icon(icon, null, modifier = Modifier.padding(8.dp), tint = color)
+        Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Surface(shape = CircleShape, color = accent.copy(alpha = 0.1f), modifier = Modifier.size(40.dp)) {
+                Icon(icon, null, modifier = Modifier.padding(8.dp), tint = accent)
             }
-            Spacer(Modifier.height(8.dp))
-            Text(label, style = MaterialTheme.typography.labelSmall, color = Color.Gray)
-            Text("$${setting.cost}", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Black, color = color)
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(Spacing.sm))
+            Text(label, style = MaterialTheme.typography.labelSmall, fontFamily = Comfortaa, color = Color.Gray)
+            Text("$${setting.cost}", style = MaterialTheme.typography.headlineMedium, fontFamily = Comfortaa, fontWeight = FontWeight.Black, color = accent)
+            Spacer(Modifier.height(Spacing.sm))
             Button(
                 onClick = onUpdate,
-                modifier = Modifier.fillMaxWidth().height(32.dp),
+                modifier = Modifier.fillMaxWidth().height(36.dp),
                 contentPadding = PaddingValues(0.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = color),
-                shape = MaterialTheme.shapes.small
+                colors = ButtonDefaults.buttonColors(containerColor = accent),
+                shape = RoundedCornerShape(8.dp)
             ) {
-                Text("CAMBIAR", fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                Text("CAMBIAR", fontSize = 10.sp, fontFamily = Comfortaa, fontWeight = FontWeight.Black)
             }
         }
     }
@@ -211,16 +201,18 @@ fun ActivePriceCard(
 fun WorkPriceItem(price: SettingEntity, onUpdate: () -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth().clickable { onUpdate() },
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Default.Engineering, null, tint = OnPastelOrange, modifier = Modifier.size(24.dp))
+            Icon(painterResource(id = R.drawable.ic_recolector), null, tint = OrangeLegacy, modifier = Modifier.size(24.dp))
             Spacer(Modifier.width(16.dp))
             Column(Modifier.weight(1f)) {
-                Text(price.feeding, fontWeight = FontWeight.Bold)
-                Text("Vigente desde: ${price.date}", style = MaterialTheme.typography.labelSmall, color = Color.Gray)
+                Text(price.feeding, fontFamily = Comfortaa, fontWeight = FontWeight.Black)
+                Text("Vigente desde: ${price.date}", style = MaterialTheme.typography.labelSmall, fontFamily = Comfortaa, color = Color.Gray)
             }
-            Text("$${price.cost}", fontWeight = FontWeight.Black, color = OnPastelOrange)
+            Text("$${price.cost}", fontFamily = Comfortaa, fontWeight = FontWeight.Black, color = OrangeLegacy, style = MaterialTheme.typography.titleLarge)
         }
     }
 }
@@ -229,17 +221,19 @@ fun WorkPriceItem(price: SettingEntity, onUpdate: () -> Unit) {
 fun HistoryPriceCard(price: SettingEntity) {
     Card(
         modifier = Modifier.width(150.dp),
+        shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.6f))
     ) {
         Column(Modifier.padding(12.dp)) {
             Text(
                 if (price.feeding == "yes") "Con Alim." else if (price.feeding == "no") "Sin Alim." else price.feeding,
                 style = MaterialTheme.typography.labelSmall,
-                fontWeight = FontWeight.Bold,
+                fontFamily = Comfortaa,
+                fontWeight = FontWeight.Black,
                 maxLines = 1
             )
-            Text("$${price.cost}", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Black, color = Color.Gray)
-            Text(price.date, style = MaterialTheme.typography.labelSmall, color = Color.Gray, fontSize = 9.sp)
+            Text("$${price.cost}", style = MaterialTheme.typography.titleMedium, fontFamily = Comfortaa, fontWeight = FontWeight.Black, color = Color.DarkGray)
+            Text(price.date, style = MaterialTheme.typography.labelSmall, fontFamily = Comfortaa, color = Color.Gray, fontSize = 9.sp)
         }
     }
 }
